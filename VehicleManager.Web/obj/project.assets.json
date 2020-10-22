@@ -1727,6 +1727,42 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "VehicleManager.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "VehicleManager.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/VehicleManager.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/VehicleManager.Application.dll": {}
+        }
+      },
+      "VehicleManager.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/VehicleManager.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/VehicleManager.Domain.dll": {}
+        }
+      },
+      "VehicleManager.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "VehicleManager.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/VehicleManager.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/VehicleManager.Infrastructure.dll": {}
+        }
       }
     }
   },
@@ -6137,6 +6173,21 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "VehicleManager.Application/1.0.0": {
+      "type": "project",
+      "path": "../VehicleManager.Application/VehicleManager.Application.csproj",
+      "msbuildProject": "../VehicleManager.Application/VehicleManager.Application.csproj"
+    },
+    "VehicleManager.Domain/1.0.0": {
+      "type": "project",
+      "path": "../VehicleManager.Domain/VehicleManager.Domain.csproj",
+      "msbuildProject": "../VehicleManager.Domain/VehicleManager.Domain.csproj"
+    },
+    "VehicleManager.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../VehicleManager.Infrastructure/VehicleManager.Infrastructure.csproj",
+      "msbuildProject": "../VehicleManager.Infrastructure/VehicleManager.Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -6146,7 +6197,9 @@
       "Microsoft.AspNetCore.Identity.UI >= 3.1.8",
       "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation >= 3.1.8",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.8",
-      "Microsoft.EntityFrameworkCore.Tools >= 3.1.8"
+      "Microsoft.EntityFrameworkCore.Tools >= 3.1.8",
+      "VehicleManager.Application >= 1.0.0",
+      "VehicleManager.Infrastructure >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -6174,7 +6227,14 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Application\\VehicleManager.Application.csproj": {
+              "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Application\\VehicleManager.Application.csproj"
+            },
+            "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
