@@ -12,8 +12,20 @@ namespace VehicleManager.Infrastructure
     {
 
         public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<CarHistory> CarHistories { get; set; }
+        public DbSet<KindOfFuel> KindOfFuels { get; set; }
+        public DbSet<VehicleBrand> VehicleBrands { get; set; }
+        public DbSet<VehicleModel> VehicleModels { get; set; }
+        public DbSet<VehicleOwner> VehicleOwners { get; set; }
+        public DbSet<VehicleService> VehicleServices { get; set; }
+        public DbSet<VehicleType> VehicleTypes { get; set; }
+        public DbSet<VehicleUser> VehicleUsers { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<AddressType> AddressTypes { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<ZipCode> ZipCodes { get; set; }
+
         public Context(DbContextOptions options) : base(options)
         {
 

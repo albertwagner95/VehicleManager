@@ -10,8 +10,8 @@ using VehicleManager.Infrastructure;
 namespace VehicleManager.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20201027154339_InitialCTesa")]
-    partial class InitialCTesa
+    [Migration("20201027181920_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -244,23 +244,38 @@ namespace VehicleManager.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CityRef")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CountryRef")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("FlatNumber")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Street")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ZipCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("VehicleOwnerRef")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VehicleUserRef")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ZipCodeRef")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -268,6 +283,21 @@ namespace VehicleManager.Infrastructure.Migrations
                         .IsUnique();
 
                     b.HasIndex("ApplicationUserID");
+
+                    b.HasIndex("CityRef")
+                        .IsUnique();
+
+                    b.HasIndex("CountryRef")
+                        .IsUnique();
+
+                    b.HasIndex("VehicleOwnerRef")
+                        .IsUnique();
+
+                    b.HasIndex("VehicleUserRef")
+                        .IsUnique();
+
+                    b.HasIndex("ZipCodeRef")
+                        .IsUnique();
 
                     b.ToTable("Addresses");
                 });
@@ -282,6 +312,18 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.Property<string>("AddressTypeName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("AddressTypes");
@@ -294,22 +336,92 @@ namespace VehicleManager.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DateOfEvent")
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Event")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                    b.Property<DateTime>("DateOfEvent")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EventDescribe")
                         .IsRequired()
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
                     b.HasKey("Id");
 
-                    b.ToTable("CarHistory");
+                    b.ToTable("CarHistories");
+                });
+
+            modelBuilder.Entity("VehicleManager.Domain.Model.City", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("VehicleManager.Domain.Model.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.KindOfFuel", b =>
@@ -319,12 +431,26 @@ namespace VehicleManager.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
-                    b.ToTable("KindOfFuel");
+                    b.ToTable("KindOfFuels");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.Vehicle", b =>
@@ -340,6 +466,12 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.Property<int>("CarHistoryId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("DateOfFirstRegistration")
                         .HasColumnType("datetime2");
 
@@ -351,6 +483,12 @@ namespace VehicleManager.Infrastructure.Migrations
 
                     b.Property<int>("Millage")
                         .HasColumnType("int");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("OwnerId")
                         .HasColumnType("int");
@@ -370,13 +508,13 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.Property<int>("VehicleOwnerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("VehicleOwnerId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("VehicleServiceId")
                         .HasColumnType("int");
 
                     b.Property<int>("VehicleTypeRef")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VehicleUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("Vin")
@@ -400,12 +538,14 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.HasIndex("VehicleModelRef")
                         .IsUnique();
 
-                    b.HasIndex("VehicleOwnerId1");
+                    b.HasIndex("VehicleOwnerId");
 
                     b.HasIndex("VehicleServiceId");
 
                     b.HasIndex("VehicleTypeRef")
                         .IsUnique();
+
+                    b.HasIndex("VehicleUserId");
 
                     b.ToTable("Vehicles");
                 });
@@ -417,14 +557,26 @@ namespace VehicleManager.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
-                    b.ToTable("VehicleBrand");
+                    b.ToTable("VehicleBrands");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.VehicleModel", b =>
@@ -434,6 +586,18 @@ namespace VehicleManager.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -441,7 +605,45 @@ namespace VehicleManager.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VehicleModel");
+                    b.ToTable("VehicleModels");
+                });
+
+            modelBuilder.Entity("VehicleManager.Domain.Model.VehicleOwner", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int?>("Pesel")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VehicleOwners");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.VehicleService", b =>
@@ -453,6 +655,18 @@ namespace VehicleManager.Infrastructure.Migrations
 
                     b.Property<decimal>("Cost")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -466,12 +680,11 @@ namespace VehicleManager.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ServiceDescribe")
-                        .HasColumnType("nvarchar(500)")
-                        .HasMaxLength(500);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("VehicleService");
+                    b.ToTable("VehicleServices");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.VehicleType", b =>
@@ -484,11 +697,23 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.Property<int>("Capacity")
                         .HasColumnType("int");
 
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("EngineCapacity")
                         .HasColumnType("int");
 
                     b.Property<int>("EnginePower")
                         .HasColumnType("int");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -503,7 +728,74 @@ namespace VehicleManager.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VehicleType");
+                    b.ToTable("VehicleTypes");
+                });
+
+            modelBuilder.Entity("VehicleManager.Domain.Model.VehicleUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int?>("Pesel")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VehicleUsers");
+                });
+
+            modelBuilder.Entity("VehicleManager.Domain.Model.ZipCode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ZipCodes");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.ApplicationUser", b =>
@@ -511,13 +803,6 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
-            modelBuilder.Entity("VehicleManager.Domain.Model.VehicleOwner", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.HasDiscriminator().HasValue("VehicleOwner");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -582,6 +867,36 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.HasOne("VehicleManager.Domain.Model.ApplicationUser", "ApplicationUser")
                         .WithMany("Addresses")
                         .HasForeignKey("ApplicationUserID");
+
+                    b.HasOne("VehicleManager.Domain.Model.City", "City")
+                        .WithOne("Address")
+                        .HasForeignKey("VehicleManager.Domain.Model.Address", "CityRef")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VehicleManager.Domain.Model.Country", "Country")
+                        .WithOne("Address")
+                        .HasForeignKey("VehicleManager.Domain.Model.Address", "CountryRef")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VehicleManager.Domain.Model.VehicleOwner", "VehicleOwner")
+                        .WithOne("Address")
+                        .HasForeignKey("VehicleManager.Domain.Model.Address", "VehicleOwnerRef")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VehicleManager.Domain.Model.VehicleUser", "VehicleUser")
+                        .WithOne("Address")
+                        .HasForeignKey("VehicleManager.Domain.Model.Address", "VehicleUserRef")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VehicleManager.Domain.Model.ZipCode", "ZipCode")
+                        .WithOne("Address")
+                        .HasForeignKey("VehicleManager.Domain.Model.Address", "ZipCodeRef")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.Vehicle", b =>
@@ -616,7 +931,9 @@ namespace VehicleManager.Infrastructure.Migrations
 
                     b.HasOne("VehicleManager.Domain.Model.VehicleOwner", "VehicleOwner")
                         .WithMany("Vehicles")
-                        .HasForeignKey("VehicleOwnerId1");
+                        .HasForeignKey("VehicleOwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("VehicleManager.Domain.Model.VehicleService", "VehicleService")
                         .WithMany("Vehicles")
@@ -627,6 +944,12 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.HasOne("VehicleManager.Domain.Model.VehicleType", "VehicleType")
                         .WithOne("Vehicle")
                         .HasForeignKey("VehicleManager.Domain.Model.Vehicle", "VehicleTypeRef")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VehicleManager.Domain.Model.VehicleUser", "VehicleUser")
+                        .WithMany("Vehicles")
+                        .HasForeignKey("VehicleUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

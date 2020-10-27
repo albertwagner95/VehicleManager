@@ -5,13 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20201027120539_InitialCTes.cs" />
-    <Compile Remove="Migrations\20201027120539_InitialCTes.Designer.cs" />
-    <Compile Remove="Migrations\20201027121327_InitialCTes.cs" />
-    <Compile Remove="Migrations\20201027121327_InitialCTes.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Repositories\" />
   </ItemGroup>
 

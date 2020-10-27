@@ -361,7 +361,7 @@ namespace VehicleManager.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CarHistory");
+                    b.ToTable("CarHistories");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.City", b =>
@@ -390,7 +390,7 @@ namespace VehicleManager.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("City");
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.Country", b =>
@@ -419,7 +419,7 @@ namespace VehicleManager.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Country");
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.KindOfFuel", b =>
@@ -448,7 +448,7 @@ namespace VehicleManager.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("KindOfFuel");
+                    b.ToTable("KindOfFuels");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.Vehicle", b =>
@@ -574,7 +574,7 @@ namespace VehicleManager.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VehicleBrand");
+                    b.ToTable("VehicleBrands");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.VehicleModel", b =>
@@ -603,7 +603,7 @@ namespace VehicleManager.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VehicleModel");
+                    b.ToTable("VehicleModels");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.VehicleOwner", b =>
@@ -641,7 +641,7 @@ namespace VehicleManager.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VehicleOwner");
+                    b.ToTable("VehicleOwners");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.VehicleService", b =>
@@ -682,7 +682,7 @@ namespace VehicleManager.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VehicleService");
+                    b.ToTable("VehicleServices");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.VehicleType", b =>
@@ -726,7 +726,7 @@ namespace VehicleManager.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VehicleType");
+                    b.ToTable("VehicleTypes");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.VehicleUser", b =>
@@ -764,7 +764,7 @@ namespace VehicleManager.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VehicleUser");
+                    b.ToTable("VehicleUsers");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.ZipCode", b =>
@@ -793,7 +793,7 @@ namespace VehicleManager.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ZipCode");
+                    b.ToTable("ZipCodes");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.ApplicationUser", b =>
