@@ -11,5 +11,5 @@ C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManag
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Infrastructure\obj\Debug\netcoreapp3.1\VehicleManager.Infrastructure.pdb
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Infrastructure\bin\Debug\netcoreapp3.1\VehicleManager.Infrastructure.runtimeconfig.json
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Infrastructure\bin\Debug\netcoreapp3.1\VehicleManager.Infrastructure.runtimeconfig.dev.json
-C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Infrastructure\obj\Debug\netcoreapp3.1\VehicleManager.Infrastructure.csproj.CoreCompileInputs.cache
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Infrastructure\obj\Debug\netcoreapp3.1\VehicleManager.Infrastructure.genruntimeconfig.cache
+C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Infrastructure\obj\Debug\netcoreapp3.1\VehicleManager.Infrastructure.csproj.CoreCompileInputs.cache

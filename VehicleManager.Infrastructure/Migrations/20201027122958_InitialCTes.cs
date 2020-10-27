@@ -1,13 +1,25 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace VehicleManager.Web.Data.Migrations
+namespace VehicleManager.Infrastructure.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class InitialCTes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AddressTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AddressTypeName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AddressTypes", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -40,7 +52,8 @@ namespace VehicleManager.Web.Data.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,7 +65,7 @@ namespace VehicleManager.Web.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -69,11 +82,43 @@ namespace VehicleManager.Web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Street = table.Column<string>(nullable: true),
+                    BuildigNumber = table.Column<string>(nullable: false),
+                    FlatNumber = table.Column<int>(nullable: false),
+                    ZipCode = table.Column<string>(nullable: false),
+                    City = table.Column<string>(nullable: false),
+                    Country = table.Column<string>(nullable: false),
+                    ApplicationUserID = table.Column<string>(nullable: true),
+                    AddressTypeRef = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Addresses_AddressTypes_AddressTypeRef",
+                        column: x => x.AddressTypeRef,
+                        principalTable: "AddressTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Addresses_AspNetUsers_ApplicationUserID",
+                        column: x => x.ApplicationUserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -153,6 +198,96 @@ namespace VehicleManager.Web.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Vehicles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Vin = table.Column<string>(nullable: true),
+                    Millage = table.Column<int>(nullable: false),
+                    DateOfFirstRegistration = table.Column<DateTime>(nullable: false),
+                    IsRegisterdInPoland = table.Column<bool>(nullable: false),
+                    RegistrationNumber = table.Column<string>(nullable: true),
+                    ProductionDate = table.Column<DateTime>(nullable: false),
+                    KindOfFuelId = table.Column<int>(nullable: false),
+                    WayOfUsageId = table.Column<int>(nullable: false),
+                    OwnerId = table.Column<int>(nullable: false),
+                    ModelId = table.Column<int>(nullable: false),
+                    TypeId = table.Column<int>(nullable: false),
+                    AddressId = table.Column<int>(nullable: false),
+                    ServiceId = table.Column<int>(nullable: false),
+                    MyProperty = table.Column<int>(nullable: false),
+                    ApplicationUserID = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vehicles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Vehicles_AspNetUsers_ApplicationUserID",
+                        column: x => x.ApplicationUserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CarHistory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Event = table.Column<string>(maxLength: 50, nullable: false),
+                    EventDescribe = table.Column<string>(maxLength: 500, nullable: false),
+                    DateOfEvent = table.Column<DateTime>(nullable: false),
+                    VehicleId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CarHistory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CarHistory_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VehicleCarHistory",
+                columns: table => new
+                {
+                    VehicleId = table.Column<int>(nullable: false),
+                    CarHistoryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VehicleCarHistory", x => new { x.CarHistoryId, x.VehicleId });
+                    table.ForeignKey(
+                        name: "FK_VehicleCarHistory_CarHistory_CarHistoryId",
+                        column: x => x.CarHistoryId,
+                        principalTable: "CarHistory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_VehicleCarHistory_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Addresses_AddressTypeRef",
+                table: "Addresses",
+                column: "AddressTypeRef",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Addresses_ApplicationUserID",
+                table: "Addresses",
+                column: "ApplicationUserID");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -191,10 +326,28 @@ namespace VehicleManager.Web.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CarHistory_VehicleId",
+                table: "CarHistory",
+                column: "VehicleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VehicleCarHistory_VehicleId",
+                table: "VehicleCarHistory",
+                column: "VehicleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicles_ApplicationUserID",
+                table: "Vehicles",
+                column: "ApplicationUserID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Addresses");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -211,7 +364,19 @@ namespace VehicleManager.Web.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "VehicleCarHistory");
+
+            migrationBuilder.DropTable(
+                name: "AddressTypes");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "CarHistory");
+
+            migrationBuilder.DropTable(
+                name: "Vehicles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
