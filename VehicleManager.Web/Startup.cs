@@ -12,6 +12,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using VehicleManager.Infrastructure;
+using FluentValidation.AspNetCore;
+using VehicleManager.Domain.Interfaces;
+using VehicleManager.Infrastructure.Repositories;
+using VehicleManager.Application.Interfaces;
+using VehicleManager.Application.Services;
+using VehicleManager.Application.DependencyInjection;
+using VehicleManager.Infrastructure.DependencyInjection;
+using FluentValidation;
+using VehicleManager.Application.ViewModels.Vehicle;
+using static VehicleManager.Application.ViewModels.Vehicle.NewVehicleVm;
 
 namespace VehicleManager.Web
 {
@@ -32,8 +42,14 @@ namespace VehicleManager.Web
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<Context>();
-            services.AddControllersWithViews();
+
+            services.AddApplication();
+            services.AddInfrastructure();
+ 
+            services.AddControllersWithViews().AddFluentValidation().AddFluentValidation(fv => fv.RunDefaultMvcValidationAfterFluentValidationExecutes = true);
             services.AddRazorPages();
+
+            services.AddTransient<IValidator<NewVehicleVm>, NewVehicleValidation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

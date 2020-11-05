@@ -6,8 +6,10 @@ namespace VehicleManager.Domain.Model
 {
     public class Country : BaseField
     {
-        public Address Address { get; set; } 
+        public string TwoCharactersoutryCode { get; set; }
+        public string ThreeCharactersoutryCode { get; set; }
+        public Address Address { get; set; }
+        //public Vehicle Vehicle { get; set; }
 
-   
     }
 }

@@ -13,14 +13,6 @@ namespace VehicleManager.Domain.Model
         [Required]
         public string BuildigNumber { get; set; }
         public int FlatNumber { get; set; }
-
-        public string ApplicationUserID { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; set; }
-
-        public int VehicleUserRef { get; set; }
-        public virtual VehicleUser VehicleUser { get; set; }
-        public int VehicleOwnerRef { get; set; }
-        public virtual VehicleOwner VehicleOwner { get; set; }
         public int AddressTypeRef { get; set; }
         public virtual AddressType AddressType { get; set; }
 
@@ -33,6 +25,7 @@ namespace VehicleManager.Domain.Model
         public int CountryRef { get; set; }
         public virtual Country Country { get; set; }
 
-
+        public string ApplicationUserID { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }
