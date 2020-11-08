@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using VehicleManager.Application.Interfaces;
@@ -11,30 +12,35 @@ using VehicleManager.Domain.Model;
 
 namespace VehicleManager.Web.Controllers
 {
+    [Authorize]
     public class VehicleController : Controller
     {
         private readonly IVehicleService _vehicleService;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public VehicleController(IVehicleService vehicleService)
+        public VehicleController(IVehicleService vehicleService, UserManager<IdentityUser> userManager)
         {
             _vehicleService = vehicleService;
+            _userManager = userManager;
+
         }
         public IActionResult Index()
-        {
-
-
+        { 
             return View();
         }
 
         [HttpGet]
         public IActionResult AddVehicle()
         {
+            var userId = _userManager.GetUserId(User);
+
+
             var model = new NewVehicleVm()
             {
                 VehicleFuelTypes = _vehicleService.GetAllFuelsTypes().ToList(),
                 VehicleBrandNames = _vehicleService.GetAllBrandNames().ToList(),
                 VehicleTypes = _vehicleService.GetVehicleTypes().ToList(),
-                ApplicationUserID = "3a7f19b8-8d42-40c0-b178-b4a3aaf70ce2"
+                ApplicationUserID = userId
             };
             return View(model);
         }
@@ -44,7 +50,7 @@ namespace VehicleManager.Web.Controllers
         public IActionResult AddVehicle(NewVehicleVm models)
         {
             if (!ModelState.IsValid)
-            { 
+            {
                 models.VehicleFuelTypes = _vehicleService.GetAllFuelsTypes().ToList();
                 models.VehicleBrandNames = _vehicleService.GetAllBrandNames().ToList();
                 models.VehicleTypes = _vehicleService.GetVehicleTypes().ToList();

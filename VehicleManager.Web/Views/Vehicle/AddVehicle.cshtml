@@ -1,5 +1,4 @@
 ﻿@model VehicleManager.Application.ViewModels.Vehicle.NewVehicleVm
-
 @{
     ViewData["Title"] = "AddVehicle";
 }
@@ -14,6 +13,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <input type="hidden" asp-for="Id" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="ApplicationUserID" class="form-control" />
             </div>
             <div class="form-group">
                 <label asp-for="Vin" class="control-label">VIN</label>
@@ -62,7 +64,7 @@
                 <span asp-validation-for="EngineCapacity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PermissibleGrossWeight" class="control-label"></label>
+                <label asp-for="PermissibleGrossWeight" class="control-label">Dopuszczalna masa całkowita</label>
                 <input asp-for="PermissibleGrossWeight" class="form-control" />
                 <span asp-validation-for="PermissibleGrossWeight" class="text-danger"></span>
             </div>
@@ -75,21 +77,21 @@
                 <input type="hidden" asp-for="ApplicationUserID" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="VehicleFuelTypeId" class="control-label"></label>
+                <label asp-for="VehicleFuelTypeId" class="control-label">Rodzaj paliwa</label>
                 <select asp-for="VehicleFuelTypeId" asp-items="@(new SelectList(Model.VehicleFuelTypes,"Id", "Name"))" class="custom-select">
                     <option value="">Wybierz rodzaj paliwa</option>
                 </select>
                 <span asp-validation-for="VehicleFuelTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="VehicleBrandNameId" class="control-label"></label>
+                <label asp-for="VehicleBrandNameId" class="control-label">Marka</label>
                 <select asp-for="VehicleBrandNameId" asp-items="@(new SelectList(Model.VehicleBrandNames,"Id", "Name"))" class="custom-select">
                     <option value="">Wybierz markę pojazdu</option>
                 </select>
                 <span asp-validation-for="VehicleFuelTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="VehicleTypeId" class="control-label"></label>
+                <label asp-for="VehicleTypeId" class="control-label">Rodzaj pojazdu</label>
                 <select asp-for="VehicleTypeId" asp-items="@(new SelectList(Model.VehicleTypes,"Id", "Name"))" class="custom-select">
                     <option value="">Wybierz rodzaj pojazdu</option>
                 </select>
@@ -103,5 +105,5 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Home" asp-action="Index">Wróć do strony głównej</a>
 </div>

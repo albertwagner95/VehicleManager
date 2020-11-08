@@ -43,6 +43,7 @@ namespace VehicleManager.Web
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<Context>();
 
+             
             services.AddApplication();
             services.AddInfrastructure();
  

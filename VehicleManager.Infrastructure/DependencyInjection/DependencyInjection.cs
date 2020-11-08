@@ -12,6 +12,7 @@ namespace VehicleManager.Infrastructure.DependencyInjection
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddTransient<IVehicleRepository, VehicleRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
 
             return services;
         }

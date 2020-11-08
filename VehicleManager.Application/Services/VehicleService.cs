@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,6 @@ namespace VehicleManager.Application.Services
         {
             vehicle.Capacity = vehicle.PermissibleGrossWeight - vehicle.OwnWeight;
             vehicle.ProductionDate = new DateTime(vehicle.YearHelper, 1, 1);
-
             var vehicl = _mapper.Map<Domain.Model.Vehicle>(vehicle);
             vehicl.CreatedDateTime = DateTime.Now;
             vehicl.CreatedById = "userid";
