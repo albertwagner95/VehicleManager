@@ -1,0 +1,52 @@
+﻿@model VehicleManager.Application.ViewModels.UserModels.ListUserCarsForList
+
+@{
+    ViewData["Title"] = "UserVehicles";
+}
+
+<h1>Pojazdy użytkownika @User.Identity.Name</h1>
+
+<p>
+    <a asp-controller="Vehicle" asp-action="AddVehicle">Dodaj nowy pojazd</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Nazwa")
+            </th>
+            <th>
+                @Html.DisplayName("Vin")
+            </th>
+            <th>
+                @Html.DisplayName("Numer rejestracyjny")
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.UserCars)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegistrationNumber)
+            </td>
+
+
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

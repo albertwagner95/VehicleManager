@@ -6,7 +6,7 @@ C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManag
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Application\obj\Debug\netcoreapp3.1\VehicleManager.Application.csprojAssemblyReference.cache
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Application\obj\Debug\netcoreapp3.1\VehicleManager.Application.AssemblyInfoInputs.cache
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Application\obj\Debug\netcoreapp3.1\VehicleManager.Application.AssemblyInfo.cs
-C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Application\obj\Debug\netcoreapp3.1\VehicleManager.Application.csproj.CoreCompileInputs.cache
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Application\obj\Debug\netcoreapp3.1\VehicleManager.Application.csproj.CopyComplete
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Application\obj\Debug\netcoreapp3.1\VehicleManager.Application.dll
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Application\obj\Debug\netcoreapp3.1\VehicleManager.Application.pdb
+C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Application\obj\Debug\netcoreapp3.1\VehicleManager.Application.csproj.CoreCompileInputs.cache

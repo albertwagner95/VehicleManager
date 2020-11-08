@@ -18,6 +18,10 @@ namespace VehicleManager.Web.Controllers
             _logger = logger;
         }
 
+        public IActionResult Test()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
 
