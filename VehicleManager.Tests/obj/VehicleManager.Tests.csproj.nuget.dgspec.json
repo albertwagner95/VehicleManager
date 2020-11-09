@@ -143,6 +143,82 @@
         }
       }
     },
+    "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj",
+        "projectName": "VehicleManager.Infrastructure",
+        "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\wagne\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\wagne\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj": {
+                "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.9, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Tests\\VehicleManager.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -168,6 +244,9 @@
             "projectReferences": {
               "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Application\\VehicleManager.Application.csproj": {
                 "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Application\\VehicleManager.Application.csproj"
+              },
+              "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj"
               }
             }
           }
@@ -181,6 +260,10 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "FluentAssertions": {
+              "target": "Package",
+              "version": "[5.10.3, )"
+            },
             "FluentValidation": {
               "target": "Package",
               "version": "[9.2.2, )"
@@ -188,6 +271,10 @@
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
               "version": "[16.5.0, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.14.7, )"
             },
             "coverlet.collector": {
               "target": "Package",

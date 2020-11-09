@@ -17,21 +17,25 @@ namespace VehicleManager.Infrastructure.Repositories
             _context = context;
         }
 
-        //public void DeleteVehicle(int vehicleId)
-        //{
-        //    var vehicle = _context.Vehicles.Find(vehicleId);
-        //    if (vehicle != null)
-        //    {
-        //        _context.Vehicles.Remove(vehicle);
-        //        _context.SaveChanges();
-        //    }
-        //}
+        public void DeleteVehicle(int? vehicleId)
+        {
+            var vehicle = _context.Vehicles.Find(vehicleId);
+            if (vehicle != null)
+            {
+                _context.Vehicles.Remove(vehicle);
+                _context.SaveChanges();
+            }
+        }
 
         public int AddVehicle(Vehicle vehicle)
         {
-            _context.Vehicles.Add(vehicle);
-            _context.SaveChanges();
-            return vehicle.Id;
+            if (vehicle != null)
+            {
+                _context.Vehicles.Add(vehicle);
+                _context.SaveChanges();
+                return vehicle.Id;
+            }
+            return 0;
         }
 
         public IQueryable<VehicleBrandName> GetVehicleBrandNames()
@@ -61,11 +65,11 @@ namespace VehicleManager.Infrastructure.Repositories
         //    return vehicles;
         //}
 
-        //public Vehicle GetVehicleById(int vehicleId)
-        //{
-        //    var vehicle = _context.Vehicles.FirstOrDefault(a => a.Id == vehicleId);
-        //    return vehicle;
-        //}
+        public Vehicle GetVehicleById(int? vehicleId)
+        {
+            var vehicle = _context.Vehicles.FirstOrDefault(a => a.Id == vehicleId);
+            return vehicle;
+        }
 
     }
 }

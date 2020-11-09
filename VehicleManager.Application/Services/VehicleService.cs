@@ -28,6 +28,7 @@ namespace VehicleManager.Application.Services
         {
             vehicle.Capacity = vehicle.PermissibleGrossWeight - vehicle.OwnWeight;
             vehicle.ProductionDate = new DateTime(vehicle.YearHelper, 1, 1);
+
             var vehicl = _mapper.Map<Domain.Model.Vehicle>(vehicle);
             vehicl.CreatedDateTime = DateTime.Now;
             vehicl.CreatedById = "userid";
@@ -36,6 +37,17 @@ namespace VehicleManager.Application.Services
             return vehicl.Id;
         }
 
+        public VehicleDetailsVm GetVehicleDetails(int vehicleId)
+        {
+            var vehicle = _vehicleRepository.GetVehicleById(vehicleId);
+            if (vehicle != null)
+            {
+                var vehicleForVm = _mapper.Map<VehicleDetailsVm>(vehicle);
+                return vehicleForVm;
+            }
+            else return null;
+
+        }
         public IQueryable<VehicleBrandNameVm> GetAllBrandNames()
         {
             var vehicleBrandNames = _vehicleRepository.GetVehicleBrandNames().ProjectTo<VehicleBrandNameVm>(_mapper.ConfigurationProvider);
@@ -54,6 +66,26 @@ namespace VehicleManager.Application.Services
             var vehicleTypes = _vehicleRepository.GetVehicleTypes().ProjectTo<VehicleTypeVm>(_mapper.ConfigurationProvider);
 
             return vehicleTypes;
+        }
+
+        public void DeleteVehicle(DeleteVehicleVm vehicle)
+        {
+            if (vehicle != null)
+            {
+                var vehicl = _mapper.Map<Domain.Model.Vehicle>(vehicle);
+                _vehicleRepository.DeleteVehicle(vehicl.Id);
+            }
+        }
+
+        public DeleteVehicleVm GetVehicleForDelete(int? vehicleId)
+        {
+            var vehicle = _vehicleRepository.GetVehicleById(vehicleId);
+            if (vehicle != null)
+            {
+                var vehicleForVm = _mapper.Map<DeleteVehicleVm>(vehicle);
+                return vehicleForVm;
+            }
+            return null;
         }
     }
 }

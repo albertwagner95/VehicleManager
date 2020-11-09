@@ -11,8 +11,12 @@ namespace VehicleManager.Application.Interfaces
     public interface IVehicleService
     {
         int AddVehicle(NewVehicleVm vehicle);
+        void DeleteVehicle(DeleteVehicleVm vehicle);
         IQueryable<VehicleFuelTypeVm> GetAllFuelsTypes();
         IQueryable<VehicleBrandNameVm> GetAllBrandNames();
         IQueryable<VehicleTypeVm> GetVehicleTypes();
+        VehicleDetailsVm GetVehicleDetails(int vehicleId);
+        DeleteVehicleVm GetVehicleForDelete(int? vehicleId);
+
     }
 }
