@@ -22,6 +22,9 @@ using VehicleManager.Infrastructure.DependencyInjection;
 using FluentValidation;
 using VehicleManager.Application.ViewModels.Vehicle;
 using static VehicleManager.Application.ViewModels.Vehicle.NewVehicleVm;
+using VehicleManager.Domain.Model;
+using VehicleManager.Application.ViewModels.AddressVm;
+using static VehicleManager.Application.ViewModels.AddressVm.NewAddressVm;
 
 namespace VehicleManager.Web
 {
@@ -40,7 +43,7 @@ namespace VehicleManager.Web
             services.AddDbContext<Context>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<Context>();
 
              
@@ -51,6 +54,7 @@ namespace VehicleManager.Web
             services.AddRazorPages();
 
             services.AddTransient<IValidator<NewVehicleVm>, NewVehicleValidation>();
+            services.AddTransient<IValidator<NewAddressVm>, NewAddressValidation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

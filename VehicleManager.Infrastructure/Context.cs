@@ -6,6 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using VehicleManager.Domain.Model;
 using VehicleManager.Domain.Model.VehicleModels;
+using VehicleManager.Domain.Model.AddressModels;
 
 namespace VehicleManager.Infrastructure
 {
@@ -17,12 +18,15 @@ namespace VehicleManager.Infrastructure
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<AddressType> AddressTypes { get; set; }
-        public DbSet<City> Cities { get; set; }
-        public DbSet<Country> Countries { get; set; }
         public DbSet<VehicleFuelType> VehicleFuelTypes { get; set; }
         public DbSet<VehicleBrandName> VehicleBrandNames { get; set; }
         public DbSet<VehicleType> VehicleTypes { get; set; }
-        public DbSet<ZipCode> ZipCodes { get; set; }
+        public DbSet<BaseAddress> BaseAddress { get; set; }
+        public DbSet<Voivodeship> Voivodeships { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<District> Districts { get; set; }
+        public DbSet<CityType> CityTypes { get; set; }
+        public DbSet<Community> Communities { get; set; }
 
         public Context(DbContextOptions options) : base(options)
         {
@@ -32,23 +36,6 @@ namespace VehicleManager.Infrastructure
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-            builder.Entity<AddressType>()
-                .HasOne(a => a.Address).WithOne(b => b.AddressType)
-                .HasForeignKey<Address>(e => e.AddressTypeRef);
-
-            builder.Entity<City>()
-               .HasOne(a => a.Address).WithOne(b => b.City)
-               .HasForeignKey<Address>(e => e.CityRef);
-
-            builder.Entity<ZipCode>()
-               .HasOne(a => a.Address).WithOne(b => b.ZipCode)
-               .HasForeignKey<Address>(e => e.ZipCodeRef);
-
-            builder.Entity<Country>()
-               .HasOne(a => a.Address).WithOne(b => b.Country)
-               .HasForeignKey<Address>(e => e.CountryRef);
-
         }
     }
 }

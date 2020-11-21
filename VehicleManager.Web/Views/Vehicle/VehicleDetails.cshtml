@@ -4,123 +4,106 @@
     ViewData["Title"] = "VehicleDetails";
 }
 
-<h1>VehicleDetails</h1>
-@ViewBag.NullVehicles
+<h1>Szczegóły pojazdu</h1>
+
 <div>
-    <h4>VehicleDetailsVm</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
+
+        <dt class="col-sm-2">
+            Marka
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VehicleBrandName)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Vin)
+        <dt class="col-sm-2">
+            Model
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Vin)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Millage)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Millage)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateOfFirstRegistration)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateOfFirstRegistration)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Model)
-        </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Model)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsRegisterdInPoland)
+
+        <dt class="col-sm-2">
+            Numer rejestracyjny
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsRegisterdInPoland)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RegistrationNumber)
-        </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.RegistrationNumber)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductionDate)
+        <dt class="col-sm-2">
+            Vin
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductionDate)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Vin)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EnginePower)
+        <dt class="col-sm-2">
+            Przebieg
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Millage)
+        </dd>
+        <dt class="col-sm-2">
+            Rejestracja w RP
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IsRegisterdInPoland)
+        </dd>
+        <dt class="col-sm-2">
+            Moc silnika
+        </dt>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.EnginePower)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EngineCapacity)
+        <dt class="col-sm-2">
+            Pojemność silnika
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.EngineCapacity)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PermissibleGrossWeight)
+        <dt class="col-sm-2">
+            Dopuszczalna masa całkowita
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PermissibleGrossWeight)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Capacity)
+        <dt class="col-sm-2">
+            Ładowność
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Capacity)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OwnWeight)
+        <dt class="col-sm-2">
+            Masa własna
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.OwnWeight)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.YearHelper)
+        <dt class="col-sm-2">
+            Rodzaj paliwa
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.YearHelper)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VehicleFuelTypeName)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ApplicationUserID)
+        <dt class="col-sm-2">
+            Rodzaj pojazdu
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ApplicationUserID)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VehicleTypeName)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VehicleFuelTypeId)
+        <dt class="col-sm-2">
+            Data pierwszej rejestracji
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VehicleFuelTypeId)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataOfFirstRegistrationString)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VehicleBrandNameId)
+        <dt class="col-sm-2">
+            Data produkcji
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VehicleBrandNameId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VehicleTypeId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VehicleTypeId)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductionDateString)
         </dd>
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Edytuj", "EditVehicle", "Vehicle", new { id = Model.Id }) |
+    @Html.ActionLink("Lista pojazdów", "UserVehicles", "User");
 </div>

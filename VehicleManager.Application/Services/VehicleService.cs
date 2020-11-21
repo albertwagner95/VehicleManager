@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using VehicleManager.Application.Interfaces;
 using VehicleManager.Application.ViewModels;
@@ -28,7 +29,9 @@ namespace VehicleManager.Application.Services
         {
             vehicle.Capacity = vehicle.PermissibleGrossWeight - vehicle.OwnWeight;
             vehicle.ProductionDate = new DateTime(vehicle.YearHelper, 1, 1);
-
+            vehicle.Vin = vehicle.Vin.ToUpper();
+            vehicle.RegistrationNumber = vehicle.RegistrationNumber.ToUpper();
+            vehicle.Model = vehicle.Model.ToUpper();
             var vehicl = _mapper.Map<Domain.Model.Vehicle>(vehicle);
             vehicl.CreatedDateTime = DateTime.Now;
             vehicl.CreatedById = "userid";
@@ -40,9 +43,15 @@ namespace VehicleManager.Application.Services
         public VehicleDetailsVm GetVehicleDetails(int vehicleId)
         {
             var vehicle = _vehicleRepository.GetVehicleById(vehicleId);
+
             if (vehicle != null)
             {
                 var vehicleForVm = _mapper.Map<VehicleDetailsVm>(vehicle);
+                vehicleForVm.VehicleFuelTypeName = GetFuelTypeName(vehicleForVm.VehicleFuelTypeId);
+                vehicleForVm.VehicleBrandName = GetBrandName(vehicleForVm.VehicleBrandNameId);
+                vehicleForVm.VehicleTypeName = GetTypeName(vehicleForVm.VehicleTypeId);
+                vehicleForVm.ProductionDateString = vehicleForVm.ProductionDate.ToString("yyyy");
+                vehicleForVm.DataOfFirstRegistrationString = vehicleForVm.DateOfFirstRegistration.ToString("D");
                 return vehicleForVm;
             }
             else return null;
@@ -87,5 +96,55 @@ namespace VehicleManager.Application.Services
             }
             return null;
         }
+
+        public NewVehicleVm GetVehicleForEdit(int? vehicleId)
+        {
+
+            if (vehicleId != null)
+            {
+                var vehicle = _vehicleRepository.GetVehicleById(vehicleId);
+                var vehicleForVm = _mapper.Map<NewVehicleVm>(vehicle);
+                return vehicleForVm;
+            }
+            return null;
+        }
+
+        public void EditVehicle(NewVehicleVm vehicle)
+        {
+            vehicle.ProductionDate = new DateTime(vehicle.YearHelper, 1, 1);
+            vehicle.Vin = vehicle.Vin.ToUpper();
+            vehicle.RegistrationNumber = vehicle.RegistrationNumber.ToUpper();
+            vehicle.Model = vehicle.Model.ToUpper();
+            var vehicleForUpdate = _mapper.Map<Vehicle>(vehicle);
+            vehicleForUpdate.ModifiedDateTime = DateTime.UtcNow;
+            _vehicleRepository.EditVehicle(vehicleForUpdate);
+        }
+        public string GetFuelTypeName(int fuelTypeId)
+        {
+            var name = _vehicleRepository.GetVehicleFuelTypes()
+                .Where(x => x.Id == fuelTypeId)
+                .Select(p => p.Name)
+                .Single();
+            return name.ToString();
+        }
+
+        public string GetBrandName(int brandNameId)
+        {
+            var name = _vehicleRepository.GetVehicleBrandNames()
+                .Where(x => x.Id == brandNameId)
+                .Select(p => p.Name)
+                .Single();
+            return name.ToString();
+        }
+
+        public string GetTypeName(int typeId)
+        {
+            var name = _vehicleRepository.GetVehicleTypes()
+                .Where(x => x.Id == typeId)
+                .Select(p => p.Name)
+                .Single();
+            return name.ToString();
+        }
+         
     }
 }

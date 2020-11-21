@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using VehicleManager.Application.Interfaces;
 using VehicleManager.Application.ViewModels.UserModels;
+using VehicleManager.Domain.Model;
 
 namespace VehicleManager.Web.Controllers
 {
@@ -14,9 +15,9 @@ namespace VehicleManager.Web.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public UserController(IUserService userService, UserManager<IdentityUser> userManager)
+        public UserController(IUserService userService, UserManager<ApplicationUser> userManager)
         {
             _userService = userService;
             _userManager = userManager;

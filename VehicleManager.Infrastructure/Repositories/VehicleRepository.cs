@@ -58,18 +58,31 @@ namespace VehicleManager.Infrastructure.Repositories
 
 
 
-
-        //public IQueryable<Vehicle> GetVehicleByUserId(string userId)
-        //{
-        //    var vehicles = _context.Vehicles.Where(a => a.ApplicationUserID.Equals(userId));
-        //    return vehicles;
-        //}
-
         public Vehicle GetVehicleById(int? vehicleId)
         {
             var vehicle = _context.Vehicles.FirstOrDefault(a => a.Id == vehicleId);
             return vehicle;
         }
 
+        public void EditVehicle(Vehicle vehicle)
+        {
+            _context.Attach(vehicle);
+            _context.Entry(vehicle).Property("Millage").IsModified = true;
+            _context.Entry(vehicle).Property("DateOfFirstRegistration").IsModified = true;
+            _context.Entry(vehicle).Property("Model").IsModified = true;
+            _context.Entry(vehicle).Property("IsRegisterdInPoland").IsModified = true;
+            _context.Entry(vehicle).Property("ProductionDate").IsModified = true;
+            _context.Entry(vehicle).Property("RegistrationNumber").IsModified = true;
+            _context.Entry(vehicle).Property("EnginePower").IsModified = true;
+            _context.Entry(vehicle).Property("EngineCapacity").IsModified = true;
+            _context.Entry(vehicle).Property("PermissibleGrossWeight").IsModified = true;
+            _context.Entry(vehicle).Property("OwnWeight").IsModified = true;
+            _context.Entry(vehicle).Property("ModifiedById").IsModified = true;
+            _context.Entry(vehicle).Property("ModifiedDateTime").IsModified = true;
+            _context.Entry(vehicle).Property("VehicleBrandNameId").IsModified = true;
+            _context.Entry(vehicle).Property("VehicleFuelTypeId").IsModified = true;
+            _context.Entry(vehicle).Property("VehicleTypeId").IsModified = true;
+            _context.SaveChanges();
+        }
     }
 }

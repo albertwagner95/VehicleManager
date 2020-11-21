@@ -13,11 +13,7 @@ namespace VehicleManager.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedById = table.Column<string>(nullable: true),
-                    CreatedDateTime = table.Column<DateTime>(nullable: true),
-                    ModifiedById = table.Column<int>(nullable: true),
-                    ModifiedDateTime = table.Column<DateTime>(nullable: true),
-                    AddressTypeName = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -70,39 +66,56 @@ namespace VehicleManager.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cities",
+                name: "BaseAddress",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedById = table.Column<string>(nullable: true),
-                    CreatedDateTime = table.Column<DateTime>(nullable: true),
-                    ModifiedById = table.Column<int>(nullable: true),
-                    ModifiedDateTime = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(maxLength: 50, nullable: false)
+                    City = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(nullable: true),
+                    Community = table.Column<string>(nullable: true),
+                    District = table.Column<string>(nullable: true),
+                    Voivodoship = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cities", x => x.Id);
+                    table.PrimaryKey("PK_BaseAddress", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Countries",
+                name: "CityTypes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedById = table.Column<string>(nullable: true),
-                    CreatedDateTime = table.Column<DateTime>(nullable: true),
-                    ModifiedById = table.Column<int>(nullable: true),
-                    ModifiedDateTime = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
-                    TwoCharactersoutryCode = table.Column<string>(nullable: true),
-                    ThreeCharactersoutryCode = table.Column<string>(nullable: true)
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Countries", x => x.Id);
+                    table.PrimaryKey("PK_CityTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Communities",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Communities", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Districts",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Districts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -157,20 +170,15 @@ namespace VehicleManager.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ZipCodes",
+                name: "Voivodeships",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedById = table.Column<string>(nullable: true),
-                    CreatedDateTime = table.Column<DateTime>(nullable: true),
-                    ModifiedById = table.Column<int>(nullable: true),
-                    ModifiedDateTime = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(maxLength: 50, nullable: false)
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ZipCodes", x => x.Id);
+                    table.PrimaryKey("PK_Voivodeships", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -192,6 +200,39 @@ namespace VehicleManager.Infrastructure.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedById = table.Column<string>(nullable: true),
+                    CreatedDateTime = table.Column<DateTime>(nullable: true),
+                    ModifiedById = table.Column<int>(nullable: true),
+                    ModifiedDateTime = table.Column<DateTime>(nullable: true),
+                    BuildigNumber = table.Column<string>(nullable: true),
+                    FlatNumber = table.Column<int>(nullable: false),
+                    StreetFromUser = table.Column<string>(nullable: true),
+                    AddressTypeId = table.Column<int>(nullable: false),
+                    ApplicationUserID = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Addresses_AddressTypes_AddressTypeId",
+                        column: x => x.AddressTypeId,
+                        principalTable: "AddressTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Addresses_AspNetUsers_ApplicationUserID",
+                        column: x => x.ApplicationUserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -336,87 +377,55 @@ namespace VehicleManager.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Addresses",
+                name: "Cities",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedById = table.Column<string>(nullable: true),
-                    CreatedDateTime = table.Column<DateTime>(nullable: true),
-                    ModifiedById = table.Column<int>(nullable: true),
-                    ModifiedDateTime = table.Column<DateTime>(nullable: true),
-                    Street = table.Column<string>(nullable: true),
-                    BuildigNumber = table.Column<string>(nullable: false),
-                    FlatNumber = table.Column<int>(nullable: false),
-                    AddressTypeRef = table.Column<int>(nullable: false),
-                    CityRef = table.Column<int>(nullable: false),
-                    ZipCodeRef = table.Column<int>(nullable: false),
-                    CountryRef = table.Column<int>(nullable: false),
-                    ApplicationUserID = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    CityTypeId = table.Column<string>(nullable: true),
+                    CommunityId = table.Column<string>(nullable: true),
+                    DistrictId = table.Column<string>(nullable: true),
+                    VoivodeshipId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.PrimaryKey("PK_Cities", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Addresses_AddressTypes_AddressTypeRef",
-                        column: x => x.AddressTypeRef,
-                        principalTable: "AddressTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Addresses_AspNetUsers_ApplicationUserID",
-                        column: x => x.ApplicationUserID,
-                        principalTable: "AspNetUsers",
+                        name: "FK_Cities_CityTypes_CityTypeId",
+                        column: x => x.CityTypeId,
+                        principalTable: "CityTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Addresses_Cities_CityRef",
-                        column: x => x.CityRef,
-                        principalTable: "Cities",
+                        name: "FK_Cities_Communities_CommunityId",
+                        column: x => x.CommunityId,
+                        principalTable: "Communities",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Addresses_Countries_CountryRef",
-                        column: x => x.CountryRef,
-                        principalTable: "Countries",
+                        name: "FK_Cities_Districts_DistrictId",
+                        column: x => x.DistrictId,
+                        principalTable: "Districts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Addresses_ZipCodes_ZipCodeRef",
-                        column: x => x.ZipCodeRef,
-                        principalTable: "ZipCodes",
+                        name: "FK_Cities_Voivodeships_VoivodeshipId",
+                        column: x => x.VoivodeshipId,
+                        principalTable: "Voivodeships",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Addresses_AddressTypeRef",
+                name: "IX_Addresses_AddressTypeId",
                 table: "Addresses",
-                column: "AddressTypeRef",
-                unique: true);
+                column: "AddressTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_ApplicationUserID",
                 table: "Addresses",
                 column: "ApplicationUserID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Addresses_CityRef",
-                table: "Addresses",
-                column: "CityRef",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Addresses_CountryRef",
-                table: "Addresses",
-                column: "CountryRef",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Addresses_ZipCodeRef",
-                table: "Addresses",
-                column: "ZipCodeRef",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -456,6 +465,26 @@ namespace VehicleManager.Infrastructure.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cities_CityTypeId",
+                table: "Cities",
+                column: "CityTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cities_CommunityId",
+                table: "Cities",
+                column: "CommunityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cities_DistrictId",
+                table: "Cities",
+                column: "DistrictId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cities_VoivodeshipId",
+                table: "Cities",
+                column: "VoivodeshipId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_ApplicationUserID",
@@ -499,22 +528,31 @@ namespace VehicleManager.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "BaseAddress");
+
+            migrationBuilder.DropTable(
+                name: "Cities");
+
+            migrationBuilder.DropTable(
                 name: "Vehicles");
 
             migrationBuilder.DropTable(
                 name: "AddressTypes");
 
             migrationBuilder.DropTable(
-                name: "Cities");
-
-            migrationBuilder.DropTable(
-                name: "Countries");
-
-            migrationBuilder.DropTable(
-                name: "ZipCodes");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "CityTypes");
+
+            migrationBuilder.DropTable(
+                name: "Communities");
+
+            migrationBuilder.DropTable(
+                name: "Districts");
+
+            migrationBuilder.DropTable(
+                name: "Voivodeships");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

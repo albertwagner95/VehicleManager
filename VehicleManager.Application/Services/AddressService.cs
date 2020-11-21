@@ -1,0 +1,102 @@
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using VehicleManager.Application.Interfaces;
+using VehicleManager.Application.ViewModels.AddressVm;
+using VehicleManager.Domain.Interfaces;
+using VehicleManager.Domain.Model.AddressModels;
+
+namespace VehicleManager.Application.Services
+{
+    public class AddressService : IAddressService
+    {
+        private readonly IAddressRepository _addressRepository;
+        private readonly IMapper _mapper;
+
+        public AddressService(IAddressRepository addressRepository, IMapper mapper)
+        {
+            _addressRepository = addressRepository;
+            _mapper = mapper;
+        }
+        public List<DistrictVm> GetDistrictsByVoivedoship(string voivodeshipId)
+        {
+            var districts = _addressRepository.GetAllDistricts();
+            var cities = _addressRepository.GetAllCities();
+            var voivodesships = _addressRepository.GetAllVoivedoships();
+
+            var districtsVm = (from ds in districts
+                               join ct in cities on ds.Id equals ct.DistrictId
+                               join vs in voivodesships on ct.VoivodeshipId equals vs.Id
+                               where vs.Id == voivodeshipId
+                               select new DistrictVm
+                               {
+                                   Id = ds.Id,
+                                   Name = ds.Name,
+                               });
+            var result = districtsVm.Distinct().OrderByDescending(a => a.Name).ToList();
+            return result;
+        }
+
+        public List<CommunityVm> GetCommunitiesByDistricId(string districtId)
+        {
+            var districts = _addressRepository.GetAllDistricts();
+            var cities = _addressRepository.GetAllCities();
+            var communities = _addressRepository.GetAllCommunities();
+
+            var communitiesList = (from ds in communities
+                                   join ct in cities on ds.Id equals ct.CommunityId
+                                   join vs in districts on ct.DistrictId equals vs.Id
+                                   where vs.Id == districtId
+                                   select new CommunityVm
+                                   {
+                                       Id = ds.Id,
+                                       Name = ds.Name,
+                                   });
+            var result = communitiesList.Distinct().OrderByDescending(a => a.Name).ToList();
+            return result;
+        }
+
+        public IEnumerable<CityVm> GetCitiesByCommunityId(string communityId)
+        {
+            var cities = _addressRepository.GetCitiesByCommunityId(communityId);
+            if (cities != null)
+            {
+                return cities.ProjectTo<CityVm>(_mapper.ConfigurationProvider);
+            }
+
+            return null;
+        }
+
+        public List<VoivodeshipVm> GetAllVoivedoships()
+        {
+            var voivedoships = _addressRepository.GetAllVoivedoships()
+                                .ProjectTo<VoivodeshipVm>(_mapper.ConfigurationProvider).ToList();
+
+            return voivedoships;
+        }
+
+        public CityTypeVm GetCityType(string cityId)
+        {
+            var cityTypes = _addressRepository.GetCityTypes();
+            var cities = _addressRepository.GetAllCities();
+            var isConvert = int.TryParse(cityId, out int id);
+
+            if (isConvert == true)
+            {
+                var cityType = (from ctp in cityTypes
+                                join cts in cities on ctp.Id equals cts.CityTypeId
+                                where cts.Id == id
+                                select new CityTypeVm
+                                {
+                                    Id = ctp.Id,
+                                    Name = ctp.Name,
+                                }).SingleOrDefault();
+                return cityType;
+            }
+            else return null;
+        }
+    }
+}

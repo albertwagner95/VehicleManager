@@ -13,6 +13,7 @@ namespace VehicleManager.Infrastructure.DependencyInjection
         {
             services.AddTransient<IVehicleRepository, VehicleRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IAddressRepository, AddressRepository>();
 
             return services;
         }

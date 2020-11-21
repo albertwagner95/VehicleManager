@@ -9,9 +9,8 @@ namespace VehicleManager.Domain.Interfaces
 {
     public interface IVehicleRepository
     {
-        void DeleteVehicle(int? vehicleId); 
-        //int AddVehicle(Vehicle vehicle);
-
+        void DeleteVehicle(int? vehicleId);
+        void EditVehicle(Vehicle vehicle);
         int AddVehicle(Vehicle vehicl);
         IQueryable<VehicleFuelType> GetVehicleFuelTypes();
         IQueryable<VehicleBrandName> GetVehicleBrandNames();

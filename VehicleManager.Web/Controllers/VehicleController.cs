@@ -16,9 +16,9 @@ namespace VehicleManager.Web.Controllers
     public class VehicleController : Controller
     {
         private readonly IVehicleService _vehicleService;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public VehicleController(IVehicleService vehicleService, UserManager<IdentityUser> userManager)
+        public VehicleController(IVehicleService vehicleService, UserManager<ApplicationUser> userManager)
         {
             _vehicleService = vehicleService;
             _userManager = userManager;
@@ -31,6 +31,8 @@ namespace VehicleManager.Web.Controllers
 
         public IActionResult VehicleDetails(int id)
         {
+
+            //GetFuelTypeName
             var model = _vehicleService.GetVehicleDetails(id);
             if (model == null)
             {
@@ -98,6 +100,35 @@ namespace VehicleManager.Web.Controllers
         {
             _vehicleService.DeleteVehicle(vehicleToDelete);
             return RedirectToAction("UserVehicles", "User");
+        }
+
+        [HttpGet]
+        public IActionResult EditVehicle(int? id)
+        {
+            var vehicle = _vehicleService.GetVehicleForEdit(id);
+            vehicle.YearHelper = vehicle.ProductionDate.Year;
+            vehicle.VehicleFuelTypes = _vehicleService.GetAllFuelsTypes().ToList();
+            vehicle.VehicleBrandNames = _vehicleService.GetAllBrandNames().ToList();
+            vehicle.VehicleTypes = _vehicleService.GetVehicleTypes().ToList();
+            return View(vehicle);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditVehicle(NewVehicleVm vehicle)
+        {
+            if (!ModelState.IsValid)
+            {
+                vehicle.YearHelper = vehicle.ProductionDate.Year;
+                vehicle.VehicleFuelTypes = _vehicleService.GetAllFuelsTypes().ToList();
+                vehicle.VehicleBrandNames = _vehicleService.GetAllBrandNames().ToList();
+                vehicle.VehicleTypes = _vehicleService.GetVehicleTypes().ToList();
+                return View(vehicle);
+            }
+             _vehicleService.EditVehicle(vehicle);
+           
+                return RedirectToAction("UserVehicles", "User");
+            
         }
     }
 }
