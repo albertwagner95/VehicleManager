@@ -1,8 +1,5 @@
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\bin\Debug\netcoreapp3.1\appsettings.json
-C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
-C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.json
-C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.local.json
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\bin\Debug\netcoreapp3.1\VehicleManager.Web.StaticWebAssets.xml
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\bin\Debug\netcoreapp3.1\VehicleManager.Web.exe
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\bin\Debug\netcoreapp3.1\VehicleManager.Web.deps.json
@@ -477,3 +474,4 @@ C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManag
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml.g.cs
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Views\Address\Index.cshtml.g.cs
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Views\Address\AddAddress.cshtml.g.cs
+C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\scopedcss\bundle\VehicleManager.Web.styles.css

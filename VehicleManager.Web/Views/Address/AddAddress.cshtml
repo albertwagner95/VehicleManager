@@ -12,6 +12,7 @@
 
 <h4>NewAddressVm</h4>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="AddAddress">
@@ -21,17 +22,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="Voivodeship" class="control-label">Województwo</label>
-                <select asp-for="Voivodeship" asp-items="@(new SelectList(Model.VoivodeshipsVm,"Id", "Name"))" id="voivodoship" class="custom-select">
+                <select asp-for="Voivodeship" asp-items="@(new SelectList(Model.VoivodeshipsVm, "Id", "Name"))" id="voivodoship" class="custom-select">
                     <option value="">Wybierz województwo</option>
                 </select>
                 <span asp-validation-for="Voivodeship" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="District" class="control-label">Powiat</label>
-                <select asp-for="District" id="district" class="form-control">
-                </select>
-                <span asp-validation-for="District" class="text-danger"></span>
-            </div>
+            </div> 
+                <div class="form-group">
+                    <label asp-for="District" class="control-label">Powiat</label>
+                    <select asp-for="District" id="district" class="form-control">
+                    </select>
+                    <span asp-validation-for="District" class="text-danger"></span>
+                </div> 
             <div class="form-group">
                 <label asp-for="Community" class="control-label">Gmina</label>
                 <select asp-for="Community" id="community" class="form-control">
@@ -50,23 +51,25 @@
                 <span asp-validation-for="CityType" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BuildigNumber" class="control-label"></label>
+                <label asp-for="BuildigNumber" class="control-label">Numer domu</label>
                 <input asp-for="BuildigNumber" class="form-control" />
                 <span asp-validation-for="BuildigNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FlatNumber" class="control-label"></label>
+                <label asp-for="FlatNumber" class="control-label">Nr lokalu</label>
                 <input asp-for="FlatNumber" class="form-control" />
                 <span asp-validation-for="FlatNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StreetFromUser" class="control-label"></label>
+                <label asp-for="StreetFromUser" class="control-label">Ulica</label>
                 <input asp-for="StreetFromUser" class="form-control" />
                 <span asp-validation-for="StreetFromUser" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AddressTypeId" class="control-label"></label>
-                <input asp-for="AddressTypeId" class="form-control" />
+                <select asp-for="AddressTypeId" asp-items="@(new SelectList(Model.AddressTypes, "Id", "Name"))" id="voivodoship" class="custom-select">
+                    <option value="">Wybierz typ adresu</option>
+                </select>
                 <span asp-validation-for="AddressTypeId" class="text-danger"></span>
             </div>
 
@@ -96,7 +99,7 @@
         city.change(function () {
             if ($(this).val() == "0") {
                 citytype.prop('disabled', true);
-                citytype.val("0");
+                citytype.val("0"); 
             }
             else {
                 $.ajax({
@@ -127,6 +130,7 @@
                 city.val("0");
                 community.prop('disabled', true);
                 community.val("0");
+
             }
             else {
                 $.ajax({

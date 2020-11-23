@@ -54,7 +54,6 @@ namespace VehicleManager.Web
             services.AddRazorPages();
 
             services.AddTransient<IValidator<NewVehicleVm>, NewVehicleValidation>();
-            services.AddTransient<IValidator<NewAddressVm>, NewAddressValidation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

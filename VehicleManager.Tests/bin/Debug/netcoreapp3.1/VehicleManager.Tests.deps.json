@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v3.1": {
       "VehicleManager.Tests/1.0.0": {
         "dependencies": {
+          "AutoMapper": "10.1.1",
           "FluentAssertions": "5.10.3",
           "FluentValidation": "9.2.2",
           "Microsoft.NET.Test.Sdk": "16.5.0",

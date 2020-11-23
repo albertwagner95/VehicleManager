@@ -125,10 +125,10 @@ namespace VehicleManager.Web.Controllers
                 vehicle.VehicleTypes = _vehicleService.GetVehicleTypes().ToList();
                 return View(vehicle);
             }
-             _vehicleService.EditVehicle(vehicle);
-           
-                return RedirectToAction("UserVehicles", "User");
-            
+            _vehicleService.EditVehicle(vehicle);
+
+            return RedirectToAction("UserVehicles", "User");
+
         }
     }
 }

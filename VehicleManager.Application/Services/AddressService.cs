@@ -37,6 +37,7 @@ namespace VehicleManager.Application.Services
                                    Name = ds.Name,
                                });
             var result = districtsVm.Distinct().OrderByDescending(a => a.Name).ToList();
+
             return result;
         }
 
@@ -97,6 +98,91 @@ namespace VehicleManager.Application.Services
                 return cityType;
             }
             else return null;
+        }
+
+        public List<AddressTypeForListVm> GetAddressTypes()
+        {
+            var types = _addressRepository.GetAddressTypes()
+                .ProjectTo<AddressTypeForListVm>(_mapper.ConfigurationProvider)
+                .ToList();
+            return types;
+        }
+
+        public string GetVoivedoshipNameById(string id)
+        {
+            var voivodeship = _addressRepository.GetAllVoivedoships()
+                .FirstOrDefault(x => x.Id.Equals(id));
+
+            if (voivodeship == null)
+            {
+                return null;
+            }
+            else
+            {
+                return voivodeship.Name;
+            }
+        }
+
+        public string GetCommunityNameById(string id)
+        {
+            var community = _addressRepository.GetAllCommunities()
+                .FirstOrDefault(x => x.Id.Equals(id));
+
+            if (community == null)
+            {
+                return null;
+            }
+            else
+            {
+                return community.Name;
+            }
+        }
+
+        public string GetCityTypeById(string id)
+        {
+            var cityType = _addressRepository.GetCityTypes()
+                .FirstOrDefault(x => x.Id.Equals(id));
+            if (cityType == null)
+            {
+                return null;
+            }
+            else
+            {
+                return cityType.Name;
+            }
+        }
+
+        public string GetDistrictNameById(string id)
+        {
+            var district = _addressRepository.GetAllDistricts()
+                .FirstOrDefault(x => x.Id.Equals(id));
+            if (district == null)
+            {
+                return null;
+            }
+            else
+            {
+                return district.Name;
+            }
+        }
+
+        public string GetCityNameById(int id)
+        {
+            var city = _addressRepository.GetAllCities()
+                           .FirstOrDefault(x => x.Id == id);
+            if (city == null)
+            {
+                return null;
+            }
+            else
+            {
+                return city.Name;
+            }
+        }
+
+        public int AddNewAddress()
+        {
+            throw new NotImplementedException();
         }
     }
 }

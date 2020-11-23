@@ -1,7 +1,6 @@
 ﻿@model VehicleManager.Application.ViewModels.AddressVm.AddressBaseVm
-@{
-    ViewData["Title"] = "Index";
-}
+
+ 
 
 <h1>Index</h1>
 <form>
@@ -9,32 +8,8 @@
         <option>Wybierz województwo</option>
     </select>
 
-    <select id="districtList" asp-for="District" >
+    <select id="districtList" asp-for="District">
         <option>Wybierz powiat</option>
     </select>
 </form>
 
-<script>
-    console.log("test");
-    $(document).ready(function () {
-        $("#voivdlist").change(function () {
-            $("#districtList").empty();
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("GetDistrictList","Address")',
-                dataType: 'json',
-                data: { name: $("#voivdlist").val() },
-
-                success: function (districts) {
-                    $("districtList").append('<option value="' + -1 + '">' +
-                        "Wybierz powiat" + '</option>');
-
-                    $.each(districts, function (i, district) {
-                        $("#districtList").append('<option value="' + district.value + '">' +
-                            district.text + '</option>');
-                    });
-                },
-            });
-        });
-    });
-</script>

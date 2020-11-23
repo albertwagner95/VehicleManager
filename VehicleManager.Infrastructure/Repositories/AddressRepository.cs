@@ -68,5 +68,46 @@ namespace VehicleManager.Infrastructure.Repositories
             var cityTypes = _context.CityTypes;
             return cityTypes;
         }
+
+        public IQueryable<AddressType> GetAddressTypes()
+        {
+            var addressTypes = _context.AddressTypes;
+            return addressTypes;
+        }
+
+        //public string GetVoivedoshipNameById(string id)
+        //{
+        //    var voivName = _context.Voivodeships.FirstOrDefault(x => x.Id.Equals(id));
+        //    return voivName.Name;
+        //}
+
+        //public string GetCommunityNameById(string id)
+        //{
+        //    var communityName = _context.Communities.FirstOrDefault(x => x.Id.Equals(id));
+        //    return communityName.Name;
+        //}
+
+        //public string GetCityTypeById(string id)
+        //{
+        //    var cityTypeName = _context.CityTypes.FirstOrDefault(x => x.Id.Equals(id));
+        //    return cityTypeName.Name;
+        //}
+
+        //public string GetDistrictNameById(string id)
+        //{
+        //    var districtName = _context.Districts.FirstOrDefault(x => x.Id.Equals(id));
+        //    return districtName.Name;
+        //}
+
+        //public string GetCityNameById(int id)
+        //{
+        //    var cityName = _context.Cities.FirstOrDefault(x => x.Id.Equals(id));
+        //    return cityName.Name;
+        //}
+
+        public int AddNewAddress()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

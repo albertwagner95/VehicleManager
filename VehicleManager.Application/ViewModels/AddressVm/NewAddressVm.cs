@@ -31,25 +31,14 @@ namespace VehicleManager.Application.ViewModels.AddressVm
         public int FlatNumber { get; set; }
         public string StreetFromUser { get; set; }
         public int AddressTypeId { get; set; }
-        public IEnumerable<DistrictVm> DistrictModel { get; set; }
         public IEnumerable<VoivodeshipVm> VoivodeshipsVm { get; set; }
-        public IEnumerable<SelectListItem> Voivds { get; set; }
+        public List<AddressTypeForListVm> AddressTypes { get; set; }
+        public string ApplicationUserID { get; set; }
 
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<NewAddressVm, Address>().ReverseMap();
-        }
-        public class NewAddressValidation : AbstractValidator<NewAddressVm>
-        {
-            public NewAddressValidation()
-            {
-
-                RuleFor(v => v.FlatNumber).NotNull();
-                RuleFor(v => v.StreetFromUser).MinimumLength(2).WithMessage("d");
-                RuleFor(v => v.BuildigNumber).NotNull();
-
-            }
         }
     }
 
