@@ -64,8 +64,46 @@ namespace VehicleManager.Tests.Services
             resultThree.Should().BeEmpty();
             resultThree.Should().HaveCount(0);
         }
-
         [Fact]
+        public void ShouleReturnCommunitiesForDistricts()
+        {
+            //Arrange
+            var mapper = new Mock<IMapper>();
+
+            var cities = new List<City>();
+            cities.Add(new City() { Id = 1, Name = "Lublin", DistrictId = "1", CommunityId = "1" });
+            cities.Add(new City() { Id = 2, Name = "Wilkolaz", DistrictId = "1", CommunityId = "2" });
+            cities.Add(new City() { Id = 3, Name = "Rzeszów", DistrictId = "3", CommunityId = "2" });
+            var districts = new List<District>();
+            districts.Add(new District() { Id = "1", Name = "Lublin", Cities = cities });
+            districts.Add(new District() { Id = "2", Name = "Kraśnicki", Cities = cities });
+            districts.Add(new District() { Id = "3", Name = "Rzeszów", Cities = cities });
+            var communities = new List<Community>();
+            communities.Add(new Community() { Id = "1", Name = "Gmina Lublin", Cities = cities });
+            communities.Add(new Community() { Id = "2", Name = "Gmina Rzeszów", Cities = cities });
+            var addressRepository = new Mock<IAddressRepository>();
+            addressRepository.Setup(x => x.GetAllDistricts()).Returns(districts.AsQueryable());
+            addressRepository.Setup(x => x.GetAllCities()).Returns(cities.AsQueryable());
+            addressRepository.Setup(x => x.GetAllCommunities()).Returns(communities.AsQueryable());
+
+            var addressService = new AddressService(addressRepository.Object, mapper.Object);
+
+            //Act
+            var result = addressService.GetCommunitiesByDistricId("1");
+            var resultTwo = addressService.GetCommunitiesByDistricId("2");
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(2);
+            result.Should().NotBeNullOrEmpty();
+            result.Should().OnlyHaveUniqueItems();
+            result.Should().BeInDescendingOrder(a => a.Name);
+            result[0].Name.Should().Equals("Gmina Lublin");
+
+            resultTwo.Should().BeEmpty();
+            resultTwo.Should().HaveCount(0);
+        }
+            [Fact]
         public void ShouldReturnVoivedoshipName()
         {
             //Arrange

@@ -14,8 +14,7 @@ namespace VehicleManager.Application.ViewModels.AddressVm
     public class NewAddressVm : IMapFrom<Address>
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "{0} is required")]
-
+        [Required(ErrorMessage = "{0} jest wymagane")]
         public string Voivodeship { get; set; }
         [RegularExpression(@"^(?!0*(\.0+)?$)(\d+|\d*\.\d+)$", ErrorMessage = "Proszę uzupełnij pole")]
         public string District { get; set; }

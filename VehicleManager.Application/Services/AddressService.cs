@@ -180,9 +180,27 @@ namespace VehicleManager.Application.Services
             }
         }
 
-        public int AddNewAddress()
+        public int AddNewAddress(NewAddressVm newAddressVm)
         {
-            throw new NotImplementedException();
+            newAddressVm.Voivodeship = GetVoivedoshipNameById(newAddressVm.Voivodeship);
+            var isId = int.TryParse(newAddressVm.City, out int cityId);
+            if (isId == true)
+            {
+                newAddressVm.City = GetCityNameById(cityId);
+            }
+            else
+            {
+                newAddressVm.City = "City name is inccorrect";
+            }
+            newAddressVm.CityType = GetCityTypeById(newAddressVm.CityType);
+            newAddressVm.Community = GetCommunityNameById(newAddressVm.Community);
+            newAddressVm.District = GetDistrictNameById(newAddressVm.District);
+
+            var newAddress = _mapper.Map<Address>(newAddressVm);
+            newAddress.CreatedDateTime = DateTime.Now;
+            
+            var isSuccesAddNewAddress = _addressRepository.AddNewAddress(newAddress);
+            return isSuccesAddNewAddress;
         }
     }
 }

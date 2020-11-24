@@ -25,7 +25,7 @@ namespace VehicleManager.Web.Controllers
             _addresService = addressService;
             _userManager = userManager;
         }
-        [Route("Identity/Account/Manage/Address")]
+        //[Route("Identity/Account/Manage/Address")]
         public IActionResult Index()
         {
 
@@ -35,10 +35,10 @@ namespace VehicleManager.Web.Controllers
         [HttpGet]
         public IActionResult AddAddress()
         {
-
             var model = new NewAddressVm();
             model.AddressTypes = _addresService.GetAddressTypes();
             model.VoivodeshipsVm = _addresService.GetAllVoivedoships();
+            model.ApplicationUserID = _userManager.GetUserId(User);
             return View(model);
         }
 
@@ -55,6 +55,11 @@ namespace VehicleManager.Web.Controllers
                 model.ApplicationUserID = _userManager.GetUserId(User);
                 return View(model);
             }
+            model.AddressTypes = _addresService.GetAddressTypes();
+            model.VoivodeshipsVm = _addresService.GetAllVoivedoships();
+            model.AddressTypes = _addresService.GetAddressTypes();
+            model.ApplicationUserID = _userManager.GetUserId(User);
+            _addresService.AddNewAddress(model);
             return RedirectToAction("Index", "Address");
         }
 

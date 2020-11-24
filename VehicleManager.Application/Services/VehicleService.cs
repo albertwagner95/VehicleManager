@@ -36,8 +36,8 @@ namespace VehicleManager.Application.Services
             vehicl.CreatedDateTime = DateTime.Now;
             vehicl.CreatedById = "userid";
 
-            _vehicleRepository.AddVehicle(vehicl);
-            return vehicl.Id;
+            var result =_vehicleRepository.AddVehicle(vehicl);
+            return result; // result = 0 is false
         }
 
         public VehicleDetailsVm GetVehicleDetails(int vehicleId)

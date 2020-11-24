@@ -26,13 +26,13 @@
                     <option value="">Wybierz województwo</option>
                 </select>
                 <span asp-validation-for="Voivodeship" class="text-danger"></span>
-            </div> 
-                <div class="form-group">
-                    <label asp-for="District" class="control-label">Powiat</label>
-                    <select asp-for="District" id="district" class="form-control">
-                    </select>
-                    <span asp-validation-for="District" class="text-danger"></span>
-                </div> 
+            </div>
+            <div class="form-group">
+                <label asp-for="District" class="control-label">Powiat</label>
+                <select asp-for="District" id="district" class="form-control">
+                </select>
+                <span asp-validation-for="District" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Community" class="control-label">Gmina</label>
                 <select asp-for="Community" id="community" class="form-control">
@@ -46,8 +46,9 @@
                 <span asp-validation-for="City" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CityType" class="control-label"></label>
-                <input asp-for="CityType" id="cityType" class="form-control" />
+                <label asp-for="CityType" class="control-label">Typ</label>
+                <select asp-for="CityType" id="cityType" class="form-control">
+                </select>
                 <span asp-validation-for="CityType" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -89,30 +90,30 @@
 
 
 <script>
-    $(document).ready(function () {
-        var citytype = $("#cityType");
-        var city = $("#city");
-        var citytype = $("#cityType");
 
-        citytype.prop('disabled', true);
-        citytype.prop('disabled', true);
-        city.change(function () {
-            if ($(this).val() == "0") {
-                citytype.prop('disabled', true);
-                citytype.val("0"); 
-            }
-            else {
-                $.ajax({
-                    url: "/api/citytype/" + $(this).val(),
-                    method: "get",
-                    success: function (data) {
-                        console.log("Succesaaas:");
-                        citytype.val(data.name);
-                    }
-                });
-            }
-        });
-    });
+    //$(document).ready(function () {
+    //    var citytype = $("#cityType");
+    //    var city = $("#city");
+
+    //    citytype.prop('disabled', true);
+    //    city.change(function () {
+    //        if ($(this).val() == "0") {
+    //            citytype.prop('disabled', true);
+    //            citytype.val("0");
+    //        }
+    //        else {
+    //            $.ajax({
+    //                url: "/api/citytype/" + $(this).val(),
+    //                method: "get",
+    //                success: function (data) {
+    //                    console.log("Succesaaas:");
+    //                    citytype.val(data.name);
+    //                    citytype.append($({ value: data.id, text: data.name}));
+    //                }
+    //            });
+    //        }
+    //    });
+    //});
 
     $(document).ready(function () {
         var voivd = $("#voivodoship");
@@ -213,6 +214,36 @@
                         city.append($('<option/>', { value: '0', text: '--Wybierz miasto--' }));
                         $(data).each(function (index, item) {
                             city.append($('<option/>', { value: item.id, text: item.name }));
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        var city = $("#city");
+        var cityType = $("#cityType");
+        cityType.prop('disabled', true);
+
+        city.change(function () {
+            if ($(this).val() == "0") {
+                cityType.prop('disabled', true);
+            }
+            else {
+                console.log($(cityType).val())
+
+                $.ajax({
+                    url: "/api/citytype/" + $(city).val(),
+                    method: "get",
+                    success: function (data) {
+                        console.log("Success:");
+                        cityType.prop('disabled', false);
+
+                        cityType.empty();
+                        cityType.append($('<option/>', { value: '0', text: '--Wybierz amiasto--' }));
+                        $(data).each(function (index, item) {
+                            cityType.append($('<option/>', { value: item.id, text: item.name }));
                         });
                     }
                 });
