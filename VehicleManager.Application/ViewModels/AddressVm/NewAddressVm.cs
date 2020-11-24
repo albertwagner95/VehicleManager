@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
-using FluentValidation;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 using VehicleManager.Application.Mapping;
 using VehicleManager.Domain.Model.AddressModels;
 

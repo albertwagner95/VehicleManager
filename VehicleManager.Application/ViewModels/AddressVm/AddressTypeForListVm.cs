@@ -1,7 +1,4 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using VehicleManager.Application.Mapping;
 using VehicleManager.Domain.Model.AddressModels;
 

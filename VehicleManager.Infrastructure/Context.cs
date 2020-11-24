@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using VehicleManager.Domain.Model;
-using VehicleManager.Domain.Model.VehicleModels;
 using VehicleManager.Domain.Model.AddressModels;
+using VehicleManager.Domain.Model.VehicleModels;
 
 namespace VehicleManager.Infrastructure
 {

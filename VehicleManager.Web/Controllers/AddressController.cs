@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.Linq;
 using VehicleManager.Application.Interfaces;
 using VehicleManager.Application.ViewModels.AddressVm;
 using VehicleManager.Domain.Model;
-using static VehicleManager.Application.ViewModels.AddressVm.NewAddressVm;
 
 namespace VehicleManager.Web.Controllers
 {

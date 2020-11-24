@@ -3,7 +3,6 @@ using AutoMapper.QueryableExtensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using VehicleManager.Application.Interfaces;
 using VehicleManager.Application.ViewModels.AddressVm;
 using VehicleManager.Domain.Interfaces;
@@ -97,7 +96,10 @@ namespace VehicleManager.Application.Services
                                 }).SingleOrDefault();
                 return cityType;
             }
-            else return null;
+            else
+            {
+                return null;
+            }
         }
 
         public List<AddressTypeForListVm> GetAddressTypes()
@@ -198,9 +200,15 @@ namespace VehicleManager.Application.Services
 
             var newAddress = _mapper.Map<Address>(newAddressVm);
             newAddress.CreatedDateTime = DateTime.Now;
-            
+            newAddress.IsActive = true;
             var isSuccesAddNewAddress = _addressRepository.AddNewAddress(newAddress);
             return isSuccesAddNewAddress;
+        }
+
+        public void DeleteAddress(int addressId)
+        {
+            var address = _addressRepository.GetAddressById(addressId);
+            address.IsActive = false;
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using VehicleManager.Domain.Interfaces;
 using VehicleManager.Domain.Model.AddressModels;
 
@@ -78,6 +75,19 @@ namespace VehicleManager.Infrastructure.Repositories
             {
                 return 0;
             }
+        }
+
+        public int DeleteAddress(Address address)
+        {
+            _context.Attach(address);
+            _context.Entry(address).Property("IsActive").IsModified = true;
+            return address.Id;
+        }
+
+        public Address GetAddressById(int addressId)
+        {
+            var address = _context.Addresses.FirstOrDefault(x => x.Id == addressId);
+            return address;
         }
     }
 }

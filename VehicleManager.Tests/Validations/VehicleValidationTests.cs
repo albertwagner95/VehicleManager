@@ -1,8 +1,5 @@
 ﻿using FluentValidation.TestHelper;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using VehicleManager.Application.ViewModels.Vehicle;
 using Xunit;
 using static VehicleManager.Application.ViewModels.Vehicle.NewVehicleVm;
@@ -11,7 +8,7 @@ namespace VehicleManager.Tests.ValidationTests
 {
     public class VehicleValidationTests
     {
-        private NewVehicleValidation _validator = new NewVehicleValidation();
+        private readonly NewVehicleValidation _validator = new NewVehicleValidation();
         public NewVehicleVm model = new NewVehicleVm();
 
 

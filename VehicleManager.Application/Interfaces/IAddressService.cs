@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using VehicleManager.Application.ViewModels.AddressVm;
-using VehicleManager.Domain.Model.AddressModels;
 
 namespace VehicleManager.Application.Interfaces
 {

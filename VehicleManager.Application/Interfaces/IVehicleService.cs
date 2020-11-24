@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using VehicleManager.Application.ViewModels;
 using VehicleManager.Application.ViewModels.Vehicle;
-using VehicleManager.Domain.Model;
 
 namespace VehicleManager.Application.Interfaces
 {

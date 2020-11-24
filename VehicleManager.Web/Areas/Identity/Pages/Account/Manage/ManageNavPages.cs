@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using VehicleManager.Application.ViewModels.AddressVm;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 
 namespace VehicleManager.Web.Areas.Identity.Pages.Account.Manage
 {

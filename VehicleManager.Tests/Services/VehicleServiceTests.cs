@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using Moq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using VehicleManager.Application.Services;
-using VehicleManager.Application.ViewModels.Vehicle;
 using VehicleManager.Domain.Interfaces;
 using VehicleManager.Domain.Model;
 using Xunit;
