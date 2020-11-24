@@ -4,6 +4,7 @@
     ViewData["Title"] = "UserVehicles";
 }
 
+
 <h1>Pojazdy użytkownika @User.Identity.Name</h1>
 
 <p>
@@ -28,25 +29,25 @@
     <tbody>
         @foreach (var item in Model.UserCars)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegistrationNumber)
-            </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegistrationNumber)
+                </td>
 
 
 
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
+                <td>
+                    @Html.ActionLink("Edit", "EditVehicle", "Vehicle", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "VehicleDetails", "Vehicle", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", "Vehicle", new { id = item.Id })
+                </td>
+            </tr>
         }
     </tbody>
 </table>

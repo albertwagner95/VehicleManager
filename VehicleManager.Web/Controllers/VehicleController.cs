@@ -16,19 +16,31 @@ namespace VehicleManager.Web.Controllers
     public class VehicleController : Controller
     {
         private readonly IVehicleService _vehicleService;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public VehicleController(IVehicleService vehicleService, UserManager<IdentityUser> userManager)
+        public VehicleController(IVehicleService vehicleService, UserManager<ApplicationUser> userManager)
         {
             _vehicleService = vehicleService;
             _userManager = userManager;
 
         }
         public IActionResult Index()
-        { 
+        {
             return View();
         }
 
+        public IActionResult VehicleDetails(int id)
+        {
+
+            //GetFuelTypeName
+            var model = _vehicleService.GetVehicleDetails(id);
+            if (model == null)
+            {
+                ViewBag.NullVehicles = "Brak pojazdów do wyświetlenia";
+                return View();
+            }
+            return View(model);
+        }
         [HttpGet]
         public IActionResult AddVehicle()
         {
@@ -57,7 +69,66 @@ namespace VehicleManager.Web.Controllers
                 return View(models);
             }
             var id = _vehicleService.AddVehicle(models);
-            return RedirectToAction("Index", "Home");
+            if (id != 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View(models);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return Ok(400);
+            }
+            var vehicleToDelete = _vehicleService.GetVehicleForDelete(id);
+            if (vehicleToDelete == null)
+            {
+                return Ok(400);
+            }
+            return View(vehicleToDelete);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(DeleteVehicleVm vehicleToDelete)
+        {
+            _vehicleService.DeleteVehicle(vehicleToDelete);
+            return RedirectToAction("UserVehicles", "User");
+        }
+
+        [HttpGet]
+        public IActionResult EditVehicle(int? id)
+        {
+            var vehicle = _vehicleService.GetVehicleForEdit(id);
+            vehicle.YearHelper = vehicle.ProductionDate.Year;
+            vehicle.VehicleFuelTypes = _vehicleService.GetAllFuelsTypes().ToList();
+            vehicle.VehicleBrandNames = _vehicleService.GetAllBrandNames().ToList();
+            vehicle.VehicleTypes = _vehicleService.GetVehicleTypes().ToList();
+            return View(vehicle);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditVehicle(NewVehicleVm vehicle)
+        {
+            if (!ModelState.IsValid)
+            {
+                vehicle.YearHelper = vehicle.ProductionDate.Year;
+                vehicle.VehicleFuelTypes = _vehicleService.GetAllFuelsTypes().ToList();
+                vehicle.VehicleBrandNames = _vehicleService.GetAllBrandNames().ToList();
+                vehicle.VehicleTypes = _vehicleService.GetVehicleTypes().ToList();
+                return View(vehicle);
+            }
+            _vehicleService.EditVehicle(vehicle);
+
+            return RedirectToAction("UserVehicles", "User");
+
         }
     }
 }

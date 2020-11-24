@@ -1,0 +1,111 @@
+﻿@model VehicleManager.Application.ViewModels.Vehicle.NewVehicleVm
+
+@{
+    ViewData["Title"] = "EditVehicle";
+}
+
+<h1>EditVehicle</h1>
+
+<h4>NewVehicleVm</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditVehicle">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="Id" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="ApplicationUserID" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Vin" class="control-label">VIN</label>
+                <input asp-for="Vin" class="form-control" />
+                <span asp-validation-for="Vin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Millage" class="control-label">Przebieg</label>
+                <input asp-for="Millage" class="form-control" />
+                <span asp-validation-for="Millage" class="text-danger"></span>
+            </div>
+            <div class="form-group"> 
+                <label asp-for="DateOfFirstRegistration" class="control-label">Data pierwszej rejestracji</label>
+                <input id="dataToSet" asp-for="DateOfFirstRegistration" type="date" value="@Model.DateOfFirstRegistration.Date.ToString("yyyy-MM-dd")" class="form-control" />
+                <span asp-validation-for="DateOfFirstRegistration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Model" class="control-label">Model pojazdu</label>
+                <input asp-for="Model" class="form-control" />
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsRegisterdInPoland" /> Czy pojazd zarejestrowan w Polsce?
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="RegistrationNumber" class="control-label">Numer rejestracyjny</label>
+                <input asp-for="RegistrationNumber" class="form-control" />
+                <span asp-validation-for="RegistrationNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="YearHelper" class="control-label">Rok produkcji pojazdu</label>
+                <input asp-for="YearHelper" class="form-control" />
+                <span asp-validation-for="YearHelper" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EnginePower" class="control-label">Moc silnika</label>
+                <input asp-for="EnginePower" class="form-control" />
+                <span asp-validation-for="EnginePower" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EngineCapacity" class="control-label">Pojemność silnika</label>
+                <input asp-for="EngineCapacity" class="form-control" />
+                <span asp-validation-for="EngineCapacity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PermissibleGrossWeight" class="control-label">Dopuszczalna masa całkowita</label>
+                <input asp-for="PermissibleGrossWeight" class="form-control" />
+                <span asp-validation-for="PermissibleGrossWeight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OwnWeight" class="control-label">Masa własna</label>
+                <input asp-for="OwnWeight" class="form-control" />
+                <span asp-validation-for="OwnWeight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="ApplicationUserID" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleFuelTypeId" class="control-label">Rodzaj paliwa</label>
+                <select asp-for="VehicleFuelTypeId" asp-items="@(new SelectList(Model.VehicleFuelTypes,"Id", "Name"))" class="custom-select">
+                    <option value="">Wybierz rodzaj paliwa</option>
+                </select>
+                <span asp-validation-for="VehicleFuelTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleBrandNameId" class="control-label">Marka</label>
+                <select asp-for="VehicleBrandNameId" asp-items="@(new SelectList(Model.VehicleBrandNames,"Id", "Name"))" class="custom-select">
+                    <option value="">Wybierz markę pojazdu</option>
+                </select>
+                <span asp-validation-for="VehicleFuelTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleTypeId" class="control-label">Rodzaj pojazdu</label>
+                <select asp-for="VehicleTypeId" asp-items="@(new SelectList(Model.VehicleTypes,"Id", "Name"))" class="custom-select">
+                    <option value="">Wybierz rodzaj pojazdu</option>
+                </select>
+                <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

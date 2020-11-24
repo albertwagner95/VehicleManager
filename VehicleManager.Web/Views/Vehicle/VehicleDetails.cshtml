@@ -1,0 +1,109 @@
+﻿@model VehicleManager.Application.ViewModels.Vehicle.VehicleDetailsVm
+
+@{
+    ViewData["Title"] = "VehicleDetails";
+}
+
+<h1>Szczegóły pojazdu</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+
+        <dt class="col-sm-2">
+            Marka
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VehicleBrandName)
+        </dd>
+        <dt class="col-sm-2">
+            Model
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+
+        <dt class="col-sm-2">
+            Numer rejestracyjny
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RegistrationNumber)
+        </dd>
+        <dt class="col-sm-2">
+            Vin
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Vin)
+        </dd>
+        <dt class="col-sm-2">
+            Przebieg
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Millage)
+        </dd>
+        <dt class="col-sm-2">
+            Rejestracja w RP
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IsRegisterdInPoland)
+        </dd>
+        <dt class="col-sm-2">
+            Moc silnika
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EnginePower)
+        </dd>
+        <dt class="col-sm-2">
+            Pojemność silnika
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EngineCapacity)
+        </dd>
+        <dt class="col-sm-2">
+            Dopuszczalna masa całkowita
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PermissibleGrossWeight)
+        </dd>
+        <dt class="col-sm-2">
+            Ładowność
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Capacity)
+        </dd>
+        <dt class="col-sm-2">
+            Masa własna
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OwnWeight)
+        </dd>
+        <dt class="col-sm-2">
+            Rodzaj paliwa
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VehicleFuelTypeName)
+        </dd>
+        <dt class="col-sm-2">
+            Rodzaj pojazdu
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VehicleTypeName)
+        </dd>
+        <dt class="col-sm-2">
+            Data pierwszej rejestracji
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataOfFirstRegistrationString)
+        </dd>
+        <dt class="col-sm-2">
+            Data produkcji
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductionDateString)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edytuj", "EditVehicle", "Vehicle", new { id = Model.Id }) |
+    @Html.ActionLink("Lista pojazdów", "UserVehicles", "User");
+</div>

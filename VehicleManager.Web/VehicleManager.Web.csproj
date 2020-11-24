@@ -22,4 +22,8 @@
     <ProjectReference Include="..\VehicleManager.Infrastructure\VehicleManager.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Identity\Views\" />
+  </ItemGroup>
+
 </Project>

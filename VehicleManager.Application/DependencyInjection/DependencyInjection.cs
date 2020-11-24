@@ -15,6 +15,7 @@ namespace VehicleManager.Application.DependencyInjection
         {
             services.AddTransient<IVehicleService, VehicleService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAddressService, AddressService>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             return services;
         }

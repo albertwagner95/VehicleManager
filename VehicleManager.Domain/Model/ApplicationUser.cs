@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using VehicleManager.Domain.Common;
+using VehicleManager.Domain.Model.AddressModels;
 
 namespace VehicleManager.Domain.Model
 {

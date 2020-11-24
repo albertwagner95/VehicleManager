@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using VehicleManager.Application.Mapping;
 
 namespace VehicleManager.Application.ViewModels.UserModels
@@ -17,9 +14,8 @@ namespace VehicleManager.Application.ViewModels.UserModels
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Domain.Model.Vehicle, UserCarsForList>()
-                .ForMember(s => s.Name, opt => opt.MapFrom(x => String.Concat(x.VehicleBrandName.Name, " ", x.Model)));    
+                .ForMember(s => s.Name, opt => opt.MapFrom(x => String.Concat(x.VehicleBrandName.Name, " ", x.Model)));
         }
     }
-
 
 }

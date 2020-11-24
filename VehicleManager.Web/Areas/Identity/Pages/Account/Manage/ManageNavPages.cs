@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using VehicleManager.Application.ViewModels.AddressVm;
 
 namespace VehicleManager.Web.Areas.Identity.Pages.Account.Manage
 {
@@ -23,6 +24,7 @@ namespace VehicleManager.Web.Areas.Identity.Pages.Account.Manage
         public static string PersonalData => "PersonalData";
 
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
+        public static string Address => "Address";
 
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
@@ -39,6 +41,7 @@ namespace VehicleManager.Web.Areas.Identity.Pages.Account.Manage
         public static string PersonalDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, PersonalData);
 
         public static string TwoFactorAuthenticationNavClass(ViewContext viewContext) => PageNavClass(viewContext, TwoFactorAuthentication);
+        public static string AdAddress (ViewContext viewContext) => PageNavClass(viewContext, Address);
 
         private static string PageNavClass(ViewContext viewContext, string page)
         {

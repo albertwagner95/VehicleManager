@@ -225,34 +225,39 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("VehicleManager.Domain.Model.Address", b =>
+            modelBuilder.Entity("VehicleManager.Domain.Model.AddressModels.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddressTypeRef")
+                    b.Property<int>("AddressTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("ApplicationUserID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BuildigNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CityRef")
-                        .HasColumnType("int");
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CountryRef")
-                        .HasColumnType("int");
+                    b.Property<string>("CityType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Community")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreatedDateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("District")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FlatNumber")
                         .HasColumnType("int");
@@ -263,120 +268,148 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Street")
+                    b.Property<string>("StreetFromUser")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ZipCodeRef")
-                        .HasColumnType("int");
+                    b.Property<string>("Voivodeship")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressTypeRef")
-                        .IsUnique();
+                    b.HasIndex("AddressTypeId");
 
                     b.HasIndex("ApplicationUserID");
-
-                    b.HasIndex("CityRef")
-                        .IsUnique();
-
-                    b.HasIndex("CountryRef")
-                        .IsUnique();
-
-                    b.HasIndex("ZipCodeRef")
-                        .IsUnique();
 
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("VehicleManager.Domain.Model.AddressType", b =>
+            modelBuilder.Entity("VehicleManager.Domain.Model.AddressModels.AddressType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AddressTypeName")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ModifiedById")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedDateTime")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.ToTable("AddressTypes");
                 });
 
-            modelBuilder.Entity("VehicleManager.Domain.Model.City", b =>
+            modelBuilder.Entity("VehicleManager.Domain.Model.AddressModels.BaseAddress", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CreatedById")
+                    b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreatedDateTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Community")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ModifiedById")
-                        .HasColumnType("int");
+                    b.Property<string>("District")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ModifiedDateTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                    b.Property<string>("Voivodoship")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.ToTable("BaseAddress");
+                });
+
+            modelBuilder.Entity("VehicleManager.Domain.Model.AddressModels.City", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CityTypeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CommunityId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("DistrictId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VoivodeshipId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityTypeId");
+
+                    b.HasIndex("CommunityId");
+
+                    b.HasIndex("DistrictId");
+
+                    b.HasIndex("VoivodeshipId");
 
                     b.ToTable("Cities");
                 });
 
-            modelBuilder.Entity("VehicleManager.Domain.Model.Country", b =>
+            modelBuilder.Entity("VehicleManager.Domain.Model.AddressModels.CityType", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ModifiedById")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedDateTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("ThreeCharactersoutryCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TwoCharactersoutryCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries");
+                    b.ToTable("CityTypes");
+                });
+
+            modelBuilder.Entity("VehicleManager.Domain.Model.AddressModels.Community", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Communities");
+                });
+
+            modelBuilder.Entity("VehicleManager.Domain.Model.AddressModels.District", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Districts");
+                });
+
+            modelBuilder.Entity("VehicleManager.Domain.Model.AddressModels.Voivodeship", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Voivodeships");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.Vehicle", b =>
@@ -546,35 +579,6 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.ToTable("VehicleTypes");
                 });
 
-            modelBuilder.Entity("VehicleManager.Domain.Model.ZipCode", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ModifiedById")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ZipCodes");
-                });
-
             modelBuilder.Entity("VehicleManager.Domain.Model.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -650,35 +654,36 @@ namespace VehicleManager.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("VehicleManager.Domain.Model.Address", b =>
+            modelBuilder.Entity("VehicleManager.Domain.Model.AddressModels.Address", b =>
                 {
-                    b.HasOne("VehicleManager.Domain.Model.AddressType", "AddressType")
-                        .WithOne("Address")
-                        .HasForeignKey("VehicleManager.Domain.Model.Address", "AddressTypeRef")
+                    b.HasOne("VehicleManager.Domain.Model.AddressModels.AddressType", "AddressType")
+                        .WithMany("Addresses")
+                        .HasForeignKey("AddressTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("VehicleManager.Domain.Model.ApplicationUser", "ApplicationUser")
                         .WithMany("Addresses")
                         .HasForeignKey("ApplicationUserID");
+                });
 
-                    b.HasOne("VehicleManager.Domain.Model.City", "City")
-                        .WithOne("Address")
-                        .HasForeignKey("VehicleManager.Domain.Model.Address", "CityRef")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("VehicleManager.Domain.Model.AddressModels.City", b =>
+                {
+                    b.HasOne("VehicleManager.Domain.Model.AddressModels.CityType", "CityType")
+                        .WithMany("Cities")
+                        .HasForeignKey("CityTypeId");
 
-                    b.HasOne("VehicleManager.Domain.Model.Country", "Country")
-                        .WithOne("Address")
-                        .HasForeignKey("VehicleManager.Domain.Model.Address", "CountryRef")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("VehicleManager.Domain.Model.AddressModels.Community", "Community")
+                        .WithMany("Cities")
+                        .HasForeignKey("CommunityId");
 
-                    b.HasOne("VehicleManager.Domain.Model.ZipCode", "ZipCode")
-                        .WithOne("Address")
-                        .HasForeignKey("VehicleManager.Domain.Model.Address", "ZipCodeRef")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("VehicleManager.Domain.Model.AddressModels.District", "District")
+                        .WithMany("Cities")
+                        .HasForeignKey("DistrictId");
+
+                    b.HasOne("VehicleManager.Domain.Model.AddressModels.Voivodeship", "Voivodeship")
+                        .WithMany("Cities")
+                        .HasForeignKey("VoivodeshipId");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.Vehicle", b =>
