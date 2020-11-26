@@ -79,8 +79,10 @@ namespace VehicleManager.Infrastructure.Repositories
 
         public int DeleteAddress(Address address)
         {
+            address.IsActive = false;
             _context.Attach(address);
             _context.Entry(address).Property("IsActive").IsModified = true;
+            _context.SaveChanges();
             return address.Id;
         }
 

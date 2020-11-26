@@ -472,6 +472,7 @@ C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManag
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Manage\_Layout.cshtml.g.cs
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Manage\Email.cshtml.g.cs
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml.g.cs
-C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Views\Address\Index.cshtml.g.cs
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Views\Address\AddAddress.cshtml.g.cs
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\scopedcss\bundle\VehicleManager.Web.styles.css
+C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Views\User\UserAddresses.cshtml.g.cs
+C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Views\Address\Delete.cshtml.g.cs

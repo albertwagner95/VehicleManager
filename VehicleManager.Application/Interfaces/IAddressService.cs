@@ -18,5 +18,7 @@ namespace VehicleManager.Application.Interfaces
         string GetDistrictNameById(string id);
         string GetCityNameById(int id);
         int AddNewAddress(NewAddressVm newAddressVm);
+        void DeleteAddress(int addressId);
+        NewAddressVm GetAddressById(int id);
     }
 }

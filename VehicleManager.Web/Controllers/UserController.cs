@@ -25,8 +25,13 @@ namespace VehicleManager.Web.Controllers
         public IActionResult UserVehicles()
         {
             var userCars = _userService.GetUserVehicles(_userManager.GetUserId(User));
-            
             return View(userCars);
+        }
+
+        public IActionResult UserAddresses()
+        {
+            var userAddresses = _userService.GetUserAddresses(_userManager.GetUserId(User));
+            return View(userAddresses);
         }
     }
 }

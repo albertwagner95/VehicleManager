@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using VehicleManager.Domain.Model.AddressModels;
 
 namespace VehicleManager.Domain.Interfaces
@@ -19,6 +20,7 @@ namespace VehicleManager.Domain.Interfaces
         //string GetDistrictNameById(string id);
         //string GetCityNameById(int id);
         int AddNewAddress(Address address);
-
+        int DeleteAddress(Address addressId);
+        Address GetAddressById(int addressId);
     }
 }

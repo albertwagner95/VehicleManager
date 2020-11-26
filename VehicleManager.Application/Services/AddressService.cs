@@ -208,7 +208,14 @@ namespace VehicleManager.Application.Services
         public void DeleteAddress(int addressId)
         {
             var address = _addressRepository.GetAddressById(addressId);
-            address.IsActive = false;
+            _addressRepository.DeleteAddress(address);
+        }
+
+        public NewAddressVm GetAddressById(int id)
+        {
+            var address = _addressRepository.GetAddressById(id);
+            var result = _mapper.Map<NewAddressVm>(address);
+            return result;
         }
     }
 }

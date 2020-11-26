@@ -23,8 +23,31 @@ namespace VehicleManager.Web.Controllers
         //[Route("Identity/Account/Manage/Address")]
         public IActionResult Index()
         {
-
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            if (id == 0)
+            {
+                return Ok(400);
+            }
+            var address = _addresService.GetAddressById(id);
+            if (address == null)
+            {
+                return Ok(400);
+            }
+            return View(address);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(NewAddressVm addressToDelete)
+        {
+            var addressId = addressToDelete.Id;
+            _addresService.DeleteAddress(addressId);
+            return RedirectToAction("UserAddresses", "User");
         }
 
         [HttpGet]
