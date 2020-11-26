@@ -14,26 +14,32 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                Numer adresu
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Szczegóły
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.KindOfAddress)
+                Rodzaj adresu
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
+        @{
+            int i = 0;
+        }
         @foreach (var item in Model)
-        {
+        { i++;
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Id)
+                    @i
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @item.Voivedoshipha <p></p>
+                    @item.Districts <p></p>
+                    @item.CityAndType <p></p>
+                    @item.StreetAndBuildNumber <p></p>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.KindOfAddress)
