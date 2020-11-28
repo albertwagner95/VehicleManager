@@ -47,6 +47,7 @@ namespace VehicleManager.Web.Controllers
         {
             var addressId = addressToDelete.Id;
             _addresService.DeleteAddress(addressId);
+            TempData["succesMessage"] = "Pomyślnie usunięto adres!";
             return RedirectToAction("UserAddresses", "User");
         }
 
@@ -78,8 +79,46 @@ namespace VehicleManager.Web.Controllers
             model.AddressTypes = _addresService.GetAddressTypes();
             model.ApplicationUserID = _userManager.GetUserId(User);
             _addresService.AddNewAddress(model);
-            return RedirectToAction("Index", "Address");
+            TempData["succesMessage"] = "Pomyślnie dodano nowy adres!";
+            return RedirectToAction("UserAddresses", "User");
         }
+
+        [HttpGet]
+        public IActionResult EditAddress(int id)
+        {
+
+            var model = _addresService.GetAddressById(id);
+            model.AddressTypes = _addresService.GetAddressTypes();
+            model.VoivodeshipsVm = _addresService.GetAllVoivedoships();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditAddress(NewAddressVm model)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                model.AddressTypes = _addresService.GetAddressTypes();
+                model.VoivodeshipsVm = _addresService.GetAllVoivedoships();
+                return View(model);
+            }
+            var isEdit = _addresService.EditAddress(model);
+            if (isEdit == true)
+            {
+                TempData["succesMessage"] = "Pomyślnie edytowano adres!";
+                return RedirectToAction("UserAddresses", "User");               
+            }
+            else
+            {
+                ViewData["ErrorMessage"] = "Coś poszło nie tak, skontaktuj się z administratorem!";
+                return View(model);
+            }
+
+        }
+
 
         [AllowAnonymous]
         [HttpGet("api/Voivedoship/{voivedoshipId}")]

@@ -476,3 +476,4 @@ C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManag
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\scopedcss\bundle\VehicleManager.Web.styles.css
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Views\User\UserAddresses.cshtml.g.cs
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Views\Address\Delete.cshtml.g.cs
+C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Views\Address\EditAddress.cshtml.g.cs

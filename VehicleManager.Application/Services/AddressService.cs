@@ -201,6 +201,7 @@ namespace VehicleManager.Application.Services
             var newAddress = _mapper.Map<Address>(newAddressVm);
             newAddress.CreatedDateTime = DateTime.Now;
             newAddress.IsActive = true;
+            newAddress.CreatedById = newAddress.ApplicationUserID;
             var isSuccesAddNewAddress = _addressRepository.AddNewAddress(newAddress);
             return isSuccesAddNewAddress;
         }
@@ -216,6 +217,32 @@ namespace VehicleManager.Application.Services
             var address = _addressRepository.GetAddressById(id);
             var result = _mapper.Map<NewAddressVm>(address);
             return result;
+        }
+
+        public bool EditAddress(NewAddressVm address)
+        {
+            if (address != null)
+            {
+                address.Voivodeship = GetVoivedoshipNameById(address.Voivodeship);
+                var isId = int.TryParse(address.City, out int cityId);
+                if (isId == true)
+                {
+                    address.City = GetCityNameById(cityId);
+                }
+                else
+                {
+                    address.City = "City name is inccorrect";
+                }
+                address.CityType = GetCityTypeById(address.CityType);
+                address.Community = GetCommunityNameById(address.Community);
+                address.District = GetDistrictNameById(address.District);
+
+                var addressToEdit = _mapper.Map<Address>(address);
+                addressToEdit.ModifiedDateTime = DateTime.Now;
+                _addressRepository.EditAddress(addressToEdit);
+                return true;
+            }
+            return false;
         }
     }
 }

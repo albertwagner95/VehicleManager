@@ -15,6 +15,7 @@ namespace VehicleManager.Application.ViewModels.UserModels
         public string StreetAndBuildNumber { get; set; }
         public string Voivedoshipha { get; set; }
         public string Districts { get; set; }
+        public string ZipCode { get; set; }
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Address, UserAdressesForListVm>()

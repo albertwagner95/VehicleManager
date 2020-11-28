@@ -277,6 +277,9 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.Property<string>("Voivodeship")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ZipCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddressTypeId");

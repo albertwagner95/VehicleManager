@@ -24,6 +24,9 @@ namespace VehicleManager.Application.ViewModels.AddressVm
         [Required(AllowEmptyStrings = false, ErrorMessage = "Wartość wymagana")]
         public int FlatNumber { get; set; }
         public string StreetFromUser { get; set; }
+        [Required(ErrorMessage = "Kod pocztowy jest wymagany")]
+        [RegularExpression(@"^\d{2}(-\d{3})?$", ErrorMessage = "Błędny format. Poprawny to XX-XXX")]
+        public string ZipCode { get; set; }
         public int AddressTypeId { get; set; }
         public IEnumerable<VoivodeshipVm> VoivodeshipsVm { get; set; }
         public List<AddressTypeForListVm> AddressTypes { get; set; }

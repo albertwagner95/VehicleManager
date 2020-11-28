@@ -31,6 +31,10 @@ namespace VehicleManager.Web.Controllers
         public IActionResult UserAddresses()
         {
             var userAddresses = _userService.GetUserAddresses(_userManager.GetUserId(User));
+            if(userAddresses == null || userAddresses.Count == 0)
+            {
+                TempData["succesMessage"] = "Brak danych do wyświetlenia!";
+            }
             return View(userAddresses);
         }
     }

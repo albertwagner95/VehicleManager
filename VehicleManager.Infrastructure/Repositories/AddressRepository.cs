@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using VehicleManager.Domain.Interfaces;
 using VehicleManager.Domain.Model.AddressModels;
 
@@ -80,8 +81,10 @@ namespace VehicleManager.Infrastructure.Repositories
         public int DeleteAddress(Address address)
         {
             address.IsActive = false;
+            address.ModifiedDateTime = DateTime.Now;
             _context.Attach(address);
             _context.Entry(address).Property("IsActive").IsModified = true;
+            _context.Entry(address).Property("ModifiedDateTime").IsModified = true;
             _context.SaveChanges();
             return address.Id;
         }
@@ -91,5 +94,23 @@ namespace VehicleManager.Infrastructure.Repositories
             var address = _context.Addresses.FirstOrDefault(x => x.Id == addressId);
             return address;
         }
+
+        public void EditAddress(Address addressToEdit)
+        {
+
+            _context.Attach(addressToEdit);
+            _context.Entry(addressToEdit).Property("Voivodeship").IsModified = true;
+            _context.Entry(addressToEdit).Property("District").IsModified = true;
+            _context.Entry(addressToEdit).Property("City").IsModified = true;
+            _context.Entry(addressToEdit).Property("Community").IsModified = true;
+            _context.Entry(addressToEdit).Property("CityType").IsModified = true;
+            _context.Entry(addressToEdit).Property("BuildigNumber").IsModified = true;
+            _context.Entry(addressToEdit).Property("FlatNumber").IsModified = true;
+            _context.Entry(addressToEdit).Property("StreetFromUser").IsModified = true;
+            _context.Entry(addressToEdit).Property("AddressTypeId").IsModified = true;
+            _context.Entry(addressToEdit).Property("ModifiedDateTime").IsModified = true;
+                _context.SaveChanges();
+        }
     }
 }
+

@@ -23,6 +23,7 @@ namespace VehicleManager.Application.Services
         {
             var useraddresses = _userRepository.GetAllUserAddresses(userId)
                 .ProjectTo<UserAdressesForListVm>(_mapper.ConfigurationProvider).ToList();
+            
 
             return useraddresses;
         }

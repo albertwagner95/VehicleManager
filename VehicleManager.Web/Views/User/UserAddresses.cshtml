@@ -5,11 +5,23 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+
 <h1>UserAddresses</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="AddAddress" asp-controller="Address">Dodaj nowy adres</a>
 </p>
+@{
+    var tmpData = TempData["succesMessage"];
+
+    if (tmpData != null)
+    {
+        <div class="alert alert-primary" role="alert">
+            @tmpData
+        </div>
+    }
+}
 <table class="table">
     <thead>
         <tr>
@@ -30,7 +42,8 @@
             int i = 0;
         }
         @foreach (var item in Model)
-        { i++;
+        {
+            i++;
             <tr>
                 <td>
                     @i
@@ -38,6 +51,7 @@
                 <td>
                     @item.Voivedoshipha <p></p>
                     @item.Districts <p></p>
+                    @item.ZipCode <p></p> 
                     @item.CityAndType <p></p>
                     @item.StreetAndBuildNumber <p></p>
                 </td>
@@ -45,7 +59,7 @@
                     @Html.DisplayFor(modelItem => item.KindOfAddress)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Edit", "EditAddress", "Address", new { id = item.Id }) |
                     @Html.ActionLink("Usuń", "Delete", "Address", new { id = item.Id })
                 </td>
             </tr>

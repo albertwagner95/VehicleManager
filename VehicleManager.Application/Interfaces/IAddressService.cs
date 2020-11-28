@@ -20,5 +20,6 @@ namespace VehicleManager.Application.Interfaces
         int AddNewAddress(NewAddressVm newAddressVm);
         void DeleteAddress(int addressId);
         NewAddressVm GetAddressById(int id);
+        bool EditAddress(NewAddressVm model);
     }
 }
