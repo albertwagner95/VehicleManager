@@ -80,7 +80,19 @@ namespace VehicleManager.Infrastructure.Repositories
             _context.Entry(vehicle).Property("VehicleBrandNameId").IsModified = true;
             _context.Entry(vehicle).Property("VehicleFuelTypeId").IsModified = true;
             _context.Entry(vehicle).Property("VehicleTypeId").IsModified = true;
+            _context.Entry(vehicle).Property("IsGasInstalation").IsModified = true;
+
             _context.SaveChanges();
+        }
+
+        public IQueryable<Vehicle> GetVehicles()
+        {
+            return _context.Vehicles;
+        }
+
+        public IQueryable<UnitOfFuel> GetUnitsOfFuel()
+        {
+            return _context.UnitOfFuels;
         }
     }
 }

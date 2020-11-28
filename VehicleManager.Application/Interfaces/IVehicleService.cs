@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using VehicleManager.Application.ViewModels;
 using VehicleManager.Application.ViewModels.Vehicle;
 
@@ -9,7 +10,7 @@ namespace VehicleManager.Application.Interfaces
         int AddVehicle(NewVehicleVm vehicle);
         void DeleteVehicle(DeleteVehicleVm vehicle);
         void EditVehicle(NewVehicleVm vehicle);
-        IQueryable<VehicleFuelTypeVm> GetAllFuelsTypes();
+        List<VehicleFuelTypeVm> GetAllFuelsTypes();
         IQueryable<VehicleBrandNameVm> GetAllBrandNames();
         IQueryable<VehicleTypeVm> GetVehicleTypes();
         VehicleDetailsVm GetVehicleDetails(int vehicleId);
@@ -17,7 +18,8 @@ namespace VehicleManager.Application.Interfaces
         DeleteVehicleVm GetVehicleForDelete(int? vehicleId);
         string GetFuelTypeName(int fuelTypeId);
         string GetBrandName(int brandNameId);
-        string GetTypeName(int typeId); 
- 
+        string GetTypeName(int typeId);
+        ListForUserCarsForListVm GetUserCars(string userId);
+        ListForUnitOfFuelForListVm GetUnitsOfFuels();
     }
 }

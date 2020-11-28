@@ -19,6 +19,7 @@ namespace VehicleManager.Application.ViewModels.Vehicle
         public int PermissibleGrossWeight { get; set; }
         public int Capacity { get; set; }
         public int OwnWeight { get; set; }
+        public bool IsGasInstalation { get; set; }
 
         public string ProductionDateString { get; set; }
         public string DataOfFirstRegistrationString { get; set; }

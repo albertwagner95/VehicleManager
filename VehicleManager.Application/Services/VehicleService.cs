@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using VehicleManager.Application.Interfaces;
 using VehicleManager.Application.ViewModels;
@@ -31,7 +32,7 @@ namespace VehicleManager.Application.Services
             vehicl.CreatedDateTime = DateTime.Now;
             vehicl.CreatedById = "userid";
             vehicl.IsActive = true;
-            var result =_vehicleRepository.AddVehicle(vehicl);
+            var result = _vehicleRepository.AddVehicle(vehicl);
             return result; // result = 0 is false
         }
 
@@ -60,9 +61,9 @@ namespace VehicleManager.Application.Services
             return vehicleBrandNames;
         }
 
-        public IQueryable<VehicleFuelTypeVm> GetAllFuelsTypes()
+        public List<VehicleFuelTypeVm> GetAllFuelsTypes()
         {
-            var vehicleFuelTypesVm = _vehicleRepository.GetVehicleFuelTypes().ProjectTo<VehicleFuelTypeVm>(_mapper.ConfigurationProvider);
+            var vehicleFuelTypesVm = _vehicleRepository.GetVehicleFuelTypes().ProjectTo<VehicleFuelTypeVm>(_mapper.ConfigurationProvider).ToList();
 
             return vehicleFuelTypesVm;
         }
@@ -142,6 +143,27 @@ namespace VehicleManager.Application.Services
                 .Single();
             return name.ToString();
         }
-         
+
+        public ListForUserCarsForListVm GetUserCars(string userId)
+        {
+            var userCarsList = _vehicleRepository.GetVehicles()
+                .Where(x => x.ApplicationUserID.Equals(userId) && x.IsActive == true).ProjectTo<UserCarsForListVm>(_mapper.ConfigurationProvider)
+                .ToList();
+
+            var userCars = new ListForUserCarsForListVm();
+            userCars.UserCars = userCarsList;
+
+            return userCars;
+        }
+
+        public ListForUnitOfFuelForListVm GetUnitsOfFuels()
+        {
+            var unitsOfFuel = _vehicleRepository.GetUnitsOfFuel().ProjectTo<UnitOfFuelForListVm>(_mapper.ConfigurationProvider)
+                .ToList();
+            var unitsOfFuelist = new ListForUnitOfFuelForListVm();
+            unitsOfFuelist.UnitOfFuelList = unitsOfFuel;
+
+            return unitsOfFuelist;
+        }
     }
 }

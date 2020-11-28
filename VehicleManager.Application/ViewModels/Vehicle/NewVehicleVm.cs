@@ -29,6 +29,7 @@ namespace VehicleManager.Application.ViewModels.Vehicle
         public int Capacity { get; set; }
         public int OwnWeight { get; set; }
         public int YearHelper { get; set; }
+        public bool IsGasInstalation { get; set; }
         public string ApplicationUserID { get; set; }
         public int VehicleFuelTypeId { get; set; }
         public int VehicleBrandNameId { get; set; }

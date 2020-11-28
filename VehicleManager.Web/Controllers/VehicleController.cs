@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using VehicleManager.Application.Interfaces;
+using VehicleManager.Application.ViewModels.AddressVm;
 using VehicleManager.Application.ViewModels.Vehicle;
 using VehicleManager.Domain.Model;
 
@@ -59,7 +60,7 @@ namespace VehicleManager.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                models.VehicleFuelTypes = _vehicleService.GetAllFuelsTypes().ToList();
+                models.VehicleFuelTypes = _vehicleService.GetAllFuelsTypes();
                 models.VehicleBrandNames = _vehicleService.GetAllBrandNames().ToList();
                 models.VehicleTypes = _vehicleService.GetVehicleTypes().ToList();
                 return View(models);
@@ -101,7 +102,8 @@ namespace VehicleManager.Web.Controllers
         [HttpGet]
         public IActionResult EditVehicle(int? id)
         {
-            var vehicle = _vehicleService.GetVehicleForEdit(id);
+            NewVehicleVm vehicle = _vehicleService.GetVehicleForEdit(id);
+
             vehicle.YearHelper = vehicle.ProductionDate.Year;
             vehicle.VehicleFuelTypes = _vehicleService.GetAllFuelsTypes().ToList();
             vehicle.VehicleBrandNames = _vehicleService.GetAllBrandNames().ToList();
@@ -113,10 +115,16 @@ namespace VehicleManager.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditVehicle(NewVehicleVm vehicle)
         {
+            if (vehicle is null)
+            {
+                throw new System.ArgumentNullException(nameof(vehicle));
+                //add viewbag?
+            }
+
             if (!ModelState.IsValid)
             {
                 vehicle.YearHelper = vehicle.ProductionDate.Year;
-                vehicle.VehicleFuelTypes = _vehicleService.GetAllFuelsTypes().ToList();
+                vehicle.VehicleFuelTypes = _vehicleService.GetAllFuelsTypes();
                 vehicle.VehicleBrandNames = _vehicleService.GetAllBrandNames().ToList();
                 vehicle.VehicleTypes = _vehicleService.GetVehicleTypes().ToList();
                 return View(vehicle);
@@ -125,6 +133,32 @@ namespace VehicleManager.Web.Controllers
 
             return RedirectToAction("UserVehicles", "User");
 
+        }
+
+        public IActionResult AddRefuling()
+        {
+            var userId = _userManager.GetUserId(User);
+            var model = new NewRefulingVm()
+            {
+                UserCars = _vehicleService.GetUserCars(userId),
+                VehicleFuelTypes = _vehicleService.GetAllFuelsTypes(),
+                UnitOfFuelForList = _vehicleService.GetUnitsOfFuels()
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddRefuling(NewRefulingVm model)
+        {
+            if (model is null)
+            {
+                throw new System.ArgumentNullException(nameof(model));
+                //add view bag check
+                
+            }
+
+            return View();
         }
     }
 }

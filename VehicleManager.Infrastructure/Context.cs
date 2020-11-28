@@ -23,6 +23,8 @@ namespace VehicleManager.Infrastructure
         public DbSet<District> Districts { get; set; }
         public DbSet<CityType> CityTypes { get; set; }
         public DbSet<Community> Communities { get; set; }
+        public DbSet<Refuling> Refulings { get; set; }
+        public DbSet<UnitOfFuel> UnitOfFuels { get; set; }
 
         public Context(DbContextOptions options) : base(options)
         {

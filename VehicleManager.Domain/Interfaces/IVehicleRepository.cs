@@ -14,5 +14,7 @@ namespace VehicleManager.Domain.Interfaces
         IQueryable<VehicleType> GetVehicleTypes();
         //IQueryable<Vehicle> GetVehicleByUserId(string userId);
         Vehicle GetVehicleById(int? vehicleId);
+        IQueryable<Vehicle> GetVehicles();
+        IQueryable<UnitOfFuel> GetUnitsOfFuel();
     }
 }

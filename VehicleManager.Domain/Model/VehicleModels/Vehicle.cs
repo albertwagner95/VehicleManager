@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using VehicleManager.Domain.Common;
 using VehicleManager.Domain.Model.VehicleModels;
 
@@ -19,6 +20,7 @@ namespace VehicleManager.Domain.Model
         public int PermissibleGrossWeight { get; set; }
         public int Capacity { get; set; }
         public int OwnWeight { get; set; }
+        public bool IsGasInstalation { get; set; }
 
 
         //public int CountryRef { get; set; }
@@ -34,7 +36,9 @@ namespace VehicleManager.Domain.Model
         public virtual VehicleFuelType VehicleFuelType { get; set; }
         public int VehicleTypeId { get; set; }
         public virtual VehicleType VehicleType { get; set; }
-        //public int CarHistoryId { get; set; }
-        //public virtual CarHistory CarHistory { get; set; }
+        public ICollection<Refuling> Refulings { get; set; }
+
+        public string CarHistoryId { get; set; }
+        public virtual CarHistory CarHistory { get; set; }
     }
 }
