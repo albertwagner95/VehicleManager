@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using VehicleManager.Domain.Common;
+﻿using VehicleManager.Domain.Common;
 
 namespace VehicleManager.Domain.Model.AddressModels
 {
@@ -12,6 +8,7 @@ namespace VehicleManager.Domain.Model.AddressModels
         public string Voivodeship { get; set; }
         public string District { get; set; }
         public string City { get; set; }
+        public string ZipCode { get; set; }
         public string Community { get; set; }
         public string CityType { get; set; }
         public string BuildigNumber { get; set; }

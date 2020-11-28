@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
+﻿using System.Linq;
 using VehicleManager.Domain.Interfaces;
 using VehicleManager.Domain.Model;
 using VehicleManager.Domain.Model.VehicleModels;
@@ -22,7 +18,8 @@ namespace VehicleManager.Infrastructure.Repositories
             var vehicle = _context.Vehicles.Find(vehicleId);
             if (vehicle != null)
             {
-                _context.Vehicles.Remove(vehicle);
+                //_context.Vehicles.Remove(vehicle);
+                vehicle.IsActive = false;
                 _context.SaveChanges();
             }
         }
@@ -60,7 +57,8 @@ namespace VehicleManager.Infrastructure.Repositories
 
         public Vehicle GetVehicleById(int? vehicleId)
         {
-            var vehicle = _context.Vehicles.FirstOrDefault(a => a.Id == vehicleId);
+            var vehicle = _context.Vehicles
+                .FirstOrDefault(a => a.Id == vehicleId && a.IsActive == true);
             return vehicle;
         }
 

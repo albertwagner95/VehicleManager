@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Buffers;
-using System.Collections.Generic;
-using System.Text;
 using VehicleManager.Domain.Common;
-using VehicleManager.Domain.Model;
-using VehicleManager.Domain.Model.AddressModels;
 using VehicleManager.Domain.Model.VehicleModels;
 
 namespace VehicleManager.Domain.Model

@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.Linq;
 using VehicleManager.Application.Interfaces;
 using VehicleManager.Application.ViewModels.AddressVm;
 using VehicleManager.Domain.Model;
-using static VehicleManager.Application.ViewModels.AddressVm.NewAddressVm;
 
 namespace VehicleManager.Web.Controllers
 {
@@ -28,8 +23,32 @@ namespace VehicleManager.Web.Controllers
         //[Route("Identity/Account/Manage/Address")]
         public IActionResult Index()
         {
-
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            if (id == 0)
+            {
+                return Ok(400);
+            }
+            var address = _addresService.GetAddressById(id);
+            if (address == null)
+            {
+                return Ok(400);
+            }
+            return View(address);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(NewAddressVm addressToDelete)
+        {
+            var addressId = addressToDelete.Id;
+            _addresService.DeleteAddress(addressId);
+            TempData["succesMessage"] = "Pomyślnie usunięto adres!";
+            return RedirectToAction("UserAddresses", "User");
         }
 
         [HttpGet]
@@ -60,8 +79,46 @@ namespace VehicleManager.Web.Controllers
             model.AddressTypes = _addresService.GetAddressTypes();
             model.ApplicationUserID = _userManager.GetUserId(User);
             _addresService.AddNewAddress(model);
-            return RedirectToAction("Index", "Address");
+            TempData["succesMessage"] = "Pomyślnie dodano nowy adres!";
+            return RedirectToAction("UserAddresses", "User");
         }
+
+        [HttpGet]
+        public IActionResult EditAddress(int id)
+        {
+
+            var model = _addresService.GetAddressById(id);
+            model.AddressTypes = _addresService.GetAddressTypes();
+            model.VoivodeshipsVm = _addresService.GetAllVoivedoships();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditAddress(NewAddressVm model)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                model.AddressTypes = _addresService.GetAddressTypes();
+                model.VoivodeshipsVm = _addresService.GetAllVoivedoships();
+                return View(model);
+            }
+            var isEdit = _addresService.EditAddress(model);
+            if (isEdit == true)
+            {
+                TempData["succesMessage"] = "Pomyślnie edytowano adres!";
+                return RedirectToAction("UserAddresses", "User");               
+            }
+            else
+            {
+                ViewData["ErrorMessage"] = "Coś poszło nie tak, skontaktuj się z administratorem!";
+                return View(model);
+            }
+
+        }
+
 
         [AllowAnonymous]
         [HttpGet("api/Voivedoship/{voivedoshipId}")]

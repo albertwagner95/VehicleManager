@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using VehicleManager.Application.Interfaces;
-using VehicleManager.Application.ViewModels.UserModels;
 using VehicleManager.Domain.Model;
 
 namespace VehicleManager.Web.Controllers
@@ -30,8 +25,17 @@ namespace VehicleManager.Web.Controllers
         public IActionResult UserVehicles()
         {
             var userCars = _userService.GetUserVehicles(_userManager.GetUserId(User));
-            
             return View(userCars);
+        }
+
+        public IActionResult UserAddresses()
+        {
+            var userAddresses = _userService.GetUserAddresses(_userManager.GetUserId(User));
+            if(userAddresses == null || userAddresses.Count == 0)
+            {
+                TempData["succesMessage"] = "Brak danych do wyświetlenia!";
+            }
+            return View(userAddresses);
         }
     }
 }

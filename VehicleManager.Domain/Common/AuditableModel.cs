@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace VehicleManager.Domain.Common
 {
@@ -10,5 +8,6 @@ namespace VehicleManager.Domain.Common
         public DateTime? CreatedDateTime { get; set; }
         public int? ModifiedById { get; set; }
         public DateTime? ModifiedDateTime { get; set; }
+        public bool IsActive { get; set; }
     }
 }

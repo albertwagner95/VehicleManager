@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using VehicleManager.Domain.Interfaces;
 using VehicleManager.Domain.Model;
+using VehicleManager.Domain.Model.AddressModels;
 
 namespace VehicleManager.Infrastructure.Repositories
 {
@@ -16,9 +14,18 @@ namespace VehicleManager.Infrastructure.Repositories
             _context = context;
         }
 
+        public IQueryable<Address> GetAllUserAddresses(string userId)
+        {
+            IQueryable<Address> userAddresses = _context.Addresses
+                .Where(x => x.ApplicationUserID == userId && x.IsActive == true);
+
+            return userAddresses;
+        }
+
         public IQueryable<Vehicle> GetAllUserVehicles(string userId)
         {
-            IQueryable<Vehicle> userVehicles = _context.Vehicles.Where(x => x.ApplicationUserID == userId);
+            IQueryable<Vehicle> userVehicles = _context.Vehicles
+                .Where(x => x.ApplicationUserID == userId && x.IsActive == true);
 
             return userVehicles;
         }

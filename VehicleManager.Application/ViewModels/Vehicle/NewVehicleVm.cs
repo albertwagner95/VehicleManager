@@ -3,10 +3,7 @@ using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 using VehicleManager.Application.Mapping;
-using VehicleManager.Domain.Model;
 
 namespace VehicleManager.Application.ViewModels.Vehicle
 {

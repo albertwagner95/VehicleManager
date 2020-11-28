@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using VehicleManager.Application.ViewModels.AddressVm;
-using VehicleManager.Domain.Model.AddressModels;
 
 namespace VehicleManager.Application.Interfaces
 {
@@ -21,5 +18,8 @@ namespace VehicleManager.Application.Interfaces
         string GetDistrictNameById(string id);
         string GetCityNameById(int id);
         int AddNewAddress(NewAddressVm newAddressVm);
+        void DeleteAddress(int addressId);
+        NewAddressVm GetAddressById(int id);
+        bool EditAddress(NewAddressVm model);
     }
 }

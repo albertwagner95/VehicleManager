@@ -1,17 +1,12 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
 using VehicleManager.Application.Interfaces;
 using VehicleManager.Application.ViewModels;
 using VehicleManager.Application.ViewModels.Vehicle;
 using VehicleManager.Domain.Interfaces;
 using VehicleManager.Domain.Model;
-using VehicleManager.Domain.Model.VehicleModels;
 
 namespace VehicleManager.Application.Services
 {
@@ -35,7 +30,7 @@ namespace VehicleManager.Application.Services
             var vehicl = _mapper.Map<Domain.Model.Vehicle>(vehicle);
             vehicl.CreatedDateTime = DateTime.Now;
             vehicl.CreatedById = "userid";
-
+            vehicl.IsActive = true;
             var result =_vehicleRepository.AddVehicle(vehicl);
             return result; // result = 0 is false
         }
@@ -54,8 +49,10 @@ namespace VehicleManager.Application.Services
                 vehicleForVm.DataOfFirstRegistrationString = vehicleForVm.DateOfFirstRegistration.ToString("D");
                 return vehicleForVm;
             }
-            else return null;
-
+            else
+            {
+                return null;
+            }
         }
         public IQueryable<VehicleBrandNameVm> GetAllBrandNames()
         {

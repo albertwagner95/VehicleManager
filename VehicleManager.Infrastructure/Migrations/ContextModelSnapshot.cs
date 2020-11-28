@@ -262,6 +262,9 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.Property<int>("FlatNumber")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("ModifiedById")
                         .HasColumnType("int");
 
@@ -272,6 +275,9 @@ namespace VehicleManager.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Voivodeship")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -440,6 +446,9 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.Property<int>("EnginePower")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsRegisterdInPoland")
                         .HasColumnType("bit");
 
@@ -505,6 +514,9 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.Property<DateTime?>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("ModifiedById")
                         .HasColumnType("int");
 
@@ -534,6 +546,9 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.Property<DateTime?>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("ModifiedById")
                         .HasColumnType("int");
 
@@ -562,6 +577,9 @@ namespace VehicleManager.Infrastructure.Migrations
 
                     b.Property<DateTime?>("CreatedDateTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<int?>("ModifiedById")
                         .HasColumnType("int");
