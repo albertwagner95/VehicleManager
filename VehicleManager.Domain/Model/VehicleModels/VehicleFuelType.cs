@@ -7,7 +7,6 @@ namespace VehicleManager.Domain.Model
     public class VehicleFuelType : BaseField
     {
         public ICollection<Vehicle> Vehicles { get; set; }
-        public ICollection<Refuling> Refulings { get; set; }
 
     }
 }

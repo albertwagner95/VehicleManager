@@ -36,9 +36,8 @@ namespace VehicleManager.Domain.Model
         public virtual VehicleFuelType VehicleFuelType { get; set; }
         public int VehicleTypeId { get; set; }
         public virtual VehicleType VehicleType { get; set; }
-        public ICollection<Refuling> Refulings { get; set; }
+        public ICollection<CarHistory> CarHistories { get; set; }
 
-        public string CarHistoryId { get; set; }
-        public virtual CarHistory CarHistory { get; set; }
+
     }
 }

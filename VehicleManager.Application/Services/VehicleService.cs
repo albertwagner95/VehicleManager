@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using VehicleManager.Application.Interfaces;
 using VehicleManager.Application.ViewModels;
+using VehicleManager.Application.ViewModels.AddressVm;
 using VehicleManager.Application.ViewModels.Vehicle;
 using VehicleManager.Domain.Interfaces;
 using VehicleManager.Domain.Model;
+using VehicleManager.Domain.Model.VehicleModels;
 
 namespace VehicleManager.Application.Services
 {
@@ -61,11 +63,15 @@ namespace VehicleManager.Application.Services
             return vehicleBrandNames;
         }
 
-        public List<VehicleFuelTypeVm> GetAllFuelsTypes()
+        public ListFuelTypeForRefuelingForListVm GetAllFuelsTypesForRefuling()
         {
-            var vehicleFuelTypesVm = _vehicleRepository.GetVehicleFuelTypes().ProjectTo<VehicleFuelTypeVm>(_mapper.ConfigurationProvider).ToList();
+            var vehicleFuelTypesVm = _vehicleRepository.GetFuelTypesForRefueling()
+                .ProjectTo<FuelTypeForRefuelingForListVm>(_mapper.ConfigurationProvider).ToList();
 
-            return vehicleFuelTypesVm;
+            var vehicleFuelTypeForRefueling = new ListFuelTypeForRefuelingForListVm();
+            vehicleFuelTypeForRefueling.FuelTypeForRefuelingForLists = vehicleFuelTypesVm;
+
+            return vehicleFuelTypeForRefueling;
         }
 
         public IQueryable<VehicleTypeVm> GetVehicleTypes()
@@ -164,6 +170,58 @@ namespace VehicleManager.Application.Services
             unitsOfFuelist.UnitOfFuelList = unitsOfFuel;
 
             return unitsOfFuelist;
+        }
+
+        public bool AddRefuling(NewRefulingVm model)
+        {
+            if (model is null)
+            {
+                return false;
+            }
+            else
+            {
+                var refuelingModelToAdd = _mapper.Map<Refueling>(model);
+                refuelingModelToAdd.IsActive = true;
+                string userId = GetUserIdByVehicleId(refuelingModelToAdd.VehicleId);
+                bool refuelingSucessfullyAdded = _vehicleRepository.AddRefueling(refuelingModelToAdd, userId);
+                if (refuelingSucessfullyAdded == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        public ListFuelTypeForRefuelingForListVm GetFuelAllTypeForRefueling()
+        {
+            var fuelTypesList = _vehicleRepository.GetFuelTypesForRefueling()
+                .ProjectTo<FuelTypeForRefuelingForListVm>(_mapper.ConfigurationProvider)
+                .ToList();
+            var listFuelTypesForRefueling = new ListFuelTypeForRefuelingForListVm()
+            {
+                FuelTypeForRefuelingForLists = fuelTypesList
+            };
+
+            return listFuelTypesForRefueling;
+        }
+        private string GetUserIdByVehicleId(int vehicleId)
+        {
+            var userCar = _vehicleRepository.GetVehicles()
+                .FirstOrDefault(x => x.Id == vehicleId);
+
+            return userCar.ApplicationUserID;
+        }
+
+
+        public List<VehicleFuelTypeVm> GetAllFuelsTypes()
+        {
+            var result = _vehicleRepository.GetVehicleFuelTypes()
+                .ProjectTo<VehicleFuelTypeVm>(_mapper.ConfigurationProvider)
+                .ToList();
+
+            return result;
         }
     }
 }

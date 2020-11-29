@@ -5,17 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20201118223840_InitialCreate.cs" />
-    <Compile Remove="Migrations\20201118223840_InitialCreate.Designer.cs" />
-    <Compile Remove="Migrations\20201128094316_Add entity Refuling and UnitOfFuel.cs" />
-    <Compile Remove="Migrations\20201128094316_Add entity Refuling and UnitOfFuel.Designer.cs" />
-    <Compile Remove="Migrations\20201128141654_Change id.cs" />
-    <Compile Remove="Migrations\20201128141654_Change id.Designer.cs" />
-    <Compile Remove="Migrations\20201128143022_Change i.cs" />
-    <Compile Remove="Migrations\20201128143022_Change i.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.9" />

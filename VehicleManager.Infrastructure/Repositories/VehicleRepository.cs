@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using VehicleManager.Domain.Interfaces;
 using VehicleManager.Domain.Model;
 using VehicleManager.Domain.Model.VehicleModels;
@@ -93,6 +94,38 @@ namespace VehicleManager.Infrastructure.Repositories
         public IQueryable<UnitOfFuel> GetUnitsOfFuel()
         {
             return _context.UnitOfFuels;
+        }
+
+        public bool AddRefueling(Refueling refuelingModelToAdd, string userId)
+        {
+            if (refuelingModelToAdd is null)
+            {
+                return false;
+            }
+            else
+            {
+                refuelingModelToAdd.Id = Guid.NewGuid().ToString();
+                _context.Refulings.Add(refuelingModelToAdd);
+                _context.CarHistories.Add(new CarHistory
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    IsActive = true,
+                    CreatedDateTime = DateTime.Now,
+                    Name = "Tankowanie",
+                    RefulingRef = refuelingModelToAdd.Id,
+                    VehicleId = refuelingModelToAdd.VehicleId,
+                    CreatedById = userId
+                });
+                _context.SaveChanges();
+                return true;
+            }
+
+        }
+
+        public IQueryable<FuelForRefueling> GetFuelTypesForRefueling()
+        {
+            var fuelForRefulings = _context.FuelForRefuelings;
+            return fuelForRefulings;
         }
     }
 }

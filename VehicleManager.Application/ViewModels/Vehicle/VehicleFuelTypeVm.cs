@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using VehicleManager.Application.Mapping;
 using VehicleManager.Domain.Model;
+using VehicleManager.Domain.Model.VehicleModels;
 
 namespace VehicleManager.Application.ViewModels
 {

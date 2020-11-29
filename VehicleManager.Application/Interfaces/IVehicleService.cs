@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using VehicleManager.Application.ViewModels;
+using VehicleManager.Application.ViewModels.AddressVm;
 using VehicleManager.Application.ViewModels.Vehicle;
 
 namespace VehicleManager.Application.Interfaces
@@ -21,5 +22,7 @@ namespace VehicleManager.Application.Interfaces
         string GetTypeName(int typeId);
         ListForUserCarsForListVm GetUserCars(string userId);
         ListForUnitOfFuelForListVm GetUnitsOfFuels();
+        bool AddRefuling(NewRefulingVm model);
+        ListFuelTypeForRefuelingForListVm GetAllFuelsTypesForRefuling();
     }
 }

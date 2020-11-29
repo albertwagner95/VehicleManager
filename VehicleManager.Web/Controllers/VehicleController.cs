@@ -132,16 +132,14 @@ namespace VehicleManager.Web.Controllers
             _vehicleService.EditVehicle(vehicle);
 
             return RedirectToAction("UserVehicles", "User");
-
         }
 
-        public IActionResult AddRefuling()
+        public IActionResult AddRefueling()
         {
-            var userId = _userManager.GetUserId(User);
             var model = new NewRefulingVm()
             {
-                UserCars = _vehicleService.GetUserCars(userId),
-                VehicleFuelTypes = _vehicleService.GetAllFuelsTypes(),
+                UserCars = _vehicleService.GetUserCars(_userManager.GetUserId(User)),
+                VehicleFuelTypes = _vehicleService.GetAllFuelsTypesForRefuling(),
                 UnitOfFuelForList = _vehicleService.GetUnitsOfFuels()
             };
             return View(model);
@@ -149,16 +147,32 @@ namespace VehicleManager.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddRefuling(NewRefulingVm model)
+        public IActionResult AddRefueling(NewRefulingVm model)
         {
             if (model is null)
             {
-                throw new System.ArgumentNullException(nameof(model));
-                //add view bag check
-                
+                TempData["refuellingSuccessfullyOrNotAdded"] = "Tankowanie nie dodane, skontaktuj się z pomocą techniczną aby zgłosić błąd, lub spróbuj ponownie!";
+            }
+            if (!ModelState.IsValid)
+            {
+                model.UserCars = _vehicleService.GetUserCars(_userManager.GetUserId(User));
+                model.VehicleFuelTypes = _vehicleService.GetAllFuelsTypesForRefuling();
+                model.UnitOfFuelForList = _vehicleService.GetUnitsOfFuels();
+                model.VehiclesList = _vehicleService.GetUserCars(_userManager.GetUserId(User));
+                return View(model);
+            }
+            var isAddedRefuelingCorrectly = _vehicleService.AddRefuling(model);
+            if (isAddedRefuelingCorrectly == true)
+            {
+                TempData["refuellingSuccessfullyOrNotAdded"] = "Pomyślnie dodano tankowanie!";
+            }
+            else
+            {
+                TempData["refuellingSuccessfullyOrNotAdded"] = "Tankowanie nie dodane, skontaktuj się z pomocą techniczną aby zgłosić błąd, lub spróbuj ponownie!";
             }
 
-            return View();
+            return View("UserVehicles", "User");
+            //return RedirectToAction("CarHistory", "Vehicle");
         }
     }
 }
