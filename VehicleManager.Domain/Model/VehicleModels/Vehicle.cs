@@ -37,7 +37,5 @@ namespace VehicleManager.Domain.Model
         public int VehicleTypeId { get; set; }
         public virtual VehicleType VehicleType { get; set; }
         public ICollection<CarHistory> CarHistories { get; set; }
-
-
     }
 }

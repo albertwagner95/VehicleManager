@@ -24,7 +24,7 @@ namespace VehicleManager.Tests.Services
             var mapper = new Mock<IMapper>();
             var vehicleRepository = new Mock<IVehicleRepository>();
             vehicleRepository.Setup(x => x.GetVehicleBrandNames()).Returns(vehicleBrands.AsQueryable());
-            var vehicleService = new VehicleService(vehicleRepository.Object,mapper.Object);
+            var vehicleService = new VehicleService(vehicleRepository.Object, mapper.Object);
 
             var result = vehicleService.GetBrandName(1);
             var secondResult = vehicleService.GetBrandName(2);
@@ -32,5 +32,7 @@ namespace VehicleManager.Tests.Services
             result.Should().Be("Ford");
             secondResult.Should().Be("Opel");
         }
+
+
     }
 }

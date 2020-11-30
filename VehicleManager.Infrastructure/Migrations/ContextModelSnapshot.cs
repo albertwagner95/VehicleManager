@@ -603,6 +603,9 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("ApplicationUserID")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(max)");
 
@@ -628,6 +631,8 @@ namespace VehicleManager.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserID");
 
                     b.HasIndex("RefulingRef")
                         .IsUnique()
@@ -890,6 +895,10 @@ namespace VehicleManager.Infrastructure.Migrations
 
             modelBuilder.Entity("VehicleManager.Domain.Model.VehicleModels.CarHistory", b =>
                 {
+                    b.HasOne("VehicleManager.Domain.Model.ApplicationUser", "ApplicationUser")
+                        .WithMany("CarHistories")
+                        .HasForeignKey("ApplicationUserID");
+
                     b.HasOne("VehicleManager.Domain.Model.VehicleModels.Refueling", "Refuling")
                         .WithOne("CarHistory")
                         .HasForeignKey("VehicleManager.Domain.Model.VehicleModels.CarHistory", "RefulingRef");

@@ -161,7 +161,8 @@ namespace VehicleManager.Web.Controllers
                 model.VehiclesList = _vehicleService.GetUserCars(_userManager.GetUserId(User));
                 return View(model);
             }
-            var isAddedRefuelingCorrectly = _vehicleService.AddRefuling(model);
+            var carHistory = _vehicleService.ReturnCarHistoryToAdd("Tankowanie", _userManager.GetUserId(User));
+            var isAddedRefuelingCorrectly = _vehicleService.AddRefuling(model, carHistory);
             if (isAddedRefuelingCorrectly == true)
             {
                 TempData["refuellingSuccessfullyOrNotAdded"] = "Pomyślnie dodano tankowanie!";
@@ -171,8 +172,17 @@ namespace VehicleManager.Web.Controllers
                 TempData["refuellingSuccessfullyOrNotAdded"] = "Tankowanie nie dodane, skontaktuj się z pomocą techniczną aby zgłosić błąd, lub spróbuj ponownie!";
             }
 
-            return View("UserVehicles", "User");
+            return RedirectToAction("VehicleHistory", "Vehicle");
             //return RedirectToAction("CarHistory", "Vehicle");
+        }
+        public IActionResult VehicleHistory()
+        {
+            var historyForVehicle = _vehicleService.GetUserVehicleHistory(_userManager.GetUserId(User));
+            if (historyForVehicle.CarHistoryList.Count == 0)
+            {
+                TempData["emptyCarHistory"] = "Brak danych do wyświetlenia"; 
+            }    
+            return View(historyForVehicle);
         }
     }
 }

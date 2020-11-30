@@ -96,7 +96,7 @@ namespace VehicleManager.Infrastructure.Repositories
             return _context.UnitOfFuels;
         }
 
-        public bool AddRefueling(Refueling refuelingModelToAdd, string userId)
+        public bool AddRefueling(Refueling refuelingModelToAdd, string userId, CarHistory carHistory)
         {
             if (refuelingModelToAdd is null)
             {
@@ -106,20 +106,11 @@ namespace VehicleManager.Infrastructure.Repositories
             {
                 refuelingModelToAdd.Id = Guid.NewGuid().ToString();
                 _context.Refulings.Add(refuelingModelToAdd);
-                _context.CarHistories.Add(new CarHistory
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    IsActive = true,
-                    CreatedDateTime = DateTime.Now,
-                    Name = "Tankowanie",
-                    RefulingRef = refuelingModelToAdd.Id,
-                    VehicleId = refuelingModelToAdd.VehicleId,
-                    CreatedById = userId
-                });
+                carHistory.VehicleId = refuelingModelToAdd.VehicleId;
+                _context.CarHistories.Add(carHistory);
                 _context.SaveChanges();
                 return true;
             }
-
         }
 
         public IQueryable<FuelForRefueling> GetFuelTypesForRefueling()
@@ -127,5 +118,14 @@ namespace VehicleManager.Infrastructure.Repositories
             var fuelForRefulings = _context.FuelForRefuelings;
             return fuelForRefulings;
         }
+
+        public IQueryable<CarHistory> GetAllVehicleHistory()
+        {
+            var vehicleHistory = _context.CarHistories;
+            return vehicleHistory;
+        }
+
+
+
     }
 }

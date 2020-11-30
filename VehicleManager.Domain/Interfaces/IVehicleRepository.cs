@@ -16,7 +16,8 @@ namespace VehicleManager.Domain.Interfaces
         Vehicle GetVehicleById(int? vehicleId);
         IQueryable<Vehicle> GetVehicles();
         IQueryable<UnitOfFuel> GetUnitsOfFuel();
-        bool AddRefueling(Refueling refuelingModelToAdd, string userId);
+        bool AddRefueling(Refueling refuelingModelToAdd, string userId, CarHistory carHistory);
         IQueryable<FuelForRefueling> GetFuelTypesForRefueling();
+        IQueryable<CarHistory> GetAllVehicleHistory();
     }
 }

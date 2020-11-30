@@ -172,7 +172,7 @@ namespace VehicleManager.Application.Services
             return unitsOfFuelist;
         }
 
-        public bool AddRefuling(NewRefulingVm model)
+        public bool AddRefuling(NewRefulingVm model, NewCarHistoryVm carHistoryVm)
         {
             if (model is null)
             {
@@ -181,9 +181,10 @@ namespace VehicleManager.Application.Services
             else
             {
                 var refuelingModelToAdd = _mapper.Map<Refueling>(model);
+                var carHistoryModelToAdd = _mapper.Map<CarHistory>(carHistoryVm);
                 refuelingModelToAdd.IsActive = true;
                 string userId = GetUserIdByVehicleId(refuelingModelToAdd.VehicleId);
-                bool refuelingSucessfullyAdded = _vehicleRepository.AddRefueling(refuelingModelToAdd, userId);
+                bool refuelingSucessfullyAdded = _vehicleRepository.AddRefueling(refuelingModelToAdd, userId, carHistoryModelToAdd);
                 if (refuelingSucessfullyAdded == true)
                 {
                     return true;
@@ -222,6 +223,35 @@ namespace VehicleManager.Application.Services
                 .ToList();
 
             return result;
+        }
+
+        public ListCarHistoryForListVm GetUserVehicleHistory(string userId)
+        {
+            var userVehicleHistory = _vehicleRepository.GetAllVehicleHistory()
+                .Where(x => x.ApplicationUserID.Equals(userId))
+                .OrderBy(x => x.CreatedDateTime)
+                .ProjectTo<CarHistoryForListVm>(_mapper.ConfigurationProvider)
+                .ToList();
+
+            var userVehicleHistoryVm = new ListCarHistoryForListVm()
+            {
+                CarHistoryList = userVehicleHistory
+            };
+            return userVehicleHistoryVm;
+        }
+
+        public NewCarHistoryVm ReturnCarHistoryToAdd(string kindOfEvent, string userId)
+        {
+            var carHistoryToAdd = new NewCarHistoryVm()
+            {
+                Id = Guid.NewGuid().ToString(),
+                IsActive = true,
+                CreatedDateTime = DateTime.Now,
+                Name = "Tankowanie",
+                ApplicationUserID = userId,
+                CreatedById = userId
+            };
+            return carHistoryToAdd;
         }
     }
 }

@@ -22,7 +22,10 @@ namespace VehicleManager.Application.Interfaces
         string GetTypeName(int typeId);
         ListForUserCarsForListVm GetUserCars(string userId);
         ListForUnitOfFuelForListVm GetUnitsOfFuels();
-        bool AddRefuling(NewRefulingVm model);
         ListFuelTypeForRefuelingForListVm GetAllFuelsTypesForRefuling();
+        ListCarHistoryForListVm GetUserVehicleHistory(string userId);
+        NewCarHistoryVm ReturnCarHistoryToAdd(string kindOfEvent, string userId);
+        bool AddRefuling(NewRefulingVm model, NewCarHistoryVm carHistoryVm);
+
     }
 }
