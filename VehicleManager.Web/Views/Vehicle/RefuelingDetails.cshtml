@@ -1,0 +1,91 @@
+﻿@model VehicleManager.Application.ViewModels.Vehicle.RefuelDetailsVm
+
+@{
+    ViewData["Title"] = "RefuelingDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>RefuelingDetails</h1>
+
+<div>
+    <h4>RefuelDetailsVm</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Ilość paliwa
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AmountOfFuel) j.(@Model.UnitOfFuelName)
+        </dd>
+        <dt class="col-sm-2">
+            Kwota tankowania
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FuelPrice)
+        </dd>
+        <dt class="col-sm-2">
+            Cena za jednostkę paliwa
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PriceForOneUnit) zł
+        </dd>
+        <dt class="col-sm-2">
+            Przebieg
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MeterStatus) km
+        </dd>
+        <dt class="col-sm-2">
+            Nazwa stacji
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PetrolStationName)
+        </dd>
+        <dt class="col-sm-2">
+            Tankowanie do pełna
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IsRefulingFull)
+        </dd>
+        <dt class="col-sm-2">
+            Uwagi
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Varnings)
+        </dd>
+        <dt class="col-sm-2">
+            Pojazd
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VehicleName)
+        </dd>
+        <dt class="col-sm-2">
+            Spalanie na 100 km
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BurningFuelPerOneHundredKilometers)
+        </dd> 
+        <dt class="col-sm-2">
+            Jednostka paliwa
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UnitOfFuelName)
+        </dd>
+        <dt class="col-sm-2">
+            Rodzaj paliwa
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FuelName)
+        </dd>
+        <dt class="col-sm-2">
+            Data tankowania
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="CarHistory" asp-controller="Vehicle">Wróć do historii zdarzeń</a>
+</div>

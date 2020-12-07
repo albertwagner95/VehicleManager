@@ -1,0 +1,68 @@
+﻿@model VehicleManager.Application.ViewModels.Vehicle.ListCarHistoryForListVm
+
+@{
+    ViewData["Title"] = "VehicleHistory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Historia zdarzeń</h1>
+
+@{
+    var tmpData = TempData["emptyCarHistory"];
+    var tmpDataScs = TempData["refuellingSuccessfullyOrNotAdded"];
+
+    if (tmpData != null || tmpDataScs != null)
+    {
+        <div class="alert alert-primary" role="alert">
+            @tmpData
+            @tmpDataScs
+        </div>
+    }
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Nazwa")
+            </th>
+            <th>
+                @Html.DisplayName("Data zdarzenia")
+            </th>
+            <th>
+                @Html.DisplayName("Przebieg")
+            </th>
+            <th>
+                @Html.DisplayName("Koszt operacji")
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.CarHistoryList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MeterStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RefuelingPrice)
+                </td>
+                @if (item.Name.ToUpper().Equals("TANKOWANIE"))
+                {
+                    <td>
+                        @Html.ActionLink("Sczegóły", "RefuelingDetails", "Vehicle", new { id = item.RefulingRef })
+
+                    </td>
+                }
+
+            </tr>
+        }
+
+    </tbody>
+</table>
