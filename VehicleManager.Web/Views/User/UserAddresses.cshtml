@@ -40,29 +40,30 @@
     <tbody>
         @{
             int i = 0;
-        }
-        @foreach (var item in Model)
-        {
-            i++;
-            <tr>
-                <td>
-                    @i
-                </td>
-                <td>
-                    @item.Voivedoshipha <p></p>
-                    @item.Districts <p></p>
-                    @item.ZipCode <p></p> 
-                    @item.CityAndType <p></p>
-                    @item.StreetAndBuildNumber <p></p>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.KindOfAddress)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "EditAddress", "Address", new { id = item.Id }) |
-                    @Html.ActionLink("Usuń", "Delete", "Address", new { id = item.Id })
-                </td>
-            </tr>
+
+            foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <td>
+                        @i
+                    </td>
+                    <td>
+                        @item.Voivedoshipha <p></p>
+                        @item.Districts <p></p>
+                        @item.ZipCode <p></p>
+                        @item.CityAndType <p></p>
+                        @item.StreetAndBuildNumber <p></p>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KindOfAddress)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditAddress", "Address", new { id = item.Id }) |
+                        @Html.ActionLink("Usuń", "Delete", "Address", new { id = item.Id })
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>

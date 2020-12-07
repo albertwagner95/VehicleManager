@@ -681,6 +681,9 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.Property<decimal>("AmountOfFuel")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal>("BurningFuelPerOneHundredKilometers")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(max)");
 
@@ -710,6 +713,9 @@ namespace VehicleManager.Infrastructure.Migrations
 
                     b.Property<string>("PetrolStationName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("PriceForOneUnit")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("UnitOfFuelId")
                         .HasColumnType("int");

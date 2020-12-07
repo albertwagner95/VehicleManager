@@ -299,6 +299,22 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.1.4, )"
+            },
+            "cldrjs": {
+              "target": "Package",
+              "version": "[0.5.1, )"
+            },
+            "currency": {
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "jQuery.Validation.Globalize": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
+            "jquery-globalize": {
+              "target": "Package",
+              "version": "[1.4.2, )"
             }
           },
           "imports": [

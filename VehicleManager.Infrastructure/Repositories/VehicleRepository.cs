@@ -106,8 +106,13 @@ namespace VehicleManager.Infrastructure.Repositories
             {
                 refuelingModelToAdd.Id = Guid.NewGuid().ToString();
                 _context.Refulings.Add(refuelingModelToAdd);
+                refuelingModelToAdd.CreatedDateTime = DateTime.Now;
                 carHistory.VehicleId = refuelingModelToAdd.VehicleId;
+                carHistory.RefulingRef = refuelingModelToAdd.Id;
                 _context.CarHistories.Add(carHistory);
+
+                _context.Vehicles.FirstOrDefault(x => x.Id == refuelingModelToAdd.VehicleId).Millage = refuelingModelToAdd.MeterStatus;
+
                 _context.SaveChanges();
                 return true;
             }
@@ -118,14 +123,22 @@ namespace VehicleManager.Infrastructure.Repositories
             var fuelForRefulings = _context.FuelForRefuelings;
             return fuelForRefulings;
         }
-
+        public IQueryable<Refueling> GetAllRefuelings()
+        {
+            var refuelings = _context.Refulings;
+            return refuelings;
+        }
         public IQueryable<CarHistory> GetAllVehicleHistory()
         {
             var vehicleHistory = _context.CarHistories;
             return vehicleHistory;
         }
 
-
-
+        public Refueling GetRefuelingById(string refuelingId)
+        {
+            var refueling = _context.Refulings.FirstOrDefault(x => x.Id.Equals(refuelingId));
+            if (refueling is null) return null;
+            return refueling;
+        }
     }
 }

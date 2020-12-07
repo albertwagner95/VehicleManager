@@ -26,6 +26,10 @@ namespace VehicleManager.Application.Interfaces
         ListCarHistoryForListVm GetUserVehicleHistory(string userId);
         NewCarHistoryVm ReturnCarHistoryToAdd(string kindOfEvent, string userId);
         bool AddRefuling(NewRefulingVm model, NewCarHistoryVm carHistoryVm);
-
+        int GetLastRefuelingMileage(int vehicleId);
+        RefuelDetailsVm GetRefuelById(string refuelingId);
+        string GetVehicleNameById(int vehicleId);
+        string GetUnitsOfFuelNameById(int unitOfFuelId);
+        string GetFuelNameById(int fuelForRefuelingId);
     }
 }

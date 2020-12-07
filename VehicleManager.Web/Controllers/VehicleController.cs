@@ -28,12 +28,10 @@ namespace VehicleManager.Web.Controllers
 
         public IActionResult VehicleDetails(int id)
         {
-
-            //GetFuelTypeName
             var model = _vehicleService.GetVehicleDetails(id);
             if (model == null)
             {
-                ViewBag.NullVehicles = "Brak pojazdów do wyświetlenia";
+                ViewBag.NullVehicles = "Nie znaleziono takiego pojazdu";
                 return View();
             }
             return View(model);
@@ -68,7 +66,7 @@ namespace VehicleManager.Web.Controllers
             var id = _vehicleService.AddVehicle(models);
             if (id != 0)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("User", "UserVehicles");
             }
             else
             {
@@ -153,12 +151,20 @@ namespace VehicleManager.Web.Controllers
             {
                 TempData["refuellingSuccessfullyOrNotAdded"] = "Tankowanie nie dodane, skontaktuj się z pomocą techniczną aby zgłosić błąd, lub spróbuj ponownie!";
             }
+            if (model.VehicleId != 0)
+            {
+                model.LastMeters = _vehicleService.GetLastRefuelingMileage(model.VehicleId);
+            }
+
+            if (model.MeterStatus < model.LastMeters)
+            {
+                ModelState.AddModelError("MeterStatus", $"Aktualny przebieg, nie może być niższy od poprzedniego - {model.LastMeters} km, edytuj przebieg pojazdu, lub wpisz inną wartość!");
+            }
             if (!ModelState.IsValid)
             {
-                model.UserCars = _vehicleService.GetUserCars(_userManager.GetUserId(User));
                 model.VehicleFuelTypes = _vehicleService.GetAllFuelsTypesForRefuling();
                 model.UnitOfFuelForList = _vehicleService.GetUnitsOfFuels();
-                model.VehiclesList = _vehicleService.GetUserCars(_userManager.GetUserId(User));
+                model.UserCars = _vehicleService.GetUserCars(_userManager.GetUserId(User));
                 return View(model);
             }
             var carHistory = _vehicleService.ReturnCarHistoryToAdd("Tankowanie", _userManager.GetUserId(User));
@@ -173,16 +179,28 @@ namespace VehicleManager.Web.Controllers
             }
 
             return RedirectToAction("VehicleHistory", "Vehicle");
-            //return RedirectToAction("CarHistory", "Vehicle");
         }
         public IActionResult VehicleHistory()
         {
             var historyForVehicle = _vehicleService.GetUserVehicleHistory(_userManager.GetUserId(User));
             if (historyForVehicle.CarHistoryList.Count == 0)
             {
-                TempData["emptyCarHistory"] = "Brak danych do wyświetlenia"; 
-            }    
+                TempData["emptyCarHistory"] = "Brak danych do wyświetlenia";
+            }
             return View(historyForVehicle);
+        }
+        public IActionResult RefuelingDetails(string id)
+        {
+            RefuelDetailsVm refueling = _vehicleService.GetRefuelById(id);
+            if(refueling == null)
+            {
+                ViewBag.NullVehicles = "Nie znaleziono takiego tankowania";
+                return View();
+            }
+            refueling.VehicleName = _vehicleService.GetVehicleNameById(refueling.VehicleId);
+            refueling.UnitOfFuelName = _vehicleService.GetUnitsOfFuelNameById(refueling.UnitOfFuelId);
+            refueling.FuelName = _vehicleService.GetFuelNameById(refueling.FuelForRefuelingId);
+            return View(refueling);
         }
     }
 }
