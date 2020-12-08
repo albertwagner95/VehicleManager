@@ -261,7 +261,6 @@ namespace VehicleManager.Application.Services
 
         public ListCarHistoryForListVm GetUserVehicleHistory(string userId)
         {
-
             var vehicleHistories = _vehicleRepository.GetAllVehicleHistory();
             var refuelings = _vehicleRepository.GetAllRefuelings();
 
@@ -277,6 +276,7 @@ namespace VehicleManager.Application.Services
                              RefulingRef = vh.RefulingRef
                          };
             var forRes = result.Where(x => x.ApplicationUserID.Equals(userId)).OrderByDescending(x=>x.CreatedDateTime).ToList();
+            
             var userVehicleHistoryVm = new ListCarHistoryForListVm()
             {
                 CarHistoryList = forRes
