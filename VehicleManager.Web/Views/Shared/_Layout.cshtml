@@ -6,9 +6,9 @@
     <title>@ViewData["Title"] - VehicleManager.Web</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
+    
+
 
 </head>
 <body>
@@ -36,6 +36,16 @@
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <a class="dropdown-item" asp-controller="Vehicle" asp-action="AddVehicle">Dodaj pojazd</a>
                                         <a class="dropdown-item" asp-controller="User" asp-action="UserVehicles">Twoje pojazdy</a>
+                                        <a class="dropdown-item" asp-controller="Vehicle" asp-action="AddRefueling">Dodaj tankowanie</a>
+                                        <a class="dropdown-item" asp-controller="Vehicle" asp-action="VehicleHistory">Historia zdarzeń</a>
+                                    </div>
+                                </li>
+                                <li class="dropdown show">
+                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Dane kontaktowe
+                                    </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <a class="dropdown-item" asp-controller="User" asp-action="UserAddresses">Twoje adresy</a>
                                     </div>
                                 </li>

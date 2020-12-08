@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "globalize@1.6.0",
+      "destination": "wwwroot/globalize/"
+    },
+    {
+      "library": "cldrjs@0.5.5",
+      "destination": "wwwroot/cldrjs/"
+    },
+    {
+      "provider": "filesystem",
+      "library": "C:\\Users\\wagne\\.nuget\\packages\\cldrjs",
+      "destination": "wwwroot/cldrjs/",
+      "files": []
+    },
+    {
+      "provider": "filesystem",
+      "library": "C:\\Users\\wagne\\.nuget\\packages\\cldrjs\\0.5.1\\content\\Scripts\\cldr",
+      "destination": "wwwroot/cldr/"
+    },
+    {
+      "provider": "filesystem",
+      "library": "C:\\Users\\wagne\\.nuget\\packages\\jquery.validation.globalize\\1.1.0\\content\\Scripts\\",
+      "destination": "wwwroot/Scripts/"
+    }
+  ]
+}

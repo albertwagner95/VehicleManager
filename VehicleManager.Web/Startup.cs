@@ -2,15 +2,20 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Collections.Generic;
+using System.Globalization;
 using VehicleManager.Application.DependencyInjection;
+using VehicleManager.Application.ViewModels.AddressVm;
 using VehicleManager.Application.ViewModels.Vehicle;
 using VehicleManager.Domain.Model;
 using VehicleManager.Infrastructure;
 using VehicleManager.Infrastructure.DependencyInjection;
+using static VehicleManager.Application.ViewModels.AddressVm.NewRefulingVm;
 using static VehicleManager.Application.ViewModels.Vehicle.NewVehicleVm;
 
 namespace VehicleManager.Web
@@ -21,6 +26,8 @@ namespace VehicleManager.Web
         {
             Configuration = configuration;
         }
+
+       
 
         public IConfiguration Configuration { get; }
 
@@ -41,11 +48,21 @@ namespace VehicleManager.Web
             services.AddRazorPages();
 
             services.AddTransient<IValidator<NewVehicleVm>, NewVehicleValidation>();
+            services.AddTransient<IValidator<NewRefulingVm>, NewRefuelingValidation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //helper for decimal numbers.
+            var defaultCulture = new CultureInfo("pl-PL");
+            var localizationOptions = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(defaultCulture),
+                SupportedCultures = new List<CultureInfo> { defaultCulture },
+                SupportedUICultures = new List<CultureInfo> { defaultCulture }
+            };
+            app.UseRequestLocalization(localizationOptions);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -60,6 +77,8 @@ namespace VehicleManager.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+
+
             app.UseRouting();
 
             app.UseAuthentication();
@@ -72,6 +91,9 @@ namespace VehicleManager.Web
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+
+
         }
     }
 }

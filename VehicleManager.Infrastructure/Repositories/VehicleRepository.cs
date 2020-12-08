@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using VehicleManager.Domain.Interfaces;
 using VehicleManager.Domain.Model;
 using VehicleManager.Domain.Model.VehicleModels;
@@ -80,7 +81,64 @@ namespace VehicleManager.Infrastructure.Repositories
             _context.Entry(vehicle).Property("VehicleBrandNameId").IsModified = true;
             _context.Entry(vehicle).Property("VehicleFuelTypeId").IsModified = true;
             _context.Entry(vehicle).Property("VehicleTypeId").IsModified = true;
+            _context.Entry(vehicle).Property("IsGasInstalation").IsModified = true;
+
             _context.SaveChanges();
+        }
+
+        public IQueryable<Vehicle> GetVehicles()
+        {
+            return _context.Vehicles;
+        }
+
+        public IQueryable<UnitOfFuel> GetUnitsOfFuel()
+        {
+            return _context.UnitOfFuels;
+        }
+
+        public bool AddRefueling(Refueling refuelingModelToAdd, string userId, CarHistory carHistory)
+        {
+            if (refuelingModelToAdd is null)
+            {
+                return false;
+            }
+            else
+            {
+                refuelingModelToAdd.Id = Guid.NewGuid().ToString();
+                _context.Refulings.Add(refuelingModelToAdd);
+                refuelingModelToAdd.CreatedDateTime = DateTime.Now;
+                carHistory.VehicleId = refuelingModelToAdd.VehicleId;
+                carHistory.RefulingRef = refuelingModelToAdd.Id;
+                _context.CarHistories.Add(carHistory);
+
+                _context.Vehicles.FirstOrDefault(x => x.Id == refuelingModelToAdd.VehicleId).Millage = refuelingModelToAdd.MeterStatus;
+
+                _context.SaveChanges();
+                return true;
+            }
+        }
+
+        public IQueryable<FuelForRefueling> GetFuelTypesForRefueling()
+        {
+            var fuelForRefulings = _context.FuelForRefuelings;
+            return fuelForRefulings;
+        }
+        public IQueryable<Refueling> GetAllRefuelings()
+        {
+            var refuelings = _context.Refulings;
+            return refuelings;
+        }
+        public IQueryable<CarHistory> GetAllVehicleHistory()
+        {
+            var vehicleHistory = _context.CarHistories;
+            return vehicleHistory;
+        }
+
+        public Refueling GetRefuelingById(string refuelingId)
+        {
+            var refueling = _context.Refulings.FirstOrDefault(x => x.Id.Equals(refuelingId));
+            if (refueling is null) return null;
+            return refueling;
         }
     }
 }

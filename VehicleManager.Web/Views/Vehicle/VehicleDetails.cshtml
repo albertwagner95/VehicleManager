@@ -4,6 +4,17 @@
     ViewData["Title"] = "VehicleDetails";
 }
 
+@{
+    var nullVehicle = TempData["NullVehicles"];
+
+    if (nullVehicle != null)
+    {
+        <div class="alert alert-primary" role="alert">
+            @nullVehicle
+        </div>
+    }
+}
+
 <h1>Szczegóły pojazdu</h1>
 
 <div>
@@ -100,6 +111,12 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ProductionDateString)
+        </dd>
+        <dt class="col-sm-2">
+            Data produkcji
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IsGasInstalation)
         </dd>
     </dl>
 </div>

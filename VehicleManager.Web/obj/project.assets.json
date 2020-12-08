@@ -29,6 +29,21 @@
           "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {}
         }
       },
+      "cldrjs/0.5.1": {
+        "type": "package"
+      },
+      "currency/3.1.2": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "lib/netstandard1.0/currency.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/currency.dll": {}
+        }
+      },
       "FluentValidation/9.2.2": {
         "type": "package",
         "compile": {
@@ -65,6 +80,28 @@
         },
         "runtime": {
           "lib/netstandard2.0/FluentValidation.DependencyInjectionExtensions.dll": {}
+        }
+      },
+      "jQuery/1.4.4": {
+        "type": "package"
+      },
+      "jquery-globalize/1.4.2": {
+        "type": "package",
+        "dependencies": {
+          "cldrjs": "0.5.1"
+        }
+      },
+      "jQuery.Validation/1.14.0": {
+        "type": "package",
+        "dependencies": {
+          "jQuery": "1.4.4"
+        }
+      },
+      "jQuery.Validation.Globalize/1.1.0": {
+        "type": "package",
+        "dependencies": {
+          "jQuery.Validation": "1.14.0",
+          "jquery-globalize": "1.0.0"
         }
       },
       "Microsoft.AspNetCore.Cryptography.Internal/3.1.9": {
@@ -3053,6 +3090,34 @@
         "lib/netstandard2.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll"
       ]
     },
+    "cldrjs/0.5.1": {
+      "sha512": "v38w9mdsmia1Mr/25yvyRYi6t3nWAO5Z/2ySxVV/Xp9laXmNX5JUR4Q2GMzzeERFqMtFjeB/flFADhzhYe6c0w==",
+      "type": "package",
+      "path": "cldrjs/0.5.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "cldrjs.0.5.1.nupkg.sha512",
+        "cldrjs.nuspec",
+        "content/Scripts/cldr.js",
+        "content/Scripts/cldr/event.js",
+        "content/Scripts/cldr/supplemental.js",
+        "content/Scripts/cldr/unresolved.js"
+      ]
+    },
+    "currency/3.1.2": {
+      "sha512": "6y/rmtA9+GK1UVaq22c6s4VzJ9KoP9izF8UC7aqsAgZakRs9+FlaONFLPDRm/SG/k0YZnOEbIVZ1YSPgxJJVoA==",
+      "type": "package",
+      "path": "currency/3.1.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "currency.3.1.2.nupkg.sha512",
+        "currency.nuspec",
+        "lib/netstandard1.0/currency.dll",
+        "lib/netstandard1.0/currency.xml"
+      ]
+    },
     "FluentValidation/9.2.2": {
       "sha512": "Y1TQrSa82i/WWPpXriEkL7uyUyECw3Uvtq66dZ8VC3pwFa9VqnZmeZaJJpz8deKhJQNDgqwU3BSptKTnyjqzuA==",
       "type": "package",
@@ -3094,6 +3159,67 @@
         "fluentvalidation.dependencyinjectionextensions.nuspec",
         "lib/netstandard2.0/FluentValidation.DependencyInjectionExtensions.dll",
         "lib/netstandard2.0/FluentValidation.DependencyInjectionExtensions.xml"
+      ]
+    },
+    "jQuery/1.4.4": {
+      "sha512": "kexCeYIZehR5fRjo8CK1sngN5SZEQRFNfCYZHMS1RxwEEiSKetBw/gliYJcLJdJEBB+e9aHqleLCjuaSI7u23g==",
+      "type": "package",
+      "path": "jquery/1.4.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Content/Scripts/jquery-1.4.4-vsdoc.js",
+        "Content/Scripts/jquery-1.4.4.js",
+        "Content/Scripts/jquery-1.4.4.min.js",
+        "jquery.1.4.4.nupkg.sha512",
+        "jquery.nuspec"
+      ]
+    },
+    "jquery-globalize/1.4.2": {
+      "sha512": "0/QV5CcjbsFEy76Vz6oiXSbDL6E+2bru5w7gRpy9v48iXs8SCU/5WXmVA9V2jm36h+7HNw1qV8yheqAlo+SB0w==",
+      "type": "package",
+      "path": "jquery-globalize/1.4.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/Scripts/globalize.js",
+        "content/Scripts/globalize/currency.js",
+        "content/Scripts/globalize/date.js",
+        "content/Scripts/globalize/message.js",
+        "content/Scripts/globalize/number.js",
+        "content/Scripts/globalize/plural.js",
+        "content/Scripts/globalize/relative-time.js",
+        "content/Scripts/globalize/unit.js",
+        "jquery-globalize.1.4.2.nupkg.sha512",
+        "jquery-globalize.nuspec"
+      ]
+    },
+    "jQuery.Validation/1.14.0": {
+      "sha512": "gNwKPzHsNk/TbLQVCUl4vagUMoCfdnKQwKf2uy+grKFlSK3J872/4xrABIfKWdhSgK2sAYijDswQq6Z82d5S1w==",
+      "type": "package",
+      "path": "jquery.validation/1.14.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Content/Scripts/jquery.validate-vsdoc.js",
+        "Content/Scripts/jquery.validate.js",
+        "Content/Scripts/jquery.validate.min.js",
+        "jquery.validation.1.14.0.nupkg.sha512",
+        "jquery.validation.nuspec"
+      ]
+    },
+    "jQuery.Validation.Globalize/1.1.0": {
+      "sha512": "qzka221RX45z642DOhlxGg/wvW4w8Md2Q02deZ0j6EfgyQEnXdLAeHw5xMK9EuFCjWoRbmISt/oFsJAvKqnmCA==",
+      "type": "package",
+      "path": "jquery.validation.globalize/1.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "content/Scripts/jquery.validate.globalize.js",
+        "content/Scripts/jquery.validate.globalize.min.js",
+        "jquery.validation.globalize.1.1.0.nupkg.sha512",
+        "jquery.validation.globalize.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Cryptography.Internal/3.1.9": {
@@ -9464,7 +9590,11 @@
       "Microsoft.EntityFrameworkCore.Tools >= 3.1.9",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.4",
       "VehicleManager.Application >= 1.0.0",
-      "VehicleManager.Infrastructure >= 1.0.0"
+      "VehicleManager.Infrastructure >= 1.0.0",
+      "cldrjs >= 0.5.1",
+      "currency >= 3.1.2",
+      "jQuery.Validation.Globalize >= 1.1.0",
+      "jquery-globalize >= 1.4.2"
     ]
   },
   "packageFolders": {
@@ -9544,6 +9674,22 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
             "version": "[3.1.4, )"
+          },
+          "cldrjs": {
+            "target": "Package",
+            "version": "[0.5.1, )"
+          },
+          "currency": {
+            "target": "Package",
+            "version": "[3.1.2, )"
+          },
+          "jQuery.Validation.Globalize": {
+            "target": "Package",
+            "version": "[1.1.0, )"
+          },
+          "jquery-globalize": {
+            "target": "Package",
+            "version": "[1.4.2, )"
           }
         },
         "imports": [

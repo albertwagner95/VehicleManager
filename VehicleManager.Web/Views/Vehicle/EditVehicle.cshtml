@@ -29,7 +29,7 @@
                 <input asp-for="Millage" class="form-control" />
                 <span asp-validation-for="Millage" class="text-danger"></span>
             </div>
-            <div class="form-group"> 
+            <div class="form-group">
                 <label asp-for="DateOfFirstRegistration" class="control-label">Data pierwszej rejestracji</label>
                 <input id="dataToSet" asp-for="DateOfFirstRegistration" type="date" value="@Model.DateOfFirstRegistration.Date.ToString("yyyy-MM-dd")" class="form-control" />
                 <span asp-validation-for="DateOfFirstRegistration" class="text-danger"></span>
@@ -97,6 +97,11 @@
                     <option value="">Wybierz rodzaj pojazdu</option>
                 </select>
                 <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsGasInstalation" /> Czy pojazd jest wyposażony w instalację lpg?
+                </label>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

@@ -477,3 +477,8 @@ C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManag
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Views\User\UserAddresses.cshtml.g.cs
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Views\Address\Delete.cshtml.g.cs
 C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Views\Address\EditAddress.cshtml.g.cs
+C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Views\Vehicle\AddRefueling.cshtml.g.cs
+C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Views\Vehicle\VehicleHistory.cshtml.g.cs
+C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\bin\Debug\netcoreapp3.1\libman.json
+C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\bin\Debug\netcoreapp3.1\currency.dll
+C:\Users\wagne\Desktop\Kurs programista asp.net core\VehicleManager\VehicleManager\VehicleManager.Web\obj\Debug\netcoreapp3.1\Razor\Views\Vehicle\RefuelingDetails.cshtml.g.cs

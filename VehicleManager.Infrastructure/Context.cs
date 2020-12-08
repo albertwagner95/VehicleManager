@@ -23,6 +23,10 @@ namespace VehicleManager.Infrastructure
         public DbSet<District> Districts { get; set; }
         public DbSet<CityType> CityTypes { get; set; }
         public DbSet<Community> Communities { get; set; }
+        public DbSet<Refueling> Refulings { get; set; }
+        public DbSet<UnitOfFuel> UnitOfFuels { get; set; }
+        public DbSet<CarHistory> CarHistories { get; set; }
+        public DbSet<FuelForRefueling> FuelForRefuelings { get; set; }
 
         public Context(DbContextOptions options) : base(options)
         {
@@ -32,6 +36,11 @@ namespace VehicleManager.Infrastructure
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            
+            builder.Entity<Refueling>()
+            .HasOne(a => a.CarHistory)
+            .WithOne(b => b.Refuling)
+            .HasForeignKey<CarHistory>(b => b.RefulingRef);
         }
     }
 }

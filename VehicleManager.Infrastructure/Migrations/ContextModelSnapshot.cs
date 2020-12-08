@@ -418,6 +418,36 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.ToTable("Voivodeships");
                 });
 
+            modelBuilder.Entity("VehicleManager.Domain.Model.UnitOfFuel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UnitOfFuels");
+                });
+
             modelBuilder.Entity("VehicleManager.Domain.Model.Vehicle", b =>
                 {
                     b.Property<int>("Id")
@@ -447,6 +477,9 @@ namespace VehicleManager.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsGasInstalation")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsRegisterdInPoland")
@@ -563,6 +596,143 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("VehicleFuelTypes");
+                });
+
+            modelBuilder.Entity("VehicleManager.Domain.Model.VehicleModels.CarHistory", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ApplicationUserID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RefulingRef")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserID");
+
+                    b.HasIndex("RefulingRef")
+                        .IsUnique()
+                        .HasFilter("[RefulingRef] IS NOT NULL");
+
+                    b.HasIndex("VehicleId");
+
+                    b.ToTable("CarHistories");
+                });
+
+            modelBuilder.Entity("VehicleManager.Domain.Model.VehicleModels.FuelForRefueling", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FuelForRefuelings");
+                });
+
+            modelBuilder.Entity("VehicleManager.Domain.Model.VehicleModels.Refueling", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("AmountOfFuel")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("BurningFuelPerOneHundredKilometers")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FuelForRefuelingId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("FuelPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRefulingFull")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MeterStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PetrolStationName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("PriceForOneUnit")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("UnitOfFuelId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Varnings")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FuelForRefuelingId");
+
+                    b.HasIndex("UnitOfFuelId");
+
+                    b.ToTable("Refulings");
                 });
 
             modelBuilder.Entity("VehicleManager.Domain.Model.VehicleModels.VehicleType", b =>
@@ -725,6 +895,38 @@ namespace VehicleManager.Infrastructure.Migrations
                     b.HasOne("VehicleManager.Domain.Model.VehicleModels.VehicleType", "VehicleType")
                         .WithMany("Vehicles")
                         .HasForeignKey("VehicleTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("VehicleManager.Domain.Model.VehicleModels.CarHistory", b =>
+                {
+                    b.HasOne("VehicleManager.Domain.Model.ApplicationUser", "ApplicationUser")
+                        .WithMany("CarHistories")
+                        .HasForeignKey("ApplicationUserID");
+
+                    b.HasOne("VehicleManager.Domain.Model.VehicleModels.Refueling", "Refuling")
+                        .WithOne("CarHistory")
+                        .HasForeignKey("VehicleManager.Domain.Model.VehicleModels.CarHistory", "RefulingRef");
+
+                    b.HasOne("VehicleManager.Domain.Model.Vehicle", "Vehicle")
+                        .WithMany("CarHistories")
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("VehicleManager.Domain.Model.VehicleModels.Refueling", b =>
+                {
+                    b.HasOne("VehicleManager.Domain.Model.VehicleModels.FuelForRefueling", "FuelForRefueling")
+                        .WithMany("Refulings")
+                        .HasForeignKey("FuelForRefuelingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VehicleManager.Domain.Model.UnitOfFuel", "UnitOfFuel")
+                        .WithMany("Refulings")
+                        .HasForeignKey("UnitOfFuelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
