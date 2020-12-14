@@ -23,7 +23,7 @@ namespace VehicleManager.Application.Interfaces
         ListForUserCarsForListVm GetUserCars(string userId);
         ListForUnitOfFuelForListVm GetUnitsOfFuels();
         ListFuelTypeForRefuelingForListVm GetAllFuelsTypesForRefuling();
-        ListCarHistoryForListVm GetUserVehicleHistory(string userId);
+        ListCarHistoryForListVm GetUserVehicleHistory(string userId, int vehicleId);
         NewCarHistoryVm ReturnCarHistoryToAdd(string kindOfEvent, string userId);
         bool AddRefuling(NewRefulingVm model, NewCarHistoryVm carHistoryVm);
         int GetLastRefuelingMileage(int vehicleId);
@@ -31,5 +31,8 @@ namespace VehicleManager.Application.Interfaces
         string GetVehicleNameById(int vehicleId);
         string GetUnitsOfFuelNameById(int unitOfFuelId);
         string GetFuelNameById(int fuelForRefuelingId);
+        bool DeleteRefueling(string refuelingId);
+        NewRefulingVm GetRefulingForEditById(string id);
+        bool EditRefueling(NewRefulingVm refueling);
     }
 }

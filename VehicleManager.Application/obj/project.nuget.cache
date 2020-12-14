@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OkyCXXD0E3AFGamEUuHGyLz5wAo0BUmOZwhc3pGL3cfazaykLuTCmok+GSWsIcRedXOx45P96IGSreOZ2cm/RA==",
+  "dgSpecHash": "n76fvNVoqYa3LNyFxFqBbk70Vsz1kXG8cBqejpky68BsDw2nqBgAlpT7Pd2qVGjccNernCPFtT0ctbESZAqJjA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Application\\VehicleManager.Application.csproj",
+  "projectFilePath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Application\\VehicleManager.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\wagne\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\wagne\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.0\\automapper.extensions.microsoft.dependencyinjection.8.1.0.nupkg.sha512",
@@ -24,7 +24,8 @@
     "C:\\Users\\wagne\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\3.1.9\\microsoft.extensions.logging.abstractions.3.1.9.nupkg.sha512",
     "C:\\Users\\wagne\\.nuget\\packages\\microsoft.extensions.options\\3.1.9\\microsoft.extensions.options.3.1.9.nupkg.sha512",
     "C:\\Users\\wagne\\.nuget\\packages\\microsoft.extensions.primitives\\3.1.9\\microsoft.extensions.primitives.3.1.9.nupkg.sha512",
-    "C:\\Users\\wagne\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512"
+    "C:\\Users\\wagne\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512",
+    "C:\\Users\\wagne\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512"
   ],
   "logs": []
 }

@@ -1,0 +1,30 @@
+﻿@model VehicleManager.Application.ViewModels.Vehicle.ListForUserCarsForListVm
+
+@{
+    ViewData["Title"] = "VehicleHistoryCarList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>VehicleHistoryCarList</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.UserCars)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Name, "VehicleHistory", "Vehicle", new { id = item.Id })
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

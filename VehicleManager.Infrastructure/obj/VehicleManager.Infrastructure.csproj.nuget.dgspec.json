@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj": {}
+    "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj": {
+    "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj",
         "projectName": "VehicleManager.Domain",
-        "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj",
+        "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj",
         "packagesPath": "C:\\Users\\wagne\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Domain\\obj\\",
+        "outputPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\wagne\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -55,23 +55,29 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.10, 3.1.10]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj": {
+    "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj",
         "projectName": "VehicleManager.Infrastructure",
-        "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj",
+        "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\wagne\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\wagne\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -88,8 +94,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj": {
-                "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj"
+              "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj": {
+                "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj"
               }
             }
           }
@@ -133,12 +139,18 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.10, 3.1.10]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

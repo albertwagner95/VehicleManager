@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using VehicleManager.Application.Services;
+using VehicleManager.Application.ViewModels.Vehicle;
 using VehicleManager.Domain.Interfaces;
 using VehicleManager.Domain.Model;
 using VehicleManager.Domain.Model.VehicleModels;
@@ -48,7 +49,8 @@ namespace VehicleManager.Tests.Services
                 CreatedDateTime = DateTime.Now,
                 Name = "Tankowanie",
                 IsActive = true,
-                CreatedById = "1a"
+                CreatedById = "1a",
+                VehicleId = 1
             });
 
             listRefulings.Add(new Refueling
@@ -57,7 +59,8 @@ namespace VehicleManager.Tests.Services
                 IsActive = true,
                 AmountOfFuel = 102,
                 MeterStatus = 1003,
-                CreatedDateTime = DateTime.Now
+                CreatedDateTime = DateTime.Now,
+                VehicleId = 1
             });
 
             var vehicleRepository = new Mock<IVehicleRepository>();
@@ -66,7 +69,7 @@ namespace VehicleManager.Tests.Services
             vehicleRepository.Setup(x => x.GetAllRefuelings()).Returns(listRefulings.AsQueryable());
             var vehicleService = new VehicleService(vehicleRepository.Object, mapper.Object);
             //Act
-            var result = vehicleService.GetUserVehicleHistory("1a");
+            var result = vehicleService.GetUserVehicleHistory("1a", 1);
             //Assert
             result.Should().NotBeNull();
             result.CarHistoryList.Should().HaveCount(1);

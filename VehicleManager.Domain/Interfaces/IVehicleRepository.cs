@@ -21,5 +21,7 @@ namespace VehicleManager.Domain.Interfaces
         IQueryable<CarHistory> GetAllVehicleHistory();
         IQueryable<Refueling> GetAllRefuelings();
         Refueling GetRefuelingById(string refuelingId);
+        bool DeleteRefueling(string refuelingId,CarHistory vehicleHistory, Vehicle vehicle);
+        bool EditRefueling(Refueling vehicleForUpdate);
     }
 }

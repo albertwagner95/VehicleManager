@@ -1,0 +1,90 @@
+﻿@model VehicleManager.Application.ViewModels.AddressVm.NewRefulingVm
+
+@{
+    ViewData["Title"] = "EditRefueling";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>EditRefueling</h1>
+
+<h4>NewRefulingVm</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditRefueling">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="Id" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="AmountOfFuel" class="control-label"></label>
+                <input asp-for="AmountOfFuel" class="form-control" />
+                <span asp-validation-for="AmountOfFuel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FuelPrice" class="control-label"></label>
+                <input disabled="disabled" asp-for="FuelPrice" class="form-control" />
+                <span asp-validation-for="FuelPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PriceForOneUnit" class="control-label"></label>
+                <input asp-for="PriceForOneUnit" class="form-control" />
+                <span asp-validation-for="PriceForOneUnit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MeterStatus" class="control-label"></label>
+                <input asp-for="MeterStatus" class="form-control" />
+                <span asp-validation-for="MeterStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PetrolStationName" class="control-label"></label>
+                <input asp-for="PetrolStationName" class="form-control" />
+                <span asp-validation-for="PetrolStationName" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsRefulingFull" /> @Html.DisplayNameFor(model => model.IsRefulingFull)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Varnings" class="control-label"></label>
+                <input asp-for="Varnings" class="form-control" />
+                <span asp-validation-for="Varnings" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BurningFuelPerOneHoundredKilometeres" class="control-label"></label>
+                <input disabled="disabled" asp-for="BurningFuelPerOneHoundredKilometeres" class="form-control" />
+                <span asp-validation-for="BurningFuelPerOneHoundredKilometeres" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FuelForRefuelingId" class="control-label">Rodzaj paliwa</label>
+                <select asp-for="FuelForRefuelingId" asp-items="@(new SelectList(Model.VehicleFuelTypes.FuelTypeForRefuelingForLists,"Id", "Name"))" class="custom-select">
+                    <option value="">Wybierz rodzaj paliwa</option>
+                </select>
+                <span asp-validation-for="FuelForRefuelingId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleId" class="control-label">Wybierz tankowany pojazd</label>
+                <select asp-for="VehicleId" asp-items="@(new SelectList(Model.VehiclesList.UserCars,"Id", "Name"))" class="custom-select">
+                    <option value="">Wybierz pojazd</option>
+                </select>
+                <span asp-validation-for="VehicleId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UnitOfFuelId" class="control-label">Jednostka paliwa</label>
+                <select asp-for="UnitOfFuelId" asp-items="@(new SelectList(Model.UnitOfFuelForList.UnitOfFuelList,"Id", "Name"))" class="custom-select">
+                    <option value="">Wybierz jednostkę paliwa</option>
+                </select>
+                <span asp-validation-for="UnitOfFuelId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

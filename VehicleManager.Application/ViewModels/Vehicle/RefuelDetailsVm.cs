@@ -25,11 +25,11 @@ namespace VehicleManager.Application.ViewModels.Vehicle
         public int FuelForRefuelingId { get; set; }
         public string FuelName{ get; set; }
         public string CreateDate { get; set; }
-
+        public bool IsActive { get; set; }
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Refueling, RefuelDetailsVm>()
-                .ForMember(s => s.CreateDate, opt => opt.MapFrom(x => x.CreatedDateTime.Value.ToShortDateString()))
+                .ForMember(s => s.CreateDate, opt => opt.MapFrom(x => x.CreatedDateTime.Value.ToString("dd MMM yyyy")))
                 .ForMember(s=>s.BurningFuelPerOneHundredKilometers, opt=>opt.MapFrom(x=>string.Concat(x.BurningFuelPerOneHundredKilometers," 100/km")));        }
     }
 }

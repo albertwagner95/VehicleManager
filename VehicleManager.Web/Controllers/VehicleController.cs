@@ -75,7 +75,7 @@ namespace VehicleManager.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -91,7 +91,7 @@ namespace VehicleManager.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(DeleteVehicleVm vehicleToDelete)
+        public IActionResult Delete(DeleteVehicleVm vehicleToDelete)
         {
             _vehicleService.DeleteVehicle(vehicleToDelete);
             return RedirectToAction("UserVehicles", "User");
@@ -149,7 +149,8 @@ namespace VehicleManager.Web.Controllers
         {
             if (model is null)
             {
-                TempData["refuellingSuccessfullyOrNotAdded"] = "Tankowanie nie dodane, skontaktuj się z pomocą techniczną aby zgłosić błąd, lub spróbuj ponownie!";
+                TempData["InCorrectOperation"] = "Tankowanie nie dodane, skontaktuj się z pomocą techniczną aby zgłosić błąd, lub spróbuj ponownie!";
+                return RedirectToAction("VehicleHistory", "Vehicle", new { id = model.VehicleId });
             }
             if (model.VehicleId != 0)
             {
@@ -171,28 +172,37 @@ namespace VehicleManager.Web.Controllers
             var isAddedRefuelingCorrectly = _vehicleService.AddRefuling(model, carHistory);
             if (isAddedRefuelingCorrectly == true)
             {
-                TempData["refuellingSuccessfullyOrNotAdded"] = "Pomyślnie dodano tankowanie!";
+                TempData["CorrectOperation"] = "Pomyślnie dodano tankowanie!";
             }
             else
             {
-                TempData["refuellingSuccessfullyOrNotAdded"] = "Tankowanie nie dodane, skontaktuj się z pomocą techniczną aby zgłosić błąd, lub spróbuj ponownie!";
+                TempData["InCorrectOperation"] = "Tankowanie nie dodane, skontaktuj się z pomocą techniczną aby zgłosić błąd, lub spróbuj ponownie!";
             }
 
-            return RedirectToAction("VehicleHistory", "Vehicle");
+            return RedirectToAction("VehicleHistory", "Vehicle", new { id = model.VehicleId });
         }
-        public IActionResult VehicleHistory()
+        public IActionResult VehicleHistory(int id)
         {
-            var historyForVehicle = _vehicleService.GetUserVehicleHistory(_userManager.GetUserId(User));
-            if (historyForVehicle.CarHistoryList.Count == 0)
+            var historyForVehicle = _vehicleService.GetUserVehicleHistory(_userManager.GetUserId(User), id);
+            if (historyForVehicle == null)
             {
-                TempData["emptyCarHistory"] = "Brak danych do wyświetlenia";
+                TempData["InCorrectOperation"] = "Brak danych do wyświetlenia";
             }
             return View(historyForVehicle);
+        }
+        public IActionResult VehicleHistoryCarList()
+        {
+            var vehicles = _vehicleService.GetUserCars(_userManager.GetUserId(User));
+            if (vehicles != null)
+            {
+                return View(vehicles);
+            }
+            return View();
         }
         public IActionResult RefuelingDetails(string id)
         {
             RefuelDetailsVm refueling = _vehicleService.GetRefuelById(id);
-            if(refueling == null)
+            if (refueling == null)
             {
                 ViewBag.NullVehicles = "Nie znaleziono takiego tankowania";
                 return View();
@@ -201,6 +211,80 @@ namespace VehicleManager.Web.Controllers
             refueling.UnitOfFuelName = _vehicleService.GetUnitsOfFuelNameById(refueling.UnitOfFuelId);
             refueling.FuelName = _vehicleService.GetFuelNameById(refueling.FuelForRefuelingId);
             return View(refueling);
+        }
+
+        [HttpGet]
+        public IActionResult RemoveRefueling(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var refuel = _vehicleService.GetRefuelById(id);
+            if (refuel == null)
+            {
+                return NotFound();
+            }
+            return View(refuel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RemoveRefueling(RefuelDetailsVm refueling)
+        {
+            if (refueling == null)
+            {
+                TempData["InCorrectOperation"] = "Nie udało się usunąć tankowania";
+                return RedirectToAction("VehicleHistory", "Vehicle", new { id = refueling.VehicleId });
+            }
+            bool isRemove = _vehicleService.DeleteRefueling(refueling.Id);
+            if (isRemove == true)
+            {
+                TempData["CorrectOperation"] = $"Pomyślnie usunąłeś tankowanie z dnia {refueling.CreateDate}";
+            }
+            return RedirectToAction("VehicleHistory", "Vehicle", new { id = refueling.VehicleId });
+        }
+
+        [HttpGet]
+        public IActionResult EditRefueling(string id)
+        {
+            NewRefulingVm refueling = _vehicleService.GetRefulingForEditById(id);
+            refueling.VehiclesList = _vehicleService.GetUserCars(_userManager.GetUserId(User));
+            refueling.VehicleFuelTypes = _vehicleService.GetAllFuelsTypesForRefuling();
+            refueling.UnitOfFuelForList = _vehicleService.GetUnitsOfFuels();
+            return View(refueling);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditRefueling(NewRefulingVm refueling)
+        {
+            if (refueling is null)
+            {
+                TempData["InCorrectOperation"] = "Nie udało się edytować tankowania";
+                return RedirectToAction("VehicleHistory", "Vehicle", new { id = refueling.VehicleId });
+            }
+
+            if (refueling.VehicleId != 0)
+            {
+                refueling.LastMeters = _vehicleService.GetLastRefuelingMileage(refueling.VehicleId);
+            }
+
+            if (refueling.MeterStatus < refueling.LastMeters)
+            {
+                ModelState.AddModelError("MeterStatus", $"Aktualny przebieg, nie może być niższy od poprzedniego - {refueling.LastMeters} km, edytuj przebieg pojazdu, lub wpisz inną wartość!");
+            }
+            if (!ModelState.IsValid)
+            {
+                refueling.VehiclesList = _vehicleService.GetUserCars(_userManager.GetUserId(User));
+                refueling.VehicleFuelTypes = _vehicleService.GetAllFuelsTypesForRefuling();
+                refueling.UnitOfFuelForList = _vehicleService.GetUnitsOfFuels();
+                return View(refueling);
+            }
+            _vehicleService.EditRefueling(refueling);
+            TempData["CorrectOperation"] = "Udało się edytować tankowanie";
+
+            return RedirectToAction("VehicleHistory", "Vehicle", new { id = refueling.VehicleId });
         }
     }
 }

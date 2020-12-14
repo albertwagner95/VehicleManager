@@ -41,7 +41,6 @@ namespace VehicleManager.Application.Services
             var result = _vehicleRepository.AddVehicle(vehicl);
             return result; // result = 0 is false
         }
-
         public VehicleDetailsVm GetVehicleDetails(int vehicleId)
         {
             var vehicle = _vehicleRepository.GetVehicleById(vehicleId);
@@ -68,7 +67,6 @@ namespace VehicleManager.Application.Services
             var vehicleBrandNames = _vehicleRepository.GetVehicleBrandNames().ProjectTo<VehicleBrandNameVm>(_mapper.ConfigurationProvider);
             return vehicleBrandNames;
         }
-
         public ListFuelTypeForRefuelingForListVm GetAllFuelsTypesForRefuling()
         {
             var vehicleFuelTypesVm = _vehicleRepository.GetFuelTypesForRefueling()
@@ -79,14 +77,12 @@ namespace VehicleManager.Application.Services
 
             return vehicleFuelTypeForRefueling;
         }
-
         public IQueryable<VehicleTypeVm> GetVehicleTypes()
         {
             var vehicleTypes = _vehicleRepository.GetVehicleTypes().ProjectTo<VehicleTypeVm>(_mapper.ConfigurationProvider);
 
             return vehicleTypes;
         }
-
         public void DeleteVehicle(DeleteVehicleVm vehicle)
         {
             if (vehicle != null)
@@ -95,7 +91,6 @@ namespace VehicleManager.Application.Services
                 _vehicleRepository.DeleteVehicle(vehicl.Id);
             }
         }
-
         public DeleteVehicleVm GetVehicleForDelete(int? vehicleId)
         {
             var vehicle = _vehicleRepository.GetVehicleById(vehicleId);
@@ -106,7 +101,6 @@ namespace VehicleManager.Application.Services
             }
             return null;
         }
-
         public NewVehicleVm GetVehicleForEdit(int? vehicleId)
         {
 
@@ -118,7 +112,6 @@ namespace VehicleManager.Application.Services
             }
             return null;
         }
-
         public void EditVehicle(NewVehicleVm vehicle)
         {
             vehicle.ProductionDate = new DateTime(vehicle.YearHelper, 1, 1);
@@ -138,7 +131,6 @@ namespace VehicleManager.Application.Services
                 .Single();
             return name.ToString();
         }
-
         public string GetBrandName(int brandNameId)
         {
             var name = _vehicleRepository.GetVehicleBrandNames()
@@ -147,7 +139,6 @@ namespace VehicleManager.Application.Services
                 .Single();
             return name.ToString();
         }
-
         public string GetTypeName(int typeId)
         {
             var name = _vehicleRepository.GetVehicleTypes()
@@ -156,7 +147,6 @@ namespace VehicleManager.Application.Services
                 .Single();
             return name.ToString();
         }
-
         public ListForUserCarsForListVm GetUserCars(string userId)
         {
             var userCarsList = _vehicleRepository.GetVehicles()
@@ -168,7 +158,6 @@ namespace VehicleManager.Application.Services
 
             return userCars;
         }
-
         public ListForUnitOfFuelForListVm GetUnitsOfFuels()
         {
             var unitsOfFuel = _vehicleRepository.GetUnitsOfFuel().ProjectTo<UnitOfFuelForListVm>(_mapper.ConfigurationProvider)
@@ -230,7 +219,6 @@ namespace VehicleManager.Application.Services
                 }
             }
         }
-
         public ListFuelTypeForRefuelingForListVm GetFuelAllTypeForRefueling()
         {
             var fuelTypesList = _vehicleRepository.GetFuelTypesForRefueling()
@@ -258,14 +246,14 @@ namespace VehicleManager.Application.Services
 
             return result;
         }
-
-        public ListCarHistoryForListVm GetUserVehicleHistory(string userId)
+        public ListCarHistoryForListVm GetUserVehicleHistory(string userId, int vehicleId)
         {
             var vehicleHistories = _vehicleRepository.GetAllVehicleHistory();
             var refuelings = _vehicleRepository.GetAllRefuelings();
 
             var result = from vh in vehicleHistories
                          join rf in refuelings on vh.RefulingRef equals rf.Id
+                         where vh.IsActive == true && vh.VehicleId == vehicleId
                          select new CarHistoryForListVm
                          {
                              Name = vh.Name,
@@ -275,8 +263,8 @@ namespace VehicleManager.Application.Services
                              ApplicationUserID = vh.ApplicationUserID,
                              RefulingRef = vh.RefulingRef
                          };
-            var forRes = result.Where(x => x.ApplicationUserID.Equals(userId)).OrderByDescending(x=>x.CreatedDateTime).ToList();
-            
+            var forRes = result.Where(x => x.ApplicationUserID.Equals(userId)).OrderByDescending(x => x.CreatedDateTime).ToList();
+
             var userVehicleHistoryVm = new ListCarHistoryForListVm()
             {
                 CarHistoryList = forRes
@@ -284,7 +272,6 @@ namespace VehicleManager.Application.Services
 
             return userVehicleHistoryVm;
         }
-
         public NewCarHistoryVm ReturnCarHistoryToAdd(string kindOfEvent, string userId)
         {
             var carHistoryToAdd = new NewCarHistoryVm()
@@ -298,7 +285,6 @@ namespace VehicleManager.Application.Services
             };
             return carHistoryToAdd;
         }
-
         public RefuelDetailsVm GetRefuelById(string refuelingId)
         {
             Refueling refueling = _vehicleRepository.GetRefuelingById(refuelingId);
@@ -306,7 +292,13 @@ namespace VehicleManager.Application.Services
             if (result is null) return null;
             return result;
         }
-
+        public NewRefulingVm GetRefulingForEditById(string id)
+        {
+            var refulingFromDb = _vehicleRepository.GetRefuelingById(id);
+            var refuling = _mapper.Map<NewRefulingVm>(refulingFromDb);
+            if (refuling is null) return null;
+            return refuling;
+        }
         public string GetVehicleNameById(int vehicleId)
         {
             var vehicle = GetVehicleDetails(vehicleId);
@@ -317,7 +309,6 @@ namespace VehicleManager.Application.Services
             }
             return vehicleName;
         }
-
         public string GetUnitsOfFuelNameById(int unitOfFuelId)
         {
             string unitName = GetUnitsOfFuels().UnitOfFuelList.FirstOrDefault(x => x.Id == unitOfFuelId).Name;
@@ -327,7 +318,6 @@ namespace VehicleManager.Application.Services
             }
             return unitName;
         }
-
         public string GetFuelNameById(int fuelForRefuelingId)
         {
             string fuelName = GetAllFuelsTypesForRefuling().FuelTypeForRefuelingForLists.FirstOrDefault(x => x.Id == fuelForRefuelingId).Name;
@@ -336,6 +326,54 @@ namespace VehicleManager.Application.Services
                 return "Brak danych";
             }
             return fuelName;
+        }
+        public List<RefuelDetailsVm> GetVehicleRefuelingById(int vehicleId)
+        {
+
+            List<RefuelDetailsVm> refuelDetailsVm = _vehicleRepository.GetAllRefuelings()
+                .Where(x => x.VehicleId == vehicleId && x.IsActive == true)
+                .ProjectTo<RefuelDetailsVm>(_mapper.ConfigurationProvider)
+                .ToList();
+            if (refuelDetailsVm != null)
+            {
+                return refuelDetailsVm;
+            }
+            return null;
+
+        }
+        public bool DeleteRefueling(string refuelingId)
+        {
+            bool isRemove = false;
+            if (!string.IsNullOrEmpty(refuelingId))
+            {
+                var vehicleHistory = _vehicleRepository.GetAllVehicleHistory()
+                    .FirstOrDefault(x => x.RefulingRef.Equals(refuelingId));
+                var vehicle = _vehicleRepository.GetVehicleById(vehicleHistory.VehicleId);
+                var refuelingByVehicleId = GetVehicleRefuelingById(vehicleHistory.VehicleId);
+                if (refuelingByVehicleId.Count > 1)
+                {
+                    vehicle.Millage = VehicleServiceHelpers.GetMillageBeforeEvent(refuelingByVehicleId);
+                }
+                vehicleHistory.IsActive = false;
+
+                isRemove = _vehicleRepository.DeleteRefueling(refuelingId, vehicleHistory, vehicle);
+                return isRemove;
+            }
+            return isRemove;
+        }
+        public bool EditRefueling(NewRefulingVm refueling)
+        {
+            if (refueling is null) return false;
+
+            var refuelingForUpdate = _mapper.Map<Refueling>(refueling);
+            refuelingForUpdate.BurningFuelPerOneHundredKilometers = VehicleServiceHelpers.ReturnBurningPerOneHoundredKilometers(refueling);
+
+            refuelingForUpdate.FuelPrice = decimal.Multiply(refuelingForUpdate.AmountOfFuel, refuelingForUpdate.PriceForOneUnit);
+            refuelingForUpdate.ModifiedDateTime = DateTime.UtcNow;
+            bool isCorrectEdit = _vehicleRepository.EditRefueling(refuelingForUpdate);
+
+            if (isCorrectEdit == true) return true;
+            else return false;
         }
     }
 }

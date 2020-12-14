@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "P8hqMglWfHCXL+uGRUY2UNFHn9pr5xgc3GvDwCwPdLPTBWOYm49QG18HfkGNBTPP9LVG+t7PFEXxXfxrlhvhzw==",
+  "dgSpecHash": "Ocip5AzxQUiLUz6lS9MTQCaYXzsR2XuTAOG7uBYnKjU5AZiBnQ4r2y1ME8wXJb2GDgrgbkRFVJSbEfZCVRe/UQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\wagne\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.9\\microsoft.aspnetcore.cryptography.internal.3.1.9.nupkg.sha512",
     "C:\\Users\\wagne\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.9\\microsoft.aspnetcore.cryptography.keyderivation.3.1.9.nupkg.sha512",
@@ -108,7 +108,8 @@
     "C:\\Users\\wagne\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\wagne\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\wagne\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\wagne\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
+    "C:\\Users\\wagne\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
+    "C:\\Users\\wagne\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512"
   ],
   "logs": []
 }

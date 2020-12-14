@@ -8,8 +8,8 @@
 <h1>Historia zdarzeń</h1>
 
 @{
-    var tmpData = TempData["emptyCarHistory"];
-    var tmpDataScs = TempData["refuellingSuccessfullyOrNotAdded"];
+    var tmpData = TempData["InCorrectOperation"];
+    var tmpDataScs = TempData["CorrectOperation"];
 
     if (tmpData != null || tmpDataScs != null)
     {
@@ -57,6 +57,12 @@
                 {
                     <td>
                         @Html.ActionLink("Sczegóły", "RefuelingDetails", "Vehicle", new { id = item.RefulingRef })
+
+                        @if (Model.CarHistoryList[0].RefulingRef.Equals(item.RefulingRef))
+                        {
+                            @Html.ActionLink("Usuń", "RemoveRefueling", "Vehicle", new { id = item.RefulingRef })
+                            @Html.ActionLink("Edytuj", "EditRefueling", "Vehicle", new { id = item.RefulingRef })
+                        }
 
                     </td>
                 }

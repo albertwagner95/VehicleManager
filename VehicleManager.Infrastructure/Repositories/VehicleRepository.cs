@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using VehicleManager.Domain.Interfaces;
 using VehicleManager.Domain.Model;
@@ -53,8 +54,6 @@ namespace VehicleManager.Infrastructure.Repositories
             IQueryable<VehicleType> types = _context.VehicleTypes;
             return types;
         }
-
-
 
         public Vehicle GetVehicleById(int? vehicleId)
         {
@@ -125,7 +124,7 @@ namespace VehicleManager.Infrastructure.Repositories
         }
         public IQueryable<Refueling> GetAllRefuelings()
         {
-            var refuelings = _context.Refulings;
+            var refuelings = _context.Refulings.Where(x => x.IsActive == true);
             return refuelings;
         }
         public IQueryable<CarHistory> GetAllVehicleHistory()
@@ -139,6 +138,48 @@ namespace VehicleManager.Infrastructure.Repositories
             var refueling = _context.Refulings.FirstOrDefault(x => x.Id.Equals(refuelingId));
             if (refueling is null) return null;
             return refueling;
+        }
+
+        public bool DeleteRefueling(string refuelingId, CarHistory vehicleHistory, Vehicle vehicle)
+        {
+            var refueling = _context.Refulings.Find(refuelingId);
+
+            if (refueling != null && vehicleHistory != null)
+            {
+                refueling.IsActive = false;
+                _context.Attach(vehicleHistory);
+                _context.Entry(vehicleHistory).Property("IsActive").IsModified = true;
+
+                _context.Attach(vehicle);
+                _context.Entry(vehicle).Property("Millage").IsModified = true;
+                _context.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool EditRefueling(Refueling vehicleForUpdate)
+        {
+            if (vehicleForUpdate is null) return false;
+
+            _context.Attach(vehicleForUpdate);
+            _context.Entry(vehicleForUpdate).Property("AmountOfFuel").IsModified = true;
+            _context.Entry(vehicleForUpdate).Property("FuelPrice").IsModified = true;
+            _context.Entry(vehicleForUpdate).Property("PriceForOneUnit").IsModified = true;
+            _context.Entry(vehicleForUpdate).Property("MeterStatus").IsModified = true;
+            _context.Entry(vehicleForUpdate).Property("PetrolStationName").IsModified = true;
+            _context.Entry(vehicleForUpdate).Property("IsRefulingFull").IsModified = true;
+            _context.Entry(vehicleForUpdate).Property("Varnings").IsModified = true;
+            _context.Entry(vehicleForUpdate).Property("VehicleId").IsModified = true;
+            _context.Entry(vehicleForUpdate).Property("BurningFuelPerOneHundredKilometers").IsModified = true;
+            _context.Entry(vehicleForUpdate).Property("UnitOfFuelId").IsModified = true;
+            _context.Entry(vehicleForUpdate).Property("FuelForRefuelingId").IsModified = true;
+            _context.Entry(vehicleForUpdate).Property("ModifiedDateTime").IsModified = true;
+
+            _context.SaveChanges();
+
+            return true;
         }
     }
 }
