@@ -212,7 +212,6 @@ namespace VehicleManager.Web.Controllers
             refueling.FuelName = _vehicleService.GetFuelNameById(refueling.FuelForRefuelingId);
             return View(refueling);
         }
-
         [HttpGet]
         public IActionResult RemoveRefueling(string id)
         {
