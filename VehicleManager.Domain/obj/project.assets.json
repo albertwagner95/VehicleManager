@@ -411,11 +411,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj",
+      "projectUniqueName": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\Nowy folder\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj",
       "projectName": "VehicleManager.Domain",
-      "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj",
+      "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\Nowy folder\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj",
       "packagesPath": "C:\\Users\\wagne\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Domain\\obj\\",
+      "outputPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\Nowy folder\\VehicleManager\\VehicleManager.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\wagne\\AppData\\Roaming\\NuGet\\NuGet.Config",

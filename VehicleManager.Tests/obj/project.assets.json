@@ -8561,11 +8561,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Tests\\VehicleManager.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\Nowy folder\\VehicleManager\\VehicleManager.Tests\\VehicleManager.Tests.csproj",
       "projectName": "VehicleManager.Tests",
-      "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Tests\\VehicleManager.Tests.csproj",
+      "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\Nowy folder\\VehicleManager\\VehicleManager.Tests\\VehicleManager.Tests.csproj",
       "packagesPath": "C:\\Users\\wagne\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Tests\\obj\\",
+      "outputPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\Nowy folder\\VehicleManager\\VehicleManager.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\wagne\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -8582,11 +8582,11 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Application\\VehicleManager.Application.csproj": {
-              "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Application\\VehicleManager.Application.csproj"
+            "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\Nowy folder\\VehicleManager\\VehicleManager.Application\\VehicleManager.Application.csproj": {
+              "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\Nowy folder\\VehicleManager\\VehicleManager.Application\\VehicleManager.Application.csproj"
             },
-            "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj"
+            "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\Nowy folder\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\Nowy folder\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj"
             }
           }
         }

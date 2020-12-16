@@ -712,11 +712,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Application\\VehicleManager.Application.csproj",
+      "projectUniqueName": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\Nowy folder\\VehicleManager\\VehicleManager.Application\\VehicleManager.Application.csproj",
       "projectName": "VehicleManager.Application",
-      "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Application\\VehicleManager.Application.csproj",
+      "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\Nowy folder\\VehicleManager\\VehicleManager.Application\\VehicleManager.Application.csproj",
       "packagesPath": "C:\\Users\\wagne\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Application\\obj\\",
+      "outputPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\Nowy folder\\VehicleManager\\VehicleManager.Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\wagne\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -733,8 +733,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj": {
-              "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj"
+            "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\Nowy folder\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj": {
+              "projectPath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\Nowy folder\\VehicleManager\\VehicleManager.Domain\\VehicleManager.Domain.csproj"
             }
           }
         }

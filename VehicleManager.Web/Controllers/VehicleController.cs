@@ -136,7 +136,7 @@ namespace VehicleManager.Web.Controllers
         {
             var model = new NewRefulingVm()
             {
-                UserCars = _vehicleService.GetUserCars(_userManager.GetUserId(User)),
+                VehiclesList = _vehicleService.GetUserCars(_userManager.GetUserId(User)),
                 VehicleFuelTypes = _vehicleService.GetAllFuelsTypesForRefuling(),
                 UnitOfFuelForList = _vehicleService.GetUnitsOfFuels()
             };
@@ -165,7 +165,7 @@ namespace VehicleManager.Web.Controllers
             {
                 model.VehicleFuelTypes = _vehicleService.GetAllFuelsTypesForRefuling();
                 model.UnitOfFuelForList = _vehicleService.GetUnitsOfFuels();
-                model.UserCars = _vehicleService.GetUserCars(_userManager.GetUserId(User));
+                model.VehiclesList = _vehicleService.GetUserCars(_userManager.GetUserId(User));
                 return View(model);
             }
             var carHistory = _vehicleService.ReturnCarHistoryToAdd("Tankowanie", _userManager.GetUserId(User));
@@ -190,15 +190,7 @@ namespace VehicleManager.Web.Controllers
             }
             return View(historyForVehicle);
         }
-        public IActionResult VehicleHistoryCarList()
-        {
-            var vehicles = _vehicleService.GetUserCars(_userManager.GetUserId(User));
-            if (vehicles != null)
-            {
-                return View(vehicles);
-            }
-            return View();
-        }
+
         public IActionResult RefuelingDetails(string id)
         {
             RefuelDetailsVm refueling = _vehicleService.GetRefuelById(id);
@@ -219,18 +211,19 @@ namespace VehicleManager.Web.Controllers
             {
                 return NotFound();
             }
-            var refuel = _vehicleService.GetRefuelById(id);
-            if (refuel == null)
+            var refueling = _vehicleService.GetRefuelById(id);
+            if (refueling == null)
             {
                 return NotFound();
             }
-            return View(refuel);
+            return View(refueling);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult RemoveRefueling(RefuelDetailsVm refueling)
         {
+            var vehicleId = refueling.VehicleId;
             if (refueling == null)
             {
                 TempData["InCorrectOperation"] = "Nie udało się usunąć tankowania";
@@ -240,8 +233,10 @@ namespace VehicleManager.Web.Controllers
             if (isRemove == true)
             {
                 TempData["CorrectOperation"] = $"Pomyślnie usunąłeś tankowanie z dnia {refueling.CreateDate}";
+                return RedirectToAction("VehicleHistory", "Vehicle", new { id = vehicleId });
             }
-            return RedirectToAction("VehicleHistory", "Vehicle", new { id = refueling.VehicleId });
+            return RedirectToAction("VehicleHistory", "Vehicle", new { id = vehicleId });
+
         }
 
         [HttpGet]

@@ -43,9 +43,10 @@
 
 
                 <td>
-                    @Html.ActionLink("Edit", "EditVehicle", "Vehicle", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "VehicleDetails", "Vehicle", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", "Vehicle", new { id = item.Id })
+                    @Html.ActionLink("Edytuj", "EditVehicle", "Vehicle", new { id = item.Id }) |
+                    @Html.ActionLink("Szczegóły pojazdu", "VehicleDetails", "Vehicle", new { id = item.Id }) |
+                    @Html.ActionLink("Usuń pojazd", "Delete", "Vehicle", new { id = item.Id })
+                    @Html.ActionLink("Historia zdarzeń", "VehicleHistory", "Vehicle", new { id = item.Id })
                 </td>
             </tr>
         }

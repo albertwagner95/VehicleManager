@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Ocip5AzxQUiLUz6lS9MTQCaYXzsR2XuTAOG7uBYnKjU5AZiBnQ4r2y1ME8wXJb2GDgrgbkRFVJSbEfZCVRe/UQ==",
+  "dgSpecHash": "fo82rrMNUukLr7jrqEel9dD8avdIhD5CdUiZTmxtYddO1CPBNoI6P57iZm9PpkEXKH1vKjMlA/ke5HKiEiXrcg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\Nowy folder\\VehicleManager\\VehicleManager.Infrastructure\\VehicleManager.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\wagne\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.9\\microsoft.aspnetcore.cryptography.internal.3.1.9.nupkg.sha512",
     "C:\\Users\\wagne\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.9\\microsoft.aspnetcore.cryptography.keyderivation.3.1.9.nupkg.sha512",

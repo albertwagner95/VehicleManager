@@ -16,3 +16,12 @@ C:\Users\wagne\Desktop\Kurs programista asp.net core\notprod\VehicleManager\Vehi
 C:\Users\wagne\Desktop\Kurs programista asp.net core\notprod\VehicleManager\VehicleManager.Domain\obj\Debug\netcoreapp3.1\VehicleManager.Domain.csproj.CoreCompileInputs.cache
 C:\Users\wagne\Desktop\Kurs programista asp.net core\notprod\VehicleManager\VehicleManager.Domain\obj\Debug\netcoreapp3.1\VehicleManager.Domain.dll
 C:\Users\wagne\Desktop\Kurs programista asp.net core\notprod\VehicleManager\VehicleManager.Domain\obj\Debug\netcoreapp3.1\VehicleManager.Domain.pdb
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Domain\bin\Debug\netcoreapp3.1\VehicleManager.Domain.deps.json
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Domain\bin\Debug\netcoreapp3.1\VehicleManager.Domain.dll
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Domain\bin\Debug\netcoreapp3.1\VehicleManager.Domain.pdb
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Domain\obj\Debug\netcoreapp3.1\VehicleManager.Domain.csprojAssemblyReference.cache
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Domain\obj\Debug\netcoreapp3.1\VehicleManager.Domain.AssemblyInfoInputs.cache
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Domain\obj\Debug\netcoreapp3.1\VehicleManager.Domain.AssemblyInfo.cs
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Domain\obj\Debug\netcoreapp3.1\VehicleManager.Domain.csproj.CoreCompileInputs.cache
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Domain\obj\Debug\netcoreapp3.1\VehicleManager.Domain.dll
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Domain\obj\Debug\netcoreapp3.1\VehicleManager.Domain.pdb

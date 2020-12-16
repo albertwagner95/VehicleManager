@@ -28,3 +28,18 @@ C:\Users\wagne\Desktop\Kurs programista asp.net core\notprod\VehicleManager\Vehi
 C:\Users\wagne\Desktop\Kurs programista asp.net core\notprod\VehicleManager\VehicleManager.Infrastructure\obj\Debug\netcoreapp3.1\VehicleManager.Infrastructure.dll
 C:\Users\wagne\Desktop\Kurs programista asp.net core\notprod\VehicleManager\VehicleManager.Infrastructure\obj\Debug\netcoreapp3.1\VehicleManager.Infrastructure.pdb
 C:\Users\wagne\Desktop\Kurs programista asp.net core\notprod\VehicleManager\VehicleManager.Infrastructure\obj\Debug\netcoreapp3.1\VehicleManager.Infrastructure.genruntimeconfig.cache
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Infrastructure\bin\Debug\netcoreapp3.1\VehicleManager.Infrastructure.deps.json
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Infrastructure\bin\Debug\netcoreapp3.1\VehicleManager.Infrastructure.runtimeconfig.json
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Infrastructure\bin\Debug\netcoreapp3.1\VehicleManager.Infrastructure.runtimeconfig.dev.json
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Infrastructure\bin\Debug\netcoreapp3.1\VehicleManager.Infrastructure.dll
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Infrastructure\bin\Debug\netcoreapp3.1\VehicleManager.Infrastructure.pdb
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Infrastructure\bin\Debug\netcoreapp3.1\VehicleManager.Domain.dll
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Infrastructure\bin\Debug\netcoreapp3.1\VehicleManager.Domain.pdb
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Infrastructure\obj\Debug\netcoreapp3.1\VehicleManager.Infrastructure.csprojAssemblyReference.cache
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Infrastructure\obj\Debug\netcoreapp3.1\VehicleManager.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Infrastructure\obj\Debug\netcoreapp3.1\VehicleManager.Infrastructure.AssemblyInfo.cs
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Infrastructure\obj\Debug\netcoreapp3.1\VehicleManager.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Infrastructure\obj\Debug\netcoreapp3.1\VehicleManager.Infrastructure.csproj.CopyComplete
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Infrastructure\obj\Debug\netcoreapp3.1\VehicleManager.Infrastructure.dll
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Infrastructure\obj\Debug\netcoreapp3.1\VehicleManager.Infrastructure.pdb
+C:\Users\wagne\Desktop\Kurs programista asp.net core\Nowy folder\VehicleManager\VehicleManager.Infrastructure\obj\Debug\netcoreapp3.1\VehicleManager.Infrastructure.genruntimeconfig.cache

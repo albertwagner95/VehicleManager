@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sPxcWIAUNUOL+FiTqwCuht+hKTkyDoJxaJGj7WhuUEljszeAW/w8wa+S4U5Jn3VqTsg47CFxWkCHtQTWPZDFNw==",
+  "dgSpecHash": "Kplp3SlgWOboyDKco8DQ+eqfDNN2KN5JzJHcPziVCwjU0Ryo/6Tgmd1tqBONlsptHaK1Erwa6RDZVD+LEG4MWA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\notprod\\VehicleManager\\VehicleManager.Web\\VehicleManager.Web.csproj",
+  "projectFilePath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\Nowy folder\\VehicleManager\\VehicleManager.Web\\VehicleManager.Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\wagne\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\wagne\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.0\\automapper.extensions.microsoft.dependencyinjection.8.1.0.nupkg.sha512",
