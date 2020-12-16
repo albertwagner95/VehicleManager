@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Threading.Tasks;
 using VehicleManager.Application.Interfaces;
 using VehicleManager.Application.ViewModels.AddressVm;
 using VehicleManager.Application.ViewModels.Vehicle;
@@ -45,7 +46,7 @@ namespace VehicleManager.Web.Controllers
             var model = new NewVehicleVm()
             {
                 VehicleFuelTypes = _vehicleService.GetAllFuelsTypes().ToList(),
-                VehicleBrandNames = _vehicleService.GetAllBrandNames().ToList(),
+                VehicleBrandNames = _vehicleService.GetAllBrandNames(),
                 VehicleTypes = _vehicleService.GetVehicleTypes().ToList(),
                 ApplicationUserID = userId
             };
@@ -59,7 +60,7 @@ namespace VehicleManager.Web.Controllers
             if (!ModelState.IsValid)
             {
                 models.VehicleFuelTypes = _vehicleService.GetAllFuelsTypes();
-                models.VehicleBrandNames = _vehicleService.GetAllBrandNames().ToList();
+                models.VehicleBrandNames = _vehicleService.GetAllBrandNames();
                 models.VehicleTypes = _vehicleService.GetVehicleTypes().ToList();
                 return View(models);
             }
@@ -104,7 +105,7 @@ namespace VehicleManager.Web.Controllers
 
             vehicle.YearHelper = vehicle.ProductionDate.Year;
             vehicle.VehicleFuelTypes = _vehicleService.GetAllFuelsTypes().ToList();
-            vehicle.VehicleBrandNames = _vehicleService.GetAllBrandNames().ToList();
+            vehicle.VehicleBrandNames = _vehicleService.GetAllBrandNames();
             vehicle.VehicleTypes = _vehicleService.GetVehicleTypes().ToList();
             return View(vehicle);
         }
@@ -123,7 +124,7 @@ namespace VehicleManager.Web.Controllers
             {
                 vehicle.YearHelper = vehicle.ProductionDate.Year;
                 vehicle.VehicleFuelTypes = _vehicleService.GetAllFuelsTypes();
-                vehicle.VehicleBrandNames = _vehicleService.GetAllBrandNames().ToList();
+                vehicle.VehicleBrandNames = _vehicleService.GetAllBrandNames();
                 vehicle.VehicleTypes = _vehicleService.GetVehicleTypes().ToList();
                 return View(vehicle);
             }
@@ -192,7 +193,7 @@ namespace VehicleManager.Web.Controllers
         public IActionResult RefuelingDetails(string id)
         {
             RefuelDetailsVm refueling = _vehicleService.GetRefuelById(id);
-            if(refueling == null)
+            if (refueling == null)
             {
                 ViewBag.NullVehicles = "Nie znaleziono takiego tankowania";
                 return View();
@@ -201,6 +202,59 @@ namespace VehicleManager.Web.Controllers
             refueling.UnitOfFuelName = _vehicleService.GetUnitsOfFuelNameById(refueling.UnitOfFuelId);
             refueling.FuelName = _vehicleService.GetFuelNameById(refueling.FuelForRefuelingId);
             return View(refueling);
+        }
+
+        //[HttpGet]
+        //public ActionResult DeleteEvent(string eventId, string eventTypeName)
+        //{
+        //    EventToDeleteVm eventToDelete = _vehicleService.GetEventToDelete(eventTypeName, eventId);
+        //    if (eventToDelete == null)
+        //    {
+        //        TempData["refuellingSuccessfullyOrNotAdded"] = "Zdarzenie nie usunięte";
+        //        return RedirectToAction("VehicleHistory", "Vehicle");
+        //    }
+        //    return View(eventToDelete);
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteEvent(EventToDeleteVm eventToDelete)
+        //{
+        //    bool isDelete = _vehicleService.DeleteEvent(eventToDelete);
+        //    if (isDelete == true)
+        //    {
+        //        TempData["refuellingSuccessfullyOrNotAdded"] = "Zdarzenie usunięte";
+        //    }
+        //    else
+        //    {
+        //        TempData["refuellingSuccessfullyOrNotAdded"] = "Zdarzenie nie usunięte, spróbuj ponownie lubc skontaktuj się z pomocą techniczną aby zgłosić błąd, lub spróbuj ponownie!";
+        //    }
+        //    return RedirectToAction("VehicleHistory", "Vehicle");
+        //}
+
+        // GET: Movies/Delete/5
+        public IActionResult DeleteEvent(string eventId, string eventTypeName)
+        {
+            if (eventId == null)
+            {
+                return NotFound();
+            }
+            EventToDeleteVm eventModel = _vehicleService.GetEventToDelete(eventTypeName, eventId);
+            if (eventModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(eventModel);
+        }
+
+        // POST: Movies/Delete/5
+        [HttpPost, ActionName("DeleteEvent")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(EventToDeleteVm eventModel)
+        {
+            _vehicleService.DeleteEvent(eventModel);
+            return RedirectToAction("VehicleHistory", "Vehicle");
         }
     }
 }

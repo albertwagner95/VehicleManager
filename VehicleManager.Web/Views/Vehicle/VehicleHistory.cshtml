@@ -56,10 +56,10 @@
                 @if (item.Name.ToUpper().Equals("TANKOWANIE"))
                 {
                     <td>
-                        @Html.ActionLink("Sczegóły", "RefuelingDetails", "Vehicle", new { id = item.RefulingRef })
-
+                        @Html.ActionLink("Sczegóły", "RefuelingDetails", "Vehicle", new { id = item.RefulingRef })|
+                        @Html.ActionLink("Usuń tankowanie", "DeleteEvent", "Vehicle", new { eventId = item.RefulingRef, eventTypeName = "TANKOWANIE"})
                     </td>
-                }
+                } 
 
             </tr>
         }

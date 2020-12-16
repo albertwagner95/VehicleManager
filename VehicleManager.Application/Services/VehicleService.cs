@@ -63,9 +63,23 @@ namespace VehicleManager.Application.Services
                 return null;
             }
         }
-        public IQueryable<VehicleBrandNameVm> GetAllBrandNames()
+        public List<VehicleBrandNameVm> GetAllBrandNames()
         {
-            var vehicleBrandNames = _vehicleRepository.GetVehicleBrandNames().ProjectTo<VehicleBrandNameVm>(_mapper.ConfigurationProvider);
+            List<VehicleBrandNameVm> vehicleBrandNames = null;
+            try
+            {
+                vehicleBrandNames = _vehicleRepository.GetVehicleBrandNames()
+                .ProjectTo<VehicleBrandNameVm>(_mapper.ConfigurationProvider)
+                .Where(x=>x.IsActive == true)
+                .OrderBy(x=>x.Name)
+                .ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+
             return vehicleBrandNames;
         }
 
@@ -133,7 +147,7 @@ namespace VehicleManager.Application.Services
         public string GetFuelTypeName(int fuelTypeId)
         {
             var name = _vehicleRepository.GetVehicleFuelTypes()
-                .Where(x => x.Id == fuelTypeId)
+                .Where(x => x.Id == fuelTypeId && x.IsActive == true)
                 .Select(p => p.Name)
                 .Single();
             return name.ToString();
@@ -142,7 +156,7 @@ namespace VehicleManager.Application.Services
         public string GetBrandName(int brandNameId)
         {
             var name = _vehicleRepository.GetVehicleBrandNames()
-                .Where(x => x.Id == brandNameId)
+                .Where(x => x.Id == brandNameId && x.IsActive == true)
                 .Select(p => p.Name)
                 .Single();
             return name.ToString();
@@ -151,7 +165,7 @@ namespace VehicleManager.Application.Services
         public string GetTypeName(int typeId)
         {
             var name = _vehicleRepository.GetVehicleTypes()
-                .Where(x => x.Id == typeId)
+                .Where(x => x.Id == typeId && x.IsActive == true)
                 .Select(p => p.Name)
                 .Single();
             return name.ToString();
@@ -159,20 +173,37 @@ namespace VehicleManager.Application.Services
 
         public ListForUserCarsForListVm GetUserCars(string userId)
         {
-            var userCarsList = _vehicleRepository.GetVehicles()
-                .Where(x => x.ApplicationUserID.Equals(userId) && x.IsActive == true).ProjectTo<UserCarsForListVm>(_mapper.ConfigurationProvider)
+            List<UserCarsForListVm> userCarsList = null;
+
+            try
+            {
+                userCarsList = _vehicleRepository.GetVehicles()
+                .Where(x => x.ApplicationUserID.Equals(userId) && x.IsActive == true)
+                .ProjectTo<UserCarsForListVm>(_mapper.ConfigurationProvider)
+                .OrderBy(x => x.Name)
                 .ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
 
-            var userCars = new ListForUserCarsForListVm();
-            userCars.UserCars = userCarsList;
+            if (userCarsList != null)
+            {
+                var userCars = new ListForUserCarsForListVm();
+                userCars.UserCars = userCarsList;
+                return userCars;
+            }
 
-            return userCars;
+            return null;
         }
 
         public ListForUnitOfFuelForListVm GetUnitsOfFuels()
         {
             var unitsOfFuel = _vehicleRepository.GetUnitsOfFuel().ProjectTo<UnitOfFuelForListVm>(_mapper.ConfigurationProvider)
+                .Where(x => x.IsActive == true)
                 .ToList();
+
             var unitsOfFuelist = new ListForUnitOfFuelForListVm();
             unitsOfFuelist.UnitOfFuelList = unitsOfFuel;
 
@@ -262,7 +293,7 @@ namespace VehicleManager.Application.Services
         public ListCarHistoryForListVm GetUserVehicleHistory(string userId)
         {
             var vehicleHistories = _vehicleRepository.GetAllVehicleHistory();
-            var refuelings = _vehicleRepository.GetAllRefuelings();
+            var refuelings = _vehicleRepository.GetAllRefuelings().Where(x => x.IsActive == true);
 
             var result = from vh in vehicleHistories
                          join rf in refuelings on vh.RefulingRef equals rf.Id
@@ -275,8 +306,9 @@ namespace VehicleManager.Application.Services
                              ApplicationUserID = vh.ApplicationUserID,
                              RefulingRef = vh.RefulingRef
                          };
-            var forRes = result.Where(x => x.ApplicationUserID.Equals(userId)).OrderByDescending(x=>x.CreatedDateTime).ToList();
-            
+            var forRes = result.Where(x => x.ApplicationUserID.Equals(userId))
+                .OrderByDescending(x => x.CreatedDateTime).ToList();
+
             var userVehicleHistoryVm = new ListCarHistoryForListVm()
             {
                 CarHistoryList = forRes
@@ -320,22 +352,68 @@ namespace VehicleManager.Application.Services
 
         public string GetUnitsOfFuelNameById(int unitOfFuelId)
         {
-            string unitName = GetUnitsOfFuels().UnitOfFuelList.FirstOrDefault(x => x.Id == unitOfFuelId).Name;
-            if (unitName == null)
+            string unitName = "";
+
+            try
             {
-                return "Brak danych";
+                unitName = GetUnitsOfFuels().UnitOfFuelList.FirstOrDefault(x => x.Id == unitOfFuelId).Name;
+            }
+            catch (Exception e)
+            {
+                return "Brak danych - skontaktuj się z administratorem";
+            }
+
+            if (string.IsNullOrEmpty(unitName))
+            {
+                return "Brak danych - skontaktuj się z administratorem";
             }
             return unitName;
         }
 
         public string GetFuelNameById(int fuelForRefuelingId)
         {
-            string fuelName = GetAllFuelsTypesForRefuling().FuelTypeForRefuelingForLists.FirstOrDefault(x => x.Id == fuelForRefuelingId).Name;
-            if (fuelName == null)
+            string fuelName = "";
+            try
             {
-                return "Brak danych";
+                fuelName = GetAllFuelsTypesForRefuling().FuelTypeForRefuelingForLists.Where(x => x.IsActive == true)
+                    .FirstOrDefault(x => x.Id == fuelForRefuelingId).Name;
+            }
+            catch (Exception e)
+            {
+                return "Brak danych - skontaktuj się z administratorem";
+            }
+            if (string.IsNullOrEmpty(fuelName))
+            {
+                return "Brak danych - skontaktuj się z administratorem";
             }
             return fuelName;
+        }
+
+        public EventToDeleteVm GetEventToDelete(string name, string id)
+        {
+            if (name.ToUpper().Equals("TANKOWANIE"))
+            {
+                var refuelToDelete = _vehicleRepository.GetRefuelingById(id);
+                EventToDeleteVm refVm = new EventToDeleteVm()
+                {
+                    Id = refuelToDelete.Id,
+                    Name = name,
+                    CreatedDateTime = refuelToDelete.CreatedDateTime
+                };
+                return refVm;
+            }
+            return null;
+        }
+
+        public bool DeleteEvent(EventToDeleteVm eventToDelete)
+        {
+            if (eventToDelete.Name.ToUpper().Equals("TANKOWANIE"))
+            {
+                var refuelingToDelete = _vehicleRepository.GetRefuelingById(eventToDelete.Id);
+                bool isDeleteRefuel = _vehicleRepository.DeleteRefuel(refuelingToDelete);
+                return isDeleteRefuel;
+            }
+            return false;
         }
     }
 }

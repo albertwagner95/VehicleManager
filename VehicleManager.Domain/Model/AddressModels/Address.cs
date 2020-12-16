@@ -1,4 +1,6 @@
-﻿using VehicleManager.Domain.Common;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using VehicleManager.Domain.Common;
 
 namespace VehicleManager.Domain.Model.AddressModels
 {
@@ -8,6 +10,9 @@ namespace VehicleManager.Domain.Model.AddressModels
         public string Voivodeship { get; set; }
         public string District { get; set; }
         public string City { get; set; }
+        [Required]
+        [MaxLength(10)]
+        [Column(TypeName = "varchar(10)")]
         public string ZipCode { get; set; }
         public string Community { get; set; }
         public string CityType { get; set; }

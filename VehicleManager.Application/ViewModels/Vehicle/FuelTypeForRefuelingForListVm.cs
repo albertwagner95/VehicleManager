@@ -8,10 +8,11 @@ namespace VehicleManager.Application.ViewModels.Vehicle
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool IsActive { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<FuelTypeForRefuelingForListVm, FuelForRefueling>().ReverseMap();
+            profile.CreateMap<FuelForRefueling, FuelTypeForRefuelingForListVm>();
         }
     }
 }

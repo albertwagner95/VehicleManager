@@ -140,5 +140,16 @@ namespace VehicleManager.Infrastructure.Repositories
             if (refueling is null) return null;
             return refueling;
         }
+
+        public bool DeleteRefuel(Refueling refuelingToDelete)
+        {
+            if (refuelingToDelete != null)
+            {
+                refuelingToDelete.IsActive = false;
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }

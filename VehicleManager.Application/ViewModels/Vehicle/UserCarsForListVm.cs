@@ -10,11 +10,12 @@ namespace VehicleManager.Application.ViewModels.Vehicle
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool IsActive { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<UserCarsForListVm, Domain.Model.Vehicle>().ReverseMap()
-                .ForMember(s => s.Name, opt => opt.MapFrom(x => string.Concat(x.VehicleBrandName.Name, " ", x.Model)));
+                .ForMember(s => s.Name, opt => opt.MapFrom(x => string.Concat(x.VehicleBrandName.Name, " ", x.Model, " ", x.RegistrationNumber)));
         }
     }
 }

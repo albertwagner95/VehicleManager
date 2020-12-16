@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "OkyCXXD0E3AFGamEUuHGyLz5wAo0BUmOZwhc3pGL3cfazaykLuTCmok+GSWsIcRedXOx45P96IGSreOZ2cm/RA==",
+  "dgSpecHash": "0od/cnyMPfXQhKBizToyFn6ZaJtB7c6xU+u/TL0nLsmJ2pTn7vRmIU27Dq8SlcdTQnqoyZrC7pRG9aPwPA88Bw==",
   "success": true,
   "projectFilePath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Application\\VehicleManager.Application.csproj",
   "expectedPackageFiles": [
@@ -24,7 +24,8 @@
     "C:\\Users\\wagne\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\3.1.9\\microsoft.extensions.logging.abstractions.3.1.9.nupkg.sha512",
     "C:\\Users\\wagne\\.nuget\\packages\\microsoft.extensions.options\\3.1.9\\microsoft.extensions.options.3.1.9.nupkg.sha512",
     "C:\\Users\\wagne\\.nuget\\packages\\microsoft.extensions.primitives\\3.1.9\\microsoft.extensions.primitives.3.1.9.nupkg.sha512",
-    "C:\\Users\\wagne\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512"
+    "C:\\Users\\wagne\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512",
+    "C:\\Users\\wagne\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512"
   ],
   "logs": []
 }

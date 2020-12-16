@@ -12,7 +12,7 @@ namespace VehicleManager.Application.Interfaces
         void DeleteVehicle(DeleteVehicleVm vehicle);
         void EditVehicle(NewVehicleVm vehicle);
         List<VehicleFuelTypeVm> GetAllFuelsTypes();
-        IQueryable<VehicleBrandNameVm> GetAllBrandNames();
+        List<VehicleBrandNameVm> GetAllBrandNames();
         IQueryable<VehicleTypeVm> GetVehicleTypes();
         VehicleDetailsVm GetVehicleDetails(int vehicleId);
         NewVehicleVm GetVehicleForEdit(int? vehicleId);
@@ -31,5 +31,7 @@ namespace VehicleManager.Application.Interfaces
         string GetVehicleNameById(int vehicleId);
         string GetUnitsOfFuelNameById(int unitOfFuelId);
         string GetFuelNameById(int fuelForRefuelingId);
+        EventToDeleteVm GetEventToDelete(string name, string id);
+        bool DeleteEvent(EventToDeleteVm eventToDelete);
     }
 }
