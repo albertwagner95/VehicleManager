@@ -8,10 +8,12 @@ using System.Linq;
 using VehicleManager.Application.Mapping;
 using VehicleManager.Application.Services;
 using VehicleManager.Application.ViewModels;
+using VehicleManager.Application.ViewModels.AddressVm;
 using VehicleManager.Application.ViewModels.Vehicle;
 using VehicleManager.Domain.Interfaces;
 using VehicleManager.Domain.Model;
 using VehicleManager.Domain.Model.VehicleModels;
+using VehicleManager.Tests.Initializer;
 using Xunit;
 using VehicleService = VehicleManager.Application.Services.VehicleService;
 
@@ -28,35 +30,37 @@ namespace VehicleManager.Tests.Services
             var vehicleBrands = new List<VehicleBrandName>();
             vehicleBrands.Add(ford);
             vehicleBrands.Add(opel);
+
             var mapper = new Mock<IMapper>();
             var vehicleRepository = new Mock<IVehicleRepository>();
             vehicleRepository.Setup(x => x.GetVehicleBrandNames()).Returns(vehicleBrands.AsQueryable());
             var vehicleService = new VehicleService(vehicleRepository.Object, mapper.Object);
-
+            //Act
             var result = vehicleService.GetBrandName(1);
             var secondResult = vehicleService.GetBrandName(2);
-
+            var thirdResult = vehicleService.GetBrandName(3);
+            //Asertions
             result.Should().Be("Ford");
             secondResult.Should().Be("Opel");
+            thirdResult.Should().Be("");
         }
         [Fact]
         public void ShouldReturnCarHistory()
         {
             //Arrange
-            var listVehicleHistories = new List<CarHistory>();
-            var listRefulings = new List<Refueling>();
+            List<CarHistory> listVehicleHistories = new List<CarHistory>();
+            List<Event> listEvents = new List<Event>();
             listVehicleHistories.Add(new CarHistory
             {
                 Id = "1",
                 ApplicationUserID = "1a",
-                RefulingRef = "1r",
+                EventRef = "1r",
                 CreatedDateTime = DateTime.Now,
                 Name = "Tankowanie",
                 IsActive = true,
                 CreatedById = "1a"
             });
-
-            listRefulings.Add(new Refueling
+            listEvents.Add(new Event
             {
                 Id = "1r",
                 IsActive = true,
@@ -68,7 +72,7 @@ namespace VehicleManager.Tests.Services
             var vehicleRepository = new Mock<IVehicleRepository>();
             var mapper = new Mock<IMapper>();
             vehicleRepository.Setup(x => x.GetAllVehicleHistory()).Returns(listVehicleHistories.AsQueryable());
-            vehicleRepository.Setup(x => x.GetAllRefuelings()).Returns(listRefulings.AsQueryable());
+            vehicleRepository.Setup(x => x.GetAllRefuelings()).Returns(listEvents.AsQueryable());
             var vehicleService = new VehicleService(vehicleRepository.Object, mapper.Object);
             //Act
             var result = vehicleService.GetUserVehicleHistory("1a");
@@ -81,34 +85,7 @@ namespace VehicleManager.Tests.Services
         public void ShouldReturnLastMillagerBeforeRefueling()
         {
             //Arrange
-            var listRefulings = new List<Refueling>();
-            listRefulings.Add(new Refueling
-            {
-                Id = "1r",
-                IsActive = true,
-                AmountOfFuel = 102,
-                MeterStatus = 900,
-                CreatedDateTime = DateTime.Now,
-                VehicleId = 10
-            });
-            listRefulings.Add(new Refueling
-            {
-                Id = "2r",
-                IsActive = true,
-                AmountOfFuel = 102,
-                MeterStatus = 1000,
-                CreatedDateTime = DateTime.Now,
-                VehicleId = 10
-            });
-            listRefulings.Add(new Refueling
-            {
-                Id = "3r",
-                IsActive = true,
-                AmountOfFuel = 102,
-                MeterStatus = 1100,
-                CreatedDateTime = DateTime.Now,
-                VehicleId = 10
-            });
+            List<Event> listRefulings = Initializer.Initializer.EvntInitializer();
 
             var vehicleRepository = new Mock<IVehicleRepository>();
             var mapper = new Mock<IMapper>();
@@ -127,33 +104,17 @@ namespace VehicleManager.Tests.Services
         public void ShouldReturnAllFuelsType()
         {
 
-            var firstFuelType = new VehicleFuelType();
-            firstFuelType.Id = 1;
-            firstFuelType.Name = "Gaz";
-            var secondFuelType = new VehicleFuelType();
-            secondFuelType.Id = 2;
-            secondFuelType.Name = "Benzyna";
-            var thirdFuelType = new VehicleFuelType();
-            thirdFuelType.Id = 3;
-            thirdFuelType.Name = "Olej napędowy";
-            var fuelTypesList = new List<VehicleFuelType>();
-            fuelTypesList.Add(firstFuelType);
-            fuelTypesList.Add(secondFuelType);
-            fuelTypesList.Add(thirdFuelType);
+            var fuelTypesList = Initializer.Initializer.FuelTypesInitializer();
 
-            var mapper = new Mock<IMapper>();
-            mapper.Setup(x => x.ConfigurationProvider)
-                .Returns(
-                    () => new MapperConfiguration(
-                        cfg => { cfg.CreateMap<VehicleFuelType, VehicleFuelTypeVm>(); }));
+            IMapper mapper = MapperConfig.Mapper();
 
             var vehicleRepository = new Mock<IVehicleRepository>();
             vehicleRepository.Setup(x => x.GetVehicleFuelTypes()).Returns(fuelTypesList.AsQueryable());
 
-            var vehicleService = new VehicleService(vehicleRepository.Object, mapper.Object);
+            var vehicleService = new VehicleService(vehicleRepository.Object, mapper);
 
             var vehicleRepositoryWithoutFuelNames = new Mock<IVehicleRepository>();
-            var vehicleServiceWithoutFuelNames = new VehicleService(vehicleRepositoryWithoutFuelNames.Object, mapper.Object);
+            var vehicleServiceWithoutFuelNames = new VehicleService(vehicleRepositoryWithoutFuelNames.Object, mapper);
 
             var allFuels = vehicleService.GetAllFuelsTypes();
             var withoutFuelNames = vehicleServiceWithoutFuelNames.GetAllFuelsTypes();
@@ -165,84 +126,23 @@ namespace VehicleManager.Tests.Services
 
             withoutFuelNames.Should().BeNullOrEmpty();
         }
-        //[Fact]
-        //public void ShouldReturnVehicleDetails()
-        //{
-        //    //Arrange
-        //    var fuelTypes = new List<VehicleFuelType>() { new VehicleFuelType() { Id = 1, IsActive = true, Name = "Benzyna" } };
-        //    var brands = new List<VehicleBrandName>() { new VehicleBrandName() { Id = 1, IsActive = true, Name = "Opel" } };
-        //    var vehicleTypes = new List<VehicleType>() { new VehicleType() { Id = 1, IsActive = true, Name = "Osobowy" } };
-        //    var vehicle = new Vehicle()
-        //    {
-        //        ApplicationUserID = "123@",
-        //        Capacity = 1500,
-        //        CreatedById = "123@",
-        //        CreatedDateTime = new DateTime(2000, 10, 10),
-        //        DateOfFirstRegistration = new DateTime(1999, 12, 12),
-        //        EngineCapacity = 1300,
-        //        EnginePower = 120,
-        //        Id = 1,
-        //        IsActive = true,
-        //        IsGasInstalation = true,
-        //        IsRegisterdInPoland = true,
-        //        Model = "Astra",
-        //        VehicleBrandNameId = 1,
-        //        VehicleFuelTypeId = 1,
-        //        ProductionDate = new DateTime(1999, 01, 01),
-        //        RegistrationNumber = "LUB6127",
-        //        VehicleTypeId = 1,
-        //        Millage = 15000,
-        //        OwnWeight = 800,
-        //        Vin = "ABCD12341082KRPLS",
-        //        PermissibleGrossWeight = 2000
-        //    };
 
-        //    var mapper = new Mock<IMapper>();
-        //    mapper.Setup(x => x.ConfigurationProvider)
-        //        .Returns(
-        //            () => new MapperConfiguration(
-        //                cfg => { cfg.CreateMap<VehicleDetailsVm, Vehicle>().ReverseMap(); }));
-
-        //    var repository = new Mock<IVehicleRepository>();
-        //    repository.Setup(x => x.GetVehicleFuelTypes()).Returns((fuelTypes.AsQueryable()));
-        //    repository.Setup(x => x.GetVehicleTypes()).Returns(vehicleTypes.AsQueryable());
-        //    repository.Setup(x => x.GetVehicleBrandNames()).Returns(brands.AsQueryable());
-        //    repository.Setup(x => x.GetVehicleById(1)).Returns(vehicle);
-
-        //    var service = new VehicleService(repository.Object, mapper.Object);
-
-        //    //Act
-        //    var vehicleDetails = service.GetVehicleDetails(1);
-
-        //    //Assert
-
-        //    vehicleDetails.Millage.Should().Be(15000);
-        //}
         [Fact]
         public void ShouldReturnFuelTypeNameById()
         {
             //Arrange
-            var fuelTypes = new List<FuelForRefueling>()
-            {
-                new FuelForRefueling() { Id = 1, IsActive = true, Name = "Benzyna" },
-                new FuelForRefueling(){ Id = 2, IsActive = false, Name = "Gaz" },
-                new FuelForRefueling(){ Id = 3, IsActive = true, Name = "" }
-            };
-            var mapper = new Mock<IMapper>();
-            mapper.Setup(x => x.ConfigurationProvider)
-                .Returns(
-                    () => new MapperConfiguration(
-                        cfg => { cfg.CreateMap<FuelForRefueling, FuelTypeForRefuelingForListVm>(); }));
+            List<FuelForRefueling> fuelTypes = Initializer.Initializer.FuelForRefuelingsInitializer();
+            IMapper mapper = MapperConfig.Mapper();
 
-            var repository = new Mock<IVehicleRepository>();
+            Mock<IVehicleRepository> repository = new Mock<IVehicleRepository>();
             repository.Setup(x => x.GetFuelTypesForRefueling()).Returns((fuelTypes.AsQueryable()));
 
-            var service = new VehicleService(repository.Object, mapper.Object);
+            VehicleService service = new VehicleService(repository.Object, mapper);
             //Act
-            var fuelName = service.GetFuelNameById(1);
-            var fuelNameTwo = service.GetFuelNameById(2);
-            var fuelNameThree = service.GetFuelNameById(3);
-            var fuelNameFour = service.GetFuelNameById(4);
+            string fuelName = service.GetFuelNameById(1);
+            string fuelNameTwo = service.GetFuelNameById(2);
+            string fuelNameThree = service.GetFuelNameById(3);
+            string fuelNameFour = service.GetFuelNameById(4);
             //Assert
             fuelName.Should().Be("Benzyna");
             fuelNameTwo.Should().Be("Brak danych - skontaktuj się z administratorem");
@@ -253,25 +153,15 @@ namespace VehicleManager.Tests.Services
         public void ShouldReturnUnitsOfFuel()
         {
             //Arrange
-            var unitsOfFuel = new List<UnitOfFuel>()
-            {
-            new UnitOfFuel() { Id =1,Name = "Litr", IsActive = true },
-            new UnitOfFuel() { Id =2,Name = "Kilo Wat", IsActive = true },
-            new UnitOfFuel() { Id =3,Name = "Galon", IsActive = true },
-            new UnitOfFuel() { Id =4,Name = "Baryłka", IsActive = false }
-            };
+            var unitsOfFuel = Initializer.Initializer.UnitsFuelInitializer();
 
-            var mapper = new Mock<IMapper>();
-            mapper.Setup(x => x.ConfigurationProvider)
-                .Returns(
-                    () => new MapperConfiguration(
-                        cfg => { cfg.CreateMap<UnitOfFuelForListVm, UnitOfFuel>().ReverseMap(); }));
+            IMapper mapper = MapperConfig.Mapper();
 
             var repository = new Mock<IVehicleRepository>();
             var repositoryWithoutUnits = new Mock<IVehicleRepository>();
             repository.Setup(x => x.GetUnitsOfFuel()).Returns(unitsOfFuel.AsQueryable());
-            var service = new VehicleService(repository.Object, mapper.Object);
-            var serviceWithoutUnits = new VehicleService(repositoryWithoutUnits.Object, mapper.Object);
+            var service = new VehicleService(repository.Object, mapper);
+            var serviceWithoutUnits = new VehicleService(repositoryWithoutUnits.Object, mapper);
             //Act
             var firstResult = service.GetUnitsOfFuels();
             var secondResult = serviceWithoutUnits.GetUnitsOfFuels();
@@ -290,34 +180,13 @@ namespace VehicleManager.Tests.Services
         public void ShouldReturnUserCars()
         {
 
-            var firstBrand = new VehicleBrandName() { Id = 1, Name = "Opel" };
-            var secondBrand = new VehicleBrandName() { Id = 2, Name = "Toyota" };
-            var thirdBrand = new VehicleBrandName() { Id = 3, Name = "Hyundai" };
-            //Arrange
-            var vehicleList = new List<Vehicle>()
-            {
-                new Vehicle(){Id = 1, ApplicationUserID = "1user",IsActive = true,Model = "Corsa",VehicleBrandNameId = 1, VehicleBrandName = firstBrand,RegistrationNumber ="LUB6127"},
-                new Vehicle(){Id = 2, ApplicationUserID = "1user",IsActive = true,Model = "Astra",VehicleBrandNameId = 1,VehicleBrandName=firstBrand,RegistrationNumber ="LUB6128"},
-                new Vehicle(){Id = 3, ApplicationUserID = "1user",IsActive = true,Model = "Verso",VehicleBrandNameId =2, VehicleBrandName = secondBrand,RegistrationNumber ="LUB6129"},
-                new Vehicle(){Id = 4, ApplicationUserID = "2user",IsActive = true,Model = "I30",VehicleBrandNameId =3, VehicleBrandName = thirdBrand,RegistrationNumber ="LUB6130"},
-                new Vehicle(){Id = 5, ApplicationUserID = "2user",IsActive = false,Model = "Tucson",VehicleBrandNameId =3,VehicleBrandName = thirdBrand,RegistrationNumber ="LUB6131"},
-                new Vehicle(){Id = 6, ApplicationUserID = "3user",IsActive = true,Model = "Santa Fe",VehicleBrandNameId =3,VehicleBrandName = thirdBrand,RegistrationNumber ="LUB6132"},
-                new Vehicle(){Id = 7, ApplicationUserID = "2user",IsActive = true,Model = "Santa Fe",VehicleBrandNameId =3,VehicleBrandName = thirdBrand,RegistrationNumber ="LUB6133"}
-            };
+            List<Vehicle> vehicleList = Initializer.Initializer.VehiclesInitalizer();
 
-            var mapper = new Mock<IMapper>();
-            mapper.Setup(x => x.ConfigurationProvider)
-                .Returns(
-                    () => new MapperConfiguration(
-                        cfg =>
-                        {
-                            cfg.CreateMap<UserCarsForListVm, Vehicle>().ReverseMap()
-           .ForMember(s => s.Name, opt => opt.MapFrom(x => string.Concat(x.VehicleBrandName.Name, " ", x.Model, " ", x.RegistrationNumber)));
-                        }));
+            IMapper mapper = MapperConfig.Mapper();
 
             var repository = new Mock<IVehicleRepository>();
             repository.Setup(x => x.GetVehicles()).Returns(vehicleList.AsQueryable());
-            var service = new VehicleService(repository.Object, mapper.Object);
+            var service = new VehicleService(repository.Object, mapper);
 
             var repositoryWithoutObject = new Mock<IVehicleRepository>();
             var mapperW = new Mock<IMapper>();
@@ -354,29 +223,14 @@ namespace VehicleManager.Tests.Services
         public void ShouldReturnAllVehicleBranNames()
         {
             //Arrange
-            var listVehicleBrands = new List<VehicleBrandName>()
-            {
-            new VehicleBrandName() { Id = 1, Name = "Opel" , IsActive = true},
-            new VehicleBrandName() { Id = 2, Name = "Toyota" , IsActive = true},
-            new VehicleBrandName() { Id = 3, Name = "Hyundai" , IsActive = false},
-            new VehicleBrandName() { Id = 4, Name = "Nissan" , IsActive = true},
-            new VehicleBrandName() { Id = 5, Name = "Dodge" , IsActive = true }
-            };
+            var listVehicleBrands = Initializer.Initializer.VehicleBrandsInitializer();
 
             var repository = new Mock<IVehicleRepository>();
             repository.Setup(x => x.GetVehicleBrandNames()).Returns(listVehicleBrands.AsQueryable());
 
-            var mapper = new Mock<IMapper>();
-            mapper.Setup(x => x.ConfigurationProvider)
-                .Returns(
-                    () => new MapperConfiguration(
-                        cfg =>
-                        {
-                            cfg.CreateMap<VehicleBrandName, VehicleBrandNameVm>();
-                        }));
+            IMapper mapper = MapperConfig.Mapper();
 
-            var service = new VehicleService(repository.Object, mapper.Object);
-
+            var service = new VehicleService(repository.Object, mapper);
             var repositoryWithoutElements = new Mock<IVehicleRepository>();
             var mapperWithoutConfiguration = new Mock<IMapper>();
             var serviceWithoutElements = new VehicleService(repositoryWithoutElements.Object, mapperWithoutConfiguration.Object); ;
@@ -394,8 +248,88 @@ namespace VehicleManager.Tests.Services
 
             secondListBrandsWithoutElements.Should().BeNullOrEmpty();
             secondListBrandsWithoutElements.Should().BeNull();
+        }
 
+        [Fact]
+        public void ShouldReturnAllKindOfEvents()
+        {
+            //act
+            var kindOfEvents = Initializer.Initializer.KindOfEventInitializer();
+
+
+            IMapper mapper = MapperConfig.Mapper();
+
+            Mock<IVehicleRepository> vehicleRepository = new Mock<IVehicleRepository>();
+            vehicleRepository.Setup(x => x.GetAllKindOfEvents()).Returns(kindOfEvents.AsQueryable());
+
+            VehicleService vehicleService = new VehicleService(vehicleRepository.Object, mapper);
+            //arrange
+
+            List<KindOfEventsListVm> kindOfEventsCorrect = vehicleService.GetAllKindsOfEvents();
+            List<KindOfEventsListVm> kindOfEventsIncorrect = null;
+            //asserts 
+
+            kindOfEventsCorrect[0].Name.Should().Be("Myjnia");
+            kindOfEventsCorrect[3].Name.Should().Be("Wymiana opon");
+            kindOfEventsCorrect.Should().BeInAscendingOrder(x => x.Name);
+            kindOfEventsCorrect.Should().NotBeNull();
+
+            kindOfEventsIncorrect.Should().BeNull();
+        }
+        [Fact]
+        public void ShouldReturnVehicleStats()
+        {
+            //Act
+            List<Event> vehicleEventsForStatsInitalizatotion = Initializer.Initializer.EventInitializerForStats();
+            IMapper mapper = MapperConfig.Mapper();
+            Mock<IVehicleRepository> vehicleRepository = new Mock<IVehicleRepository>();
+            vehicleRepository.Setup(x => x.GetAllEvents()).Returns(vehicleEventsForStatsInitalizatotion.AsQueryable());
+
+            var vehicleService = new VehicleService(vehicleRepository.Object, mapper);
+            //Arrange
+            var res = vehicleService.GetVehicleStats(10, null, null);
+            var res2 = vehicleService.GetVehicleStats(10, "2021-1-1", "2021-1-14");
+            //Asserts
+            res.Kilometers.Should().Be(1100);
+            res.TotalCostForEvents.Should().Be(1703.10M);
+            res.TheBiggestPriceForEvent.Should().Be(1400.00M);
+            res.TheSmallestPriceForEvent.Should().Be(81.55M);
+
+            res2.Kilometers.Should().Be(100);
+            res2.TotalCostForEvents.Should().Be(95.60M);
+            res2.TheBiggestPriceForEvent.Should().Be(95.60M);
+            res2.TheSmallestPriceForEvent.Should().Be(95.60M);
 
         }
+        [Fact]
+        public void ShouldReturnEventsBetweendTwoDays()
+        {
+            //Act
+            List<Event> vehicleEventsForStatsInitalizatotion = Initializer.Initializer.EventInitializerForStats();
+            IMapper mapper = MapperConfig.Mapper();
+            Mock<IVehicleRepository> vehicleRepository = new Mock<IVehicleRepository>();
+            Mock<IVehicleRepository> vehicleRepositoryWithoutElements = new Mock<IVehicleRepository>();
+            vehicleRepository.Setup(x => x.GetAllEvents()).Returns(vehicleEventsForStatsInitalizatotion.AsQueryable());
+            VehicleService vehicleService = new VehicleService(vehicleRepository.Object, mapper);
+            VehicleService vehicleServiceWithoutObjects = new VehicleService(vehicleRepositoryWithoutElements.Object, mapper);
+
+            //Arrange
+            var eventsList = vehicleService.GetEventsBetweenTwoDates(10, "2021-01-10", "2021-01-30");
+            var eventsListOptTwo = vehicleService.GetEventsBetweenTwoDates(10, "2021-02-1", "2021-02-3");
+            var eventsListOptThree = vehicleService.GetEventsBetweenTwoDates(1, "2021-01-1", "2021-01-1");
+            var eventsListOptFour = vehicleService.GetEventsBetweenTwoDates(10, "x", "x");
+            var eventsWithoutObjects = vehicleServiceWithoutObjects.GetEventsBetweenTwoDates(1, "xx", "xx");
+            var eventsWithoutObjectsTwo = vehicleServiceWithoutObjects.GetEventsBetweenTwoDates(2, "xx", "xx");
+
+            //Asserts
+            eventsList.Should().HaveCount(3);
+            eventsListOptTwo.Should().BeEmpty();
+            eventsListOptThree.Should().BeEmpty();
+            eventsListOptFour.Should().HaveCount(4);
+            eventsWithoutObjects.Should().BeEmpty();
+            eventsWithoutObjectsTwo.Should().BeEmpty();
+        }
+
+
     }
 }

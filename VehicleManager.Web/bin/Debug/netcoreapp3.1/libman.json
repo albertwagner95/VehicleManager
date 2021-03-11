@@ -25,6 +25,18 @@
       "provider": "filesystem",
       "library": "C:\\Users\\wagne\\.nuget\\packages\\jquery.validation.globalize\\1.1.0\\content\\Scripts\\",
       "destination": "wwwroot/Scripts/"
+    },
+    {
+      "library": "font-awesome@5.15.2",
+      "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "datatables@1.10.21",
+      "destination": "wwwroot/datatables/"
+    },
+    {
+      "library": "Chart.js@2.9.4",
+      "destination": "wwwroot/Chart.js/"
     }
   ]
 }

@@ -26,13 +26,18 @@ namespace VehicleManager.Application.Services
         }
         public int AddVehicle(NewVehicleVm vehicle)
         {
+            if (vehicle is null)
+            {
+                throw new ArgumentNullException(nameof(vehicle));
+            }
+
             vehicle.Capacity = vehicle.PermissibleGrossWeight - vehicle.OwnWeight;
             vehicle.ProductionDate = new DateTime(vehicle.YearHelper, 1, 1);
             vehicle.Vin = vehicle.Vin.ToUpper();
             vehicle.RegistrationNumber = vehicle.RegistrationNumber.ToUpper();
             vehicle.Model = vehicle.Model.ToUpper();
 
-            var vehicl = _mapper.Map<Domain.Model.Vehicle>(vehicle);
+            var vehicl = _mapper.Map<Domain.Model.VehicleModels.Vehicle>(vehicle);
 
             vehicl.CreatedDateTime = DateTime.Now;
             vehicl.CreatedById = "userid";
@@ -44,7 +49,7 @@ namespace VehicleManager.Application.Services
 
         public VehicleDetailsVm GetVehicleDetails(int vehicleId)
         {
-            var vehicle = _vehicleRepository.GetVehicleById(vehicleId);
+            Vehicle vehicle = _vehicleRepository.GetVehicleById(vehicleId);
 
             if (vehicle != null)
             {
@@ -70,8 +75,8 @@ namespace VehicleManager.Application.Services
             {
                 vehicleBrandNames = _vehicleRepository.GetVehicleBrandNames()
                 .ProjectTo<VehicleBrandNameVm>(_mapper.ConfigurationProvider)
-                .Where(x=>x.IsActive == true)
-                .OrderBy(x=>x.Name)
+                .Where(x => x.IsActive == true)
+                .OrderBy(x => x.Name)
                 .ToList();
             }
             catch (Exception)
@@ -105,7 +110,7 @@ namespace VehicleManager.Application.Services
         {
             if (vehicle != null)
             {
-                var vehicl = _mapper.Map<Domain.Model.Vehicle>(vehicle);
+                var vehicl = _mapper.Map<Domain.Model.VehicleModels.Vehicle>(vehicle);
                 _vehicleRepository.DeleteVehicle(vehicl.Id);
             }
         }
@@ -155,11 +160,14 @@ namespace VehicleManager.Application.Services
 
         public string GetBrandName(int brandNameId)
         {
-            var name = _vehicleRepository.GetVehicleBrandNames()
-                .Where(x => x.Id == brandNameId && x.IsActive == true)
-                .Select(p => p.Name)
-                .Single();
-            return name.ToString();
+            VehicleBrandName vehicleBrandName = _vehicleRepository.GetVehicleBrandNames()
+                                            .FirstOrDefault(x => x.Id == brandNameId && x.IsActive == true);
+            if(vehicleBrandName == null)
+            {
+                return "";
+            }
+
+            return vehicleBrandName.Name;
         }
 
         public string GetTypeName(int typeId)
@@ -180,7 +188,6 @@ namespace VehicleManager.Application.Services
                 userCarsList = _vehicleRepository.GetVehicles()
                 .Where(x => x.ApplicationUserID.Equals(userId) && x.IsActive == true)
                 .ProjectTo<UserCarsForListVm>(_mapper.ConfigurationProvider)
-                .OrderBy(x => x.Name)
                 .ToList();
             }
             catch (Exception)
@@ -191,7 +198,7 @@ namespace VehicleManager.Application.Services
             if (userCarsList != null)
             {
                 var userCars = new ListForUserCarsForListVm();
-                userCars.UserCars = userCarsList;
+                userCars.UserCars = userCarsList.OrderBy(x => x.Name).ToList();
                 return userCars;
             }
 
@@ -232,7 +239,7 @@ namespace VehicleManager.Application.Services
                 return lastMileage;
             }
         }
-        public bool AddRefuling(NewRefulingVm model, NewCarHistoryVm carHistoryVm)
+        public bool AddEvent(NewEventVm model, NewCarHistoryVm carHistoryVm)
         {
             if (model is null)
             {
@@ -240,25 +247,25 @@ namespace VehicleManager.Application.Services
             }
             else
             {
-                var refuelingModelToAdd = _mapper.Map<Refueling>(model);
+                var eventModelToAdd = _mapper.Map<Event>(model);
+
+                //if 1 is "TANKOWANIE" I don't need fuel burning etc.
+                if (model.EventsListId == 1)
+                {
+                    eventModelToAdd.BurningFuelPerOneHundredKilometers =
+                        VehicleServiceHelpers.ReturnBurningPerOneHoundredKilometers(model);
+                    eventModelToAdd.PriceForEvent = decimal.Multiply(eventModelToAdd.AmountOfFuel, eventModelToAdd.PriceForOneUnit);
+                }
                 var carHistoryModelToAdd = _mapper.Map<CarHistory>(carHistoryVm);
-
-                refuelingModelToAdd.IsActive = true;
-                refuelingModelToAdd.BurningFuelPerOneHundredKilometers =
-                    VehicleServiceHelpers.ReturnBurningPerOneHoundredKilometers(model);
-
-                refuelingModelToAdd.FuelPrice = decimal.Multiply(refuelingModelToAdd.AmountOfFuel, refuelingModelToAdd.PriceForOneUnit);
-                string userId = GetUserIdByVehicleId(refuelingModelToAdd.VehicleId);
-                bool refuelingSucessfullyAdded = _vehicleRepository.AddRefueling(refuelingModelToAdd, userId, carHistoryModelToAdd);
-
-                if (refuelingSucessfullyAdded == true)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                eventModelToAdd.IsActive = true;
+                eventModelToAdd.EventListId = model.EventsListId;
+                eventModelToAdd.CreatedDateTime = DateTime.Now; ;
+                eventModelToAdd.UnitOfFuelId = 1;
+                eventModelToAdd.FuelForRefuelingId = 1;
+                eventModelToAdd.Id = Guid.NewGuid().ToString();
+                string userId = GetUserIdByVehicleId(eventModelToAdd.VehicleId);
+                bool eventSucessfullyAdded = _vehicleRepository.AddEvent(eventModelToAdd, userId, carHistoryModelToAdd);
+                return eventSucessfullyAdded;
             }
         }
 
@@ -292,20 +299,21 @@ namespace VehicleManager.Application.Services
 
         public ListCarHistoryForListVm GetUserVehicleHistory(string userId)
         {
-            var vehicleHistories = _vehicleRepository.GetAllVehicleHistory();
-            var refuelings = _vehicleRepository.GetAllRefuelings().Where(x => x.IsActive == true);
-
-            var result = from vh in vehicleHistories
-                         join rf in refuelings on vh.RefulingRef equals rf.Id
-                         select new CarHistoryForListVm
-                         {
-                             Name = vh.Name,
-                             MeterStatus = rf.MeterStatus,
-                             CreatedDateTime = vh.CreatedDateTime,
-                             RefuelingPrice = rf.FuelPrice,
-                             ApplicationUserID = vh.ApplicationUserID,
-                             RefulingRef = vh.RefulingRef
-                         };
+            IQueryable<CarHistory> vehicleHistories = _vehicleRepository.GetAllVehicleHistory();
+            IQueryable<Event> refuelings = _vehicleRepository.GetAllRefuelings().Where(x => x.IsActive == true);
+            IQueryable<CarHistoryForListVm> result = from vh in vehicleHistories
+                                                     join rf in refuelings on vh.EventRef equals rf.Id
+                                                     select new CarHistoryForListVm
+                                                     {
+                                                         Name = vh.Name,
+                                                         MeterStatus = rf.MeterStatus,
+                                                         CreatedDateTime = vh.CreatedDateTime,
+                                                         RefuelingPrice = rf.PriceForEvent,
+                                                         ApplicationUserID = vh.ApplicationUserID,
+                                                         RefulingRef = vh.EventRef,
+                                                         EventDate = rf.EventDate,
+                                                         VehicleId = vh.VehicleId
+                                                     };
             var forRes = result.Where(x => x.ApplicationUserID.Equals(userId))
                 .OrderByDescending(x => x.CreatedDateTime).ToList();
 
@@ -317,24 +325,29 @@ namespace VehicleManager.Application.Services
             return userVehicleHistoryVm;
         }
 
-        public NewCarHistoryVm ReturnCarHistoryToAdd(string kindOfEvent, string userId)
+        public NewCarHistoryVm ReturnCarHistoryToAdd(int kindOfEventId, string userId)
         {
+            string kindOfEventName = GetAllKindsOfEvents().FirstOrDefault(x => x.Id == kindOfEventId).Name;
+            if (string.IsNullOrEmpty(kindOfEventName))
+            {
+                kindOfEventName = "Zdarzenie bez nazwy!";
+            }
             var carHistoryToAdd = new NewCarHistoryVm()
             {
                 Id = Guid.NewGuid().ToString(),
                 IsActive = true,
                 CreatedDateTime = DateTime.Now,
-                Name = "Tankowanie",
+                Name = kindOfEventName,
                 ApplicationUserID = userId,
                 CreatedById = userId
             };
             return carHistoryToAdd;
         }
 
-        public RefuelDetailsVm GetRefuelById(string refuelingId)
+        public EventDetailsVm GetRefuelById(string refuelingId)
         {
-            Refueling refueling = _vehicleRepository.GetRefuelingById(refuelingId);
-            RefuelDetailsVm result = _mapper.Map<RefuelDetailsVm>(refueling);
+            Event refueling = _vehicleRepository.GetRefuelingById(refuelingId);
+            EventDetailsVm result = _mapper.Map<EventDetailsVm>(refueling);
             if (result is null) return null;
             return result;
         }
@@ -358,7 +371,7 @@ namespace VehicleManager.Application.Services
             {
                 unitName = GetUnitsOfFuels().UnitOfFuelList.FirstOrDefault(x => x.Id == unitOfFuelId).Name;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return "Brak danych - skontaktuj się z administratorem";
             }
@@ -388,32 +401,75 @@ namespace VehicleManager.Application.Services
             }
             return fuelName;
         }
-
-        public EventToDeleteVm GetEventToDelete(string name, string id)
+        public bool DeleteEvent(string eventId)
         {
-            if (name.ToUpper().Equals("TANKOWANIE"))
+            if (eventId == null) return false;
+
+            bool isDeleteRefuel = _vehicleRepository.DeleteEvent(eventId);
+            return isDeleteRefuel;
+        }
+
+        public List<KindOfEventsListVm> GetAllKindsOfEvents()
+        {
+            IQueryable<KindOfEvent> kindOfEventsFromDb = _vehicleRepository.GetAllKindOfEvents();
+
+            if (kindOfEventsFromDb != null)
             {
-                var refuelToDelete = _vehicleRepository.GetRefuelingById(id);
-                EventToDeleteVm refVm = new EventToDeleteVm()
-                {
-                    Id = refuelToDelete.Id,
-                    Name = name,
-                    CreatedDateTime = refuelToDelete.CreatedDateTime
-                };
-                return refVm;
+                var result = kindOfEventsFromDb.OrderByDescending(x => x.Name).
+                    ProjectTo<KindOfEventsListVm>(_mapper.ConfigurationProvider)
+                    .OrderBy(x => x.Name)
+                    .ToList();
+                return result;
             }
+
             return null;
         }
-
-        public bool DeleteEvent(EventToDeleteVm eventToDelete)
+        public List<VehicleEventsForListVm> GetEventsBetweenTwoDates(int vehicleId, string startDay, string endDay)
         {
-            if (eventToDelete.Name.ToUpper().Equals("TANKOWANIE"))
+            List<VehicleEventsForListVm> events = new List<VehicleEventsForListVm>();
+
+            bool isCorrectStartDay = DateTime.TryParse(startDay, out DateTime startDate);
+            bool isCorrectEndDay = DateTime.TryParse(endDay, out DateTime endDate);
+
+            if (startDay == null || endDay == null || (isCorrectEndDay || isCorrectStartDay) == false)
             {
-                var refuelingToDelete = _vehicleRepository.GetRefuelingById(eventToDelete.Id);
-                bool isDeleteRefuel = _vehicleRepository.DeleteRefuel(refuelingToDelete);
-                return isDeleteRefuel;
+                events = _vehicleRepository.GetAllEvents()
+                  .Where(x => x.VehicleId == vehicleId)
+                  .OrderBy(x => x.CreatedDateTime)
+                  .ProjectTo<VehicleEventsForListVm>(_mapper.ConfigurationProvider)
+                  .ToList();
+                return events;
             }
-            return false;
+            else
+            {
+                events = _vehicleRepository.GetAllEvents()
+                   .Where(x => x.VehicleId == vehicleId)
+                   .Where(x => x.EventDate >= startDate && x.EventDate <= endDate)
+                   .OrderBy(x => x.CreatedDateTime)
+                   .ProjectTo<VehicleEventsForListVm>(_mapper.ConfigurationProvider)
+                   .ToList();
+                return events;
+            }
         }
+        public VehicleStatsVm GetVehicleStats(int vehicleId, string startDay, string endDay)
+        {
+            List<VehicleEventsForListVm> events = GetEventsBetweenTwoDates(vehicleId, startDay, endDay);
+
+            VehicleStatsVm vehicleStats = new VehicleStatsVm();
+            if (events.Count > 0)
+            {
+                vehicleStats.AverageFuelBurningForChart = VehicleServiceHelpers.ReturnAvgBurningForChart(events);
+                vehicleStats.KilometersForChart = VehicleServiceHelpers.ReturnKilometersForChart(events);
+                vehicleStats.Kilometers = events.Max(x => x.MeterStatus);
+                vehicleStats.TotalCostForEvents = events.Sum(x => x.PriceForEvent);
+                vehicleStats.TheBiggestPriceForEvent = events.Max(x => x.PriceForEvent);
+                vehicleStats.TheSmallestPriceForEvent = events.Min(x => x.PriceForEvent);
+                vehicleStats.AverageFuelBurning = VehicleServiceHelpers.ReturnBurningPerOneHoundredKilometers(events);
+                vehicleStats.TheBiggestFuelBurning = events.Max(x => x.BurningFuelPerOneHundredKilometers);
+                vehicleStats.TheSmallestFuelBurning = events.Min(x => x.BurningFuelPerOneHundredKilometers);
+            }
+            return vehicleStats;
+        }
+
     }
 }

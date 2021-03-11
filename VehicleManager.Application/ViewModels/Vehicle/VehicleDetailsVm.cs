@@ -4,7 +4,7 @@ using VehicleManager.Application.Mapping;
 
 namespace VehicleManager.Application.ViewModels.Vehicle
 {
-    public class VehicleDetailsVm : IMapFrom<Domain.Model.Vehicle>
+    public class VehicleDetailsVm : IMapFrom<Domain.Model.VehicleModels.Vehicle>
     {
         public int Id { get; set; }
         public string Vin { get; set; }
@@ -32,7 +32,7 @@ namespace VehicleManager.Application.ViewModels.Vehicle
         public int VehicleTypeId { get; set; }
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<VehicleDetailsVm, Domain.Model.Vehicle>().ReverseMap();
+            profile.CreateMap<VehicleDetailsVm, Domain.Model.VehicleModels.Vehicle>().ReverseMap();
         }
     }
 }

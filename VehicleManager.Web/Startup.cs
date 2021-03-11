@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Globalization;
 using VehicleManager.Application.DependencyInjection;
@@ -15,7 +16,7 @@ using VehicleManager.Application.ViewModels.Vehicle;
 using VehicleManager.Domain.Model;
 using VehicleManager.Infrastructure;
 using VehicleManager.Infrastructure.DependencyInjection;
-using static VehicleManager.Application.ViewModels.AddressVm.NewRefulingVm;
+using static VehicleManager.Application.ViewModels.AddressVm.NewEventVm;
 using static VehicleManager.Application.ViewModels.Vehicle.NewVehicleVm;
 
 namespace VehicleManager.Web
@@ -48,12 +49,13 @@ namespace VehicleManager.Web
             services.AddRazorPages();
 
             services.AddTransient<IValidator<NewVehicleVm>, NewVehicleValidation>();
-            services.AddTransient<IValidator<NewRefulingVm>, NewRefuelingValidation>();
+            services.AddTransient<IValidator<NewEventVm>, NewRefuelingValidation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddFile("Logs/myLog - {Date}.txt");
             //helper for decimal numbers.
             var defaultCulture = new CultureInfo("pl-PL");
             var localizationOptions = new RequestLocalizationOptions

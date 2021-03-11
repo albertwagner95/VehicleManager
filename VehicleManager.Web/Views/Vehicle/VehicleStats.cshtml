@@ -1,0 +1,210 @@
+﻿@model VehicleManager.Application.ViewModels.Vehicle.ListVehicleStatsVm
+@{
+    ViewData["Title"] = "VehicleStats";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+window.onload = function () {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	title: {
+		text: "Statystyki pojazdu"
+	},
+	toolTip: {
+		shared: true
+    },
+    axisX: {
+        interval: 4, 
+        type: "spline",
+        xValueType: "dateTime",
+        xValueFormatString: "DD MMM",
+        labelFontColor: "rgb(0,75,141)", 
+    },
+	data: [{
+		type: "line",
+		name: "Koszt",
+		showInLegend: true,
+		dataPoints: @Html.Raw(ViewBag.DataPoints1)
+	}, {
+		type: "line",
+		name: "Przebieg",
+		showInLegend: true,
+		dataPoints: @Html.Raw(ViewBag.DataPoints2)
+	}, {
+		type: "line",
+		name: "Spalanie / 100 km",
+		showInLegend: true,
+		dataPoints: @Html.Raw(ViewBag.DataPoints3)
+	}]
+});
+chart.render(); 
+}
+</script>
+
+
+<h1>Statystyki pojadu!</h1>
+<hr />
+<form asp-action="VehicleStats" method="get" class="form-inline">
+    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+        <label for="stardDay">Data początkowa</label>
+        <input class="form-control" type="date" id="stardDay" name="startDay" value="@ViewData["startDay"]" required />
+        <label for="endDay"> Data końcowa</label>
+        <input class="form-control" id="endDay" type="date" name="endDay" value="@ViewData["endDay"]" required />
+        <button type="submit" value="Search" class="btn btn-outline-dark">Filtruj</button>
+
+    </div>
+</form>
+<hr />
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <table class="table">
+
+                <thed>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">
+                            @if (ViewData["endDay"] != null && ViewData["startDay"] != null)
+                            {
+                                <text>@ViewData["startDay"] - @ViewData["endDay"]</text>
+                            }
+                            else
+                            {
+                                <text>Cały okres</text>
+                            }
+                        </th>
+                        <th>7 dni</th>
+                        <th>30 dni</th>
+                        <th>180 dni</th>
+                    </tr>
+                </thed>
+                <tbody>
+                    <tr>
+                        <th scope="row">Przebieg</th>
+                        <td>
+                            <em> @Html.DisplayFor(model => Model.VehicleStats[0].Kilometers)</em> km
+                        </td>
+                        <td>
+                            <em> @Html.DisplayFor(model => Model.VehicleStats[1].Kilometers)</em> km
+                        </td>
+                        <td>
+                            <em> @Html.DisplayFor(model => Model.VehicleStats[2].Kilometers)</em> km
+                        </td>
+                        <td>
+                            <em> @Html.DisplayFor(model => Model.VehicleStats[3].Kilometers)</em> km
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Średnie spalanie</th>
+                        <td>
+                            <em> @Html.DisplayFor(model => Model.VehicleStats[0].AverageFuelBurning)</em>   j. 100/km
+                        </td>
+                        <td>
+                            <em> @Html.DisplayFor(model => Model.VehicleStats[1].AverageFuelBurning)</em>   j. 100/km
+                        </td>
+                        <td>
+                            <em> @Html.DisplayFor(model => Model.VehicleStats[2].AverageFuelBurning)</em>   j. 100/km
+                        </td>
+                        <td>
+                            <em> @Html.DisplayFor(model => Model.VehicleStats[3].AverageFuelBurning)</em>   j. 100/km
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Najwyższa cena za zdarzenie</th>
+                        <td>
+                            <em>@Html.DisplayFor(model => Model.VehicleStats[0].TheBiggestPriceForEvent)</em> zł
+                        </td>
+                        <td>
+                            <em>@Html.DisplayFor(model => Model.VehicleStats[1].TheBiggestPriceForEvent)</em> zł
+                        </td>
+                        <td>
+                            <em>@Html.DisplayFor(model => Model.VehicleStats[2].TheBiggestPriceForEvent)</em> zł
+                        </td>
+                        <td>
+                            <em>@Html.DisplayFor(model => Model.VehicleStats[3].TheBiggestPriceForEvent)</em> zł
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Najniższa cena za zdarzenie</th>
+                        <td>
+                            <em>@Html.DisplayFor(model => Model.VehicleStats[0].TheSmallestPriceForEvent)</em>  zł
+                        </td>
+                        <td>
+                            <em>@Html.DisplayFor(model => Model.VehicleStats[1].TheSmallestPriceForEvent)</em>  zł
+                        </td>
+                        <td>
+                            <em>@Html.DisplayFor(model => Model.VehicleStats[2].TheSmallestPriceForEvent)</em>  zł
+                        </td>
+                        <td>
+                            <em>@Html.DisplayFor(model => Model.VehicleStats[3].TheSmallestPriceForEvent)</em>  zł
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Najwyższe spalanie</th>
+                        <td>
+                            <em>@Html.DisplayFor(model => Model.VehicleStats[0].TheBiggestFuelBurning)</em> j. 100/km
+                        </td>
+                        <td>
+                            <em>@Html.DisplayFor(model => Model.VehicleStats[1].TheBiggestFuelBurning)</em> j. 100/km
+                        </td>
+                        <td>
+                            <em>@Html.DisplayFor(model => Model.VehicleStats[2].TheBiggestFuelBurning)</em> j. 100/km
+                        </td>
+                        <td>
+                            <em>@Html.DisplayFor(model => Model.VehicleStats[3].TheBiggestFuelBurning)</em> j. 100/km
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Najniższe spalanie</th>
+                        <td>
+                            <em>@Html.DisplayFor(model => Model.VehicleStats[0].TheSmallestFuelBurning)</em> j. 100/km
+                        </td>
+                        <td>
+                            <em>@Html.DisplayFor(model => Model.VehicleStats[1].TheSmallestFuelBurning)</em> j. 100/km
+                        </td>
+                        <td>
+                            <em>@Html.DisplayFor(model => Model.VehicleStats[2].TheSmallestFuelBurning)</em> j. 100/km
+                        </td>
+                        <td>
+                            <em>@Html.DisplayFor(model => Model.VehicleStats[3].TheSmallestFuelBurning)</em> j. 100/km
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Całkowity koszt</th>
+                        <td>
+                            <em> @Html.DisplayFor(model => Model.VehicleStats[0].TotalCostForEvents)</em> zł
+                        </td>
+                        <td>
+                            <em> @Html.DisplayFor(model => Model.VehicleStats[1].TotalCostForEvents)</em> zł
+                        </td>
+                        <td>
+                            <em> @Html.DisplayFor(model => Model.VehicleStats[2].TotalCostForEvents)</em> zł
+                        </td>
+                        <td>
+                            <em> @Html.DisplayFor(model => Model.VehicleStats[3].TotalCostForEvents)</em> zł
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col"> 
+            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            1 of 2
+        </div>
+        <div class="col">
+            2 of 2
+        </div>
+    </div>
+</div>
+<form>
+    <button asp-action="UserVehicles" asp-controller="User" class="btn btn-dark">Wróć do listy pojazdów!</button>
+</form> 
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+ 

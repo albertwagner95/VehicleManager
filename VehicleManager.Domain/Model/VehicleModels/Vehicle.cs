@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using VehicleManager.Domain.Common;
 using VehicleManager.Domain.Model.VehicleModels;
 
-namespace VehicleManager.Domain.Model
+namespace VehicleManager.Domain.Model.VehicleModels
 {
     public class Vehicle : AuditableModel
     {

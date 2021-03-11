@@ -7,7 +7,7 @@ using VehicleManager.Application.Mapping;
 
 namespace VehicleManager.Application.ViewModels.Vehicle
 {
-    public class NewVehicleVm : IMapFrom<Domain.Model.Vehicle>
+    public class NewVehicleVm : IMapFrom<Domain.Model.VehicleModels.Vehicle>
     {
         public int Id { get; set; }
         [MaxLength(17)]
@@ -39,7 +39,7 @@ namespace VehicleManager.Application.ViewModels.Vehicle
         public List<VehicleTypeVm> VehicleTypes { get; set; }
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<NewVehicleVm, Domain.Model.Vehicle>().ReverseMap();
+            profile.CreateMap<NewVehicleVm, Domain.Model.VehicleModels.Vehicle>().ReverseMap();
         }
 
         public class NewVehicleValidation : AbstractValidator<NewVehicleVm>
@@ -58,12 +58,26 @@ namespace VehicleManager.Application.ViewModels.Vehicle
                 RuleFor(v => v.PermissibleGrossWeight).GreaterThan(10).WithMessage("Masa własna nie może mieć mniej niż 2 znaki");
                 
                 RuleFor(v => v.ApplicationUserID).NotNull();
-                RuleFor(v => v.Model).NotNull();
                 RuleFor(v => v.EngineCapacity).GreaterThan(0).WithMessage("Pojemność silnika nie może być mniejsza od 1 cm^3");
                 RuleFor(v => v.EnginePower).GreaterThan(0).WithMessage("Moc silnika nie może być mniejsza od 1 kW");
-                RuleFor(v => v.Millage).NotEmpty();
+                RuleFor(v => v.Millage).NotEmpty().WithMessage("Wartość wymagana");
                 RuleFor(v => v.Millage).GreaterThan(0).WithMessage("Przebieg nie może być mniejszy niż 1 km");
                 RuleFor(v => v.RegistrationNumber).MaximumLength(8).WithMessage("Maksymalna długość numeru rejestracyjnego wynosi 8");
+
+                RuleFor(v => v.VehicleTypeId).NotNull().WithMessage("Pole nie może być puste"); 
+                RuleFor(v => v.VehicleBrandNameId).NotNull().WithMessage("Pole nie może być puste.");
+                RuleFor(v => v.VehicleBrandNameId).NotNull().WithMessage("Pole nie może być puste.");
+                RuleFor(v => v.Model).NotNull().WithMessage("Pole nie może być puste.");
+                RuleFor(v => v.Vin).NotNull().WithMessage("Pole nie może być puste.");
+                RuleFor(v => v.RegistrationNumber).NotNull().WithMessage("Pole nie może być puste.");
+                RuleFor(v => v.Millage).NotNull().WithMessage("Pole nie może być puste.");
+                RuleFor(v => v.DateOfFirstRegistration).NotNull().WithMessage("Pole nie może być puste.");
+                RuleFor(v => v.YearHelper).NotNull().WithMessage("Pole nie może być puste.");
+                RuleFor(v => v.EnginePower).NotNull().WithMessage("Pole nie może być puste.");
+                RuleFor(v => v.EngineCapacity).NotNull().WithMessage("Pole nie może być puste.");
+                RuleFor(v => v.PermissibleGrossWeight).NotNull().WithMessage("Pole nie może być puste.");
+                RuleFor(v => v.OwnWeight).NotNull().WithMessage("Pole nie może być puste.");
+                RuleFor(v => v.VehicleFuelTypeId).NotNull().WithMessage("Pole nie może być puste."); 
             }
         }
     }

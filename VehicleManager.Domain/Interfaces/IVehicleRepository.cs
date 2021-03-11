@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using VehicleManager.Domain.Model;
 using VehicleManager.Domain.Model.VehicleModels;
 
@@ -16,11 +17,13 @@ namespace VehicleManager.Domain.Interfaces
         Vehicle GetVehicleById(int? vehicleId);
         IQueryable<Vehicle> GetVehicles();
         IQueryable<UnitOfFuel> GetUnitsOfFuel();
-        bool AddRefueling(Refueling refuelingModelToAdd, string userId, CarHistory carHistory);
+        bool AddEvent(Event refuelingModelToAdd, string userId, CarHistory carHistory);
         IQueryable<FuelForRefueling> GetFuelTypesForRefueling();
         IQueryable<CarHistory> GetAllVehicleHistory();
-        IQueryable<Refueling> GetAllRefuelings();
-        Refueling GetRefuelingById(string refuelingId);
-        bool DeleteRefuel(Refueling refuelingToDelete);
+        IQueryable<Event> GetAllRefuelings();
+        Event GetRefuelingById(string refuelingId);
+        bool DeleteEvent(string eventId);
+        IQueryable<Event> GetAllEvents();
+        IQueryable<KindOfEvent> GetAllKindOfEvents(); 
     }
 }

@@ -22,12 +22,12 @@ namespace VehicleManager.Infrastructure
         public DbSet<City> Cities { get; set; }
         public DbSet<District> Districts { get; set; }
         public DbSet<CityType> CityTypes { get; set; }
-        public DbSet<Community> Communities { get; set; }
-        public DbSet<Refueling> Refulings { get; set; }
+        public DbSet<Community> Communities { get; set; } 
         public DbSet<UnitOfFuel> UnitOfFuels { get; set; }
         public DbSet<CarHistory> CarHistories { get; set; }
         public DbSet<FuelForRefueling> FuelForRefuelings { get; set; }
-
+        public DbSet<Event> Events { get; set; }
+        public DbSet<KindOfEvent> KindfOfEvents { get; set; }
         public Context(DbContextOptions options) : base(options)
         {
 
@@ -36,11 +36,12 @@ namespace VehicleManager.Infrastructure
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            
-            builder.Entity<Refueling>()
+
+            builder.Entity<Event>()
             .HasOne(a => a.CarHistory)
-            .WithOne(b => b.Refuling)
-            .HasForeignKey<CarHistory>(b => b.RefulingRef);
+            .WithOne(b => b.Event)
+            .HasForeignKey<CarHistory>(b => b.EventRef);
+             
         }
     }
 }

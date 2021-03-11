@@ -2,6 +2,7 @@
 using VehicleManager.Domain.Interfaces;
 using VehicleManager.Domain.Model;
 using VehicleManager.Domain.Model.AddressModels;
+using VehicleManager.Domain.Model.VehicleModels;
 
 namespace VehicleManager.Infrastructure.Repositories
 {

@@ -3,7 +3,7 @@ using VehicleManager.Application.Mapping;
 
 namespace VehicleManager.Application.ViewModels.UserModels
 {
-    public class UserCarsForList : IMapFrom<Domain.Model.Vehicle>
+    public class UserCarsForList : IMapFrom<Domain.Model.VehicleModels.Vehicle>
     {
         public int Id { get; set; }
         public string Vin { get; set; }
@@ -12,7 +12,7 @@ namespace VehicleManager.Application.ViewModels.UserModels
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Domain.Model.Vehicle, UserCarsForList>()
+            profile.CreateMap<Domain.Model.VehicleModels.Vehicle, UserCarsForList>()
                 .ForMember(s => s.Name, opt => opt.MapFrom(x => string.Concat(x.VehicleBrandName.Name, " ", x.Model)));
         }
     }

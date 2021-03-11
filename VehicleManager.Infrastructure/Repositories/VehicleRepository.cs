@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using VehicleManager.Domain.Interfaces;
 using VehicleManager.Domain.Model;
@@ -54,8 +55,6 @@ namespace VehicleManager.Infrastructure.Repositories
             return types;
         }
 
-
-
         public Vehicle GetVehicleById(int? vehicleId)
         {
             var vehicle = _context.Vehicles
@@ -88,6 +87,7 @@ namespace VehicleManager.Infrastructure.Repositories
 
         public IQueryable<Vehicle> GetVehicles()
         {
+            var x = _context.Vehicles;
             return _context.Vehicles;
         }
 
@@ -96,26 +96,35 @@ namespace VehicleManager.Infrastructure.Repositories
             return _context.UnitOfFuels;
         }
 
-        public bool AddRefueling(Refueling refuelingModelToAdd, string userId, CarHistory carHistory)
+        public bool AddEvent(Event eventModelToAdd, string userId, CarHistory carHistory)
         {
-            if (refuelingModelToAdd is null)
+            if (string.IsNullOrEmpty(userId))
+            {
+                return false;
+            }
+            if (carHistory is null)
+            {
+                return false;
+            }
+            if (eventModelToAdd is null)
             {
                 return false;
             }
             else
             {
-                refuelingModelToAdd.Id = Guid.NewGuid().ToString();
-                _context.Refulings.Add(refuelingModelToAdd);
-                refuelingModelToAdd.CreatedDateTime = DateTime.Now;
-                carHistory.VehicleId = refuelingModelToAdd.VehicleId;
-                carHistory.RefulingRef = refuelingModelToAdd.Id;
-                _context.CarHistories.Add(carHistory);
 
-                _context.Vehicles.FirstOrDefault(x => x.Id == refuelingModelToAdd.VehicleId).Millage = refuelingModelToAdd.MeterStatus;
+                _context.Events.Add(eventModelToAdd);
+                carHistory.VehicleId = eventModelToAdd.VehicleId;
+                carHistory.EventDate = eventModelToAdd.EventDate;
+                carHistory.EventRef = eventModelToAdd.Id;
+                _context.CarHistories.Add(carHistory);
+                _context.Vehicles.FirstOrDefault(x => x.Id == eventModelToAdd.VehicleId).Millage = eventModelToAdd.MeterStatus;
 
                 _context.SaveChanges();
                 return true;
             }
+
+
         }
 
         public IQueryable<FuelForRefueling> GetFuelTypesForRefueling()
@@ -123,9 +132,9 @@ namespace VehicleManager.Infrastructure.Repositories
             var fuelForRefulings = _context.FuelForRefuelings;
             return fuelForRefulings;
         }
-        public IQueryable<Refueling> GetAllRefuelings()
+        public IQueryable<Event> GetAllRefuelings()
         {
-            var refuelings = _context.Refulings;
+            var refuelings = _context.Events;
             return refuelings;
         }
         public IQueryable<CarHistory> GetAllVehicleHistory()
@@ -134,22 +143,39 @@ namespace VehicleManager.Infrastructure.Repositories
             return vehicleHistory;
         }
 
-        public Refueling GetRefuelingById(string refuelingId)
+        public Event GetRefuelingById(string refuelingId)
         {
-            var refueling = _context.Refulings.FirstOrDefault(x => x.Id.Equals(refuelingId));
+            var refueling = _context.Events.FirstOrDefault(x => x.Id.Equals(refuelingId));
             if (refueling is null) return null;
             return refueling;
         }
 
-        public bool DeleteRefuel(Refueling refuelingToDelete)
+        public bool DeleteEvent(string eventId)
         {
-            if (refuelingToDelete != null)
+            if (eventId != null)
             {
-                refuelingToDelete.IsActive = false;
+                Event eventToDelete =  _context.Events.Find(eventId);
+                eventToDelete.IsActive = false;
                 _context.SaveChanges();
                 return true;
             }
             return false;
+        }
+
+        public IQueryable<Event> GetAllEvents()
+        {
+            var events = _context.Events;
+            return events;
+        }
+
+        public IQueryable<KindOfEvent> GetAllKindOfEvents()
+        {
+            IQueryable<KindOfEvent> kindOfEvents = _context.KindfOfEvents;
+            if (kindOfEvents.Any())
+            {
+                return kindOfEvents;
+            }
+            return null;
         }
     }
 }

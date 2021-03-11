@@ -3,24 +3,37 @@
 @inject UserManager<VehicleManager.Domain.Model.ApplicationUser> UserManager
 
 <ul class="navbar-nav">
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tooltip" title="Adresy użytkownika @User.Identity.Name " asp-controller="Address" asp-action="AddAddress">
+            <i class="fas fa-address-card"></i>
+        </a>
+    </li>
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name</a>
+            <a class="nav-link" data-toggle="tooltip" title="Konto użytkownika @User.Identity.Name " asp-area="Identity" asp-page="/Account/Manage/Index">
+                <i class="far fa-user-circle"></i>
+            </a>
         </li>
         <li class="nav-item">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button id="logout-btn" type="submit" class="nav-link" data-toggle="tooltip" title="Wyloguj się!">
+                    <i class="fa fa-sign-out-alt"></i>
+                </button>
             </form>
         </li>
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">
+                <i class="fa fa-registered"></i>
+            </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">
+                <i id="login-font" class="fa fa-sign-in-alt"></i>
+            </a>
         </li>
     }
 </ul>

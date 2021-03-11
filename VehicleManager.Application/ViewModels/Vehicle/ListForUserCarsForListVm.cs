@@ -6,6 +6,6 @@ namespace VehicleManager.Application.ViewModels.Vehicle
 {
     public class ListForUserCarsForListVm
     {
-        public List<UserCarsForListVm> UserCars { get; set; }
+        public List<UserCarsForListVm> UserCars { get; set; } 
     }
 }

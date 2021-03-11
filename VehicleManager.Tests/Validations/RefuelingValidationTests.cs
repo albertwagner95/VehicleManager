@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using VehicleManager.Application.ViewModels.AddressVm;
 using Xunit;
-using static VehicleManager.Application.ViewModels.AddressVm.NewRefulingVm;
+using static VehicleManager.Application.ViewModels.AddressVm.NewEventVm;
 
 namespace VehicleManager.Tests.Validations
 {
@@ -12,7 +12,7 @@ namespace VehicleManager.Tests.Validations
     {
         
         private readonly NewRefuelingValidation _validator = new NewRefuelingValidation();
-        public NewRefulingVm model = new NewRefulingVm();
+        public NewEventVm model = new NewEventVm();
 
 
         [Fact]

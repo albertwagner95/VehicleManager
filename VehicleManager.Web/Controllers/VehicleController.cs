@@ -1,6 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VehicleManager.Application.Interfaces;
@@ -15,11 +20,13 @@ namespace VehicleManager.Web.Controllers
     {
         private readonly IVehicleService _vehicleService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ILogger<VehicleController> _logger;
 
-        public VehicleController(IVehicleService vehicleService, UserManager<ApplicationUser> userManager)
+        public VehicleController(IVehicleService vehicleService, UserManager<ApplicationUser> userManager, ILogger<VehicleController> logger)
         {
             _vehicleService = vehicleService;
             _userManager = userManager;
+            _logger = logger;
 
         }
         public IActionResult Index()
@@ -29,8 +36,9 @@ namespace VehicleManager.Web.Controllers
 
         public IActionResult VehicleDetails(int id)
         {
-            var model = _vehicleService.GetVehicleDetails(id);
-            if (model == null)
+            VehicleDetailsVm model = _vehicleService.GetVehicleDetails(id);
+            
+            if (model == null )
             {
                 ViewBag.NullVehicles = "Nie znaleziono takiego pojazdu";
                 return View();
@@ -67,11 +75,13 @@ namespace VehicleManager.Web.Controllers
             var id = _vehicleService.AddVehicle(models);
             if (id != 0)
             {
-                return RedirectToAction("User", "UserVehicles");
+                TempData["tmpDataSuccess"] = $"Pomyślnie dodano pojazd {id}";
+                return RedirectToAction("UserVehicles", "User");
             }
             else
             {
-                return View(models);
+                TempData["tmpDataNoneSuccess"] = $"Nie dodano pojazdu. Skontaktuj się z administratorem.";
+                return RedirectToAction("UserVehicles", "User");
             }
         }
 
@@ -133,20 +143,21 @@ namespace VehicleManager.Web.Controllers
             return RedirectToAction("UserVehicles", "User");
         }
 
-        public IActionResult AddRefueling()
+        public IActionResult AddEvent()
         {
-            var model = new NewRefulingVm()
+            var model = new NewEventVm()
             {
                 UserCars = _vehicleService.GetUserCars(_userManager.GetUserId(User)),
                 VehicleFuelTypes = _vehicleService.GetAllFuelsTypesForRefuling(),
-                UnitOfFuelForList = _vehicleService.GetUnitsOfFuels()
+                UnitOfFuelForList = _vehicleService.GetUnitsOfFuels(),
+                EventsListVm = _vehicleService.GetAllKindsOfEvents()
             };
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddRefueling(NewRefulingVm model)
+        public IActionResult AddEvent(NewEventVm model)
         {
             if (model is null)
             {
@@ -156,20 +167,33 @@ namespace VehicleManager.Web.Controllers
             {
                 model.LastMeters = _vehicleService.GetLastRefuelingMileage(model.VehicleId);
             }
-
             if (model.MeterStatus < model.LastMeters)
             {
                 ModelState.AddModelError("MeterStatus", $"Aktualny przebieg, nie może być niższy od poprzedniego - {model.LastMeters} km, edytuj przebieg pojazdu, lub wpisz inną wartość!");
+            }
+            if (model.EventsListId != 1)
+            {
+                ModelState.Remove("AmountOfFuel");
+                ModelState.Remove("PetrolStationName");
+                ModelState.Remove("PriceForOneUnit");
+                ModelState.Remove("IsRefulingFull");
+                ModelState.Remove("FuelForRefuelingId");
+                ModelState.Remove("UnitOfFuelId");
+            }
+            else if (model.EventsListId == 1)
+            {
+                ModelState.Remove("PriceForEvent");
             }
             if (!ModelState.IsValid)
             {
                 model.VehicleFuelTypes = _vehicleService.GetAllFuelsTypesForRefuling();
                 model.UnitOfFuelForList = _vehicleService.GetUnitsOfFuels();
                 model.UserCars = _vehicleService.GetUserCars(_userManager.GetUserId(User));
+                model.EventsListVm = _vehicleService.GetAllKindsOfEvents();
                 return View(model);
             }
-            var carHistory = _vehicleService.ReturnCarHistoryToAdd("Tankowanie", _userManager.GetUserId(User));
-            var isAddedRefuelingCorrectly = _vehicleService.AddRefuling(model, carHistory);
+            var carHistory = _vehicleService.ReturnCarHistoryToAdd(model.EventsListId, _userManager.GetUserId(User));
+            var isAddedRefuelingCorrectly = _vehicleService.AddEvent(model, carHistory);
             if (isAddedRefuelingCorrectly == true)
             {
                 TempData["refuellingSuccessfullyOrNotAdded"] = "Pomyślnie dodano tankowanie!";
@@ -181,18 +205,32 @@ namespace VehicleManager.Web.Controllers
 
             return RedirectToAction("VehicleHistory", "Vehicle");
         }
-        public IActionResult VehicleHistory()
+        public IActionResult VehicleHistory(int VehicleId)
         {
-            var historyForVehicle = _vehicleService.GetUserVehicleHistory(_userManager.GetUserId(User));
+            var cars = _vehicleService.GetUserCars(_userManager.GetUserId(User));
+            ListCarHistoryForListVm historyForVehicle = new ListCarHistoryForListVm();
+            if (VehicleId > 0)
+            {
+                historyForVehicle.CarHistoryList = _vehicleService.GetUserVehicleHistory(_userManager.GetUserId(User))
+                    .CarHistoryList
+                    .Where(x => x.VehicleId == VehicleId)
+                    .ToList();
+            }
+            else
+            {
+                historyForVehicle = _vehicleService.GetUserVehicleHistory(_userManager.GetUserId(User));
+            }
+
             if (historyForVehicle.CarHistoryList.Count == 0)
             {
                 TempData["emptyCarHistory"] = "Brak danych do wyświetlenia";
             }
+            historyForVehicle.UserCars = cars;
             return View(historyForVehicle);
         }
-        public IActionResult RefuelingDetails(string id)
+        public IActionResult EventDetails(string id)
         {
-            RefuelDetailsVm refueling = _vehicleService.GetRefuelById(id);
+            EventDetailsVm refueling = _vehicleService.GetRefuelById(id);
             if (refueling == null)
             {
                 ViewBag.NullVehicles = "Nie znaleziono takiego tankowania";
@@ -203,58 +241,54 @@ namespace VehicleManager.Web.Controllers
             refueling.FuelName = _vehicleService.GetFuelNameById(refueling.FuelForRefuelingId);
             return View(refueling);
         }
-
-        //[HttpGet]
-        //public ActionResult DeleteEvent(string eventId, string eventTypeName)
-        //{
-        //    EventToDeleteVm eventToDelete = _vehicleService.GetEventToDelete(eventTypeName, eventId);
-        //    if (eventToDelete == null)
-        //    {
-        //        TempData["refuellingSuccessfullyOrNotAdded"] = "Zdarzenie nie usunięte";
-        //        return RedirectToAction("VehicleHistory", "Vehicle");
-        //    }
-        //    return View(eventToDelete);
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteEvent(EventToDeleteVm eventToDelete)
-        //{
-        //    bool isDelete = _vehicleService.DeleteEvent(eventToDelete);
-        //    if (isDelete == true)
-        //    {
-        //        TempData["refuellingSuccessfullyOrNotAdded"] = "Zdarzenie usunięte";
-        //    }
-        //    else
-        //    {
-        //        TempData["refuellingSuccessfullyOrNotAdded"] = "Zdarzenie nie usunięte, spróbuj ponownie lubc skontaktuj się z pomocą techniczną aby zgłosić błąd, lub spróbuj ponownie!";
-        //    }
-        //    return RedirectToAction("VehicleHistory", "Vehicle");
-        //}
-
-        // GET: Movies/Delete/5
-        public IActionResult DeleteEvent(string eventId, string eventTypeName)
+        public IActionResult DeleteEvent(string eventId)
         {
             if (eventId == null)
             {
                 return NotFound();
             }
-            EventToDeleteVm eventModel = _vehicleService.GetEventToDelete(eventTypeName, eventId);
-            if (eventModel == null)
+            var isDelete = _vehicleService.DeleteEvent(eventId);
+            if (isDelete == true)
             {
-                return NotFound();
+                TempData["deleteOperation"] = $"Pomyślnie usunięto zdarzenie {eventId}";
+            }
+            else
+            {
+                TempData["deleteOperation"] = "Nie udało się usunąć zdarzenia. Skontaktuj się z obsługą techniczną.";
+            }
+            return RedirectToAction("VehicleHistory", "Vehicle");
+
+        } 
+        public IActionResult VehicleStats(int id, string startDay, string endDay)
+        {
+            ViewData["startDay"] = startDay;
+            ViewData["endDay"] = endDay;
+            var vehicleEvents = _vehicleService.GetEventsBetweenTwoDates(id, startDay, endDay).OrderBy(x => x.EventDate).ToList();
+
+            List<DataPointVehicleStatsVm> dataPoints1 = new List<DataPointVehicleStatsVm>();
+            List<DataPointVehicleStatsVm> dataPoints2 = new List<DataPointVehicleStatsVm>();
+            List<DataPointVehicleStatsVm> dataPoints3 = new List<DataPointVehicleStatsVm>();
+
+            foreach (var item in vehicleEvents)
+            {
+                dataPoints1.Add(new DataPointVehicleStatsVm(item.EventDate.ToString("yyyy MMM"), item.MeterStatus));
+                dataPoints2.Add(new DataPointVehicleStatsVm(item.EventDate.ToString("yyyy MMM"), (double)item.PriceForEvent));
+                dataPoints3.Add(new DataPointVehicleStatsVm(item.EventDate.ToString("yyyy MMM"), (double)item.BurningFuelPerOneHundredKilometers));
             }
 
-            return View(eventModel);
+            ViewBag.DataPoints1 = JsonConvert.SerializeObject(dataPoints1);
+            ViewBag.DataPoints2 = JsonConvert.SerializeObject(dataPoints2);
+            ViewBag.DataPoints3 = JsonConvert.SerializeObject(dataPoints3);
+
+            ListVehicleStatsVm vehicleStatsTab = new ListVehicleStatsVm();
+            vehicleStatsTab.VehicleStats = new VehicleStatsVm[4];
+            vehicleStatsTab.VehicleStats[0] = _vehicleService.GetVehicleStats(id, startDay, endDay);
+            vehicleStatsTab.VehicleStats[1] = _vehicleService.GetVehicleStats(id, DateTime.Today.AddDays(-7).ToString(), DateTime.Today.ToString());
+            vehicleStatsTab.VehicleStats[2] = _vehicleService.GetVehicleStats(id, DateTime.Today.AddDays(-30).ToString(), DateTime.Today.ToString());
+            vehicleStatsTab.VehicleStats[3] = _vehicleService.GetVehicleStats(id, DateTime.Today.AddDays(-180).ToString(), DateTime.Today.ToString());
+            //_logger.LogError("VehicleStats");
+            return View(vehicleStatsTab);
         }
 
-        // POST: Movies/Delete/5
-        [HttpPost, ActionName("DeleteEvent")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(EventToDeleteVm eventModel)
-        {
-            _vehicleService.DeleteEvent(eventModel);
-            return RedirectToAction("VehicleHistory", "Vehicle");
-        }
     }
 }

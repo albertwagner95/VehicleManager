@@ -12,7 +12,7 @@ namespace VehicleManager.Application.ViewModels.AddressVm
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Domain.Model.Vehicle, AddItemForListVm>().ReverseMap();
+            profile.CreateMap<Domain.Model.VehicleModels.Vehicle, AddItemForListVm>().ReverseMap();
         }
     }
 }

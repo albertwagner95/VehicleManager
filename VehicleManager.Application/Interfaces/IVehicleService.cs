@@ -24,14 +24,17 @@ namespace VehicleManager.Application.Interfaces
         ListForUnitOfFuelForListVm GetUnitsOfFuels();
         ListFuelTypeForRefuelingForListVm GetAllFuelsTypesForRefuling();
         ListCarHistoryForListVm GetUserVehicleHistory(string userId);
-        NewCarHistoryVm ReturnCarHistoryToAdd(string kindOfEvent, string userId);
-        bool AddRefuling(NewRefulingVm model, NewCarHistoryVm carHistoryVm);
+        NewCarHistoryVm ReturnCarHistoryToAdd(int kindOfeventId, string userId);
+        bool AddEvent(NewEventVm model, NewCarHistoryVm carHistoryVm);
         int GetLastRefuelingMileage(int vehicleId);
-        RefuelDetailsVm GetRefuelById(string refuelingId);
+        EventDetailsVm GetRefuelById(string refuelingId);
         string GetVehicleNameById(int vehicleId);
         string GetUnitsOfFuelNameById(int unitOfFuelId);
-        string GetFuelNameById(int fuelForRefuelingId);
-        EventToDeleteVm GetEventToDelete(string name, string id);
-        bool DeleteEvent(EventToDeleteVm eventToDelete);
+        string GetFuelNameById(int fuelForRefuelingId); 
+        bool DeleteEvent(string eventId);
+        List<KindOfEventsListVm> GetAllKindsOfEvents();
+        VehicleStatsVm GetVehicleStats(int vehicleId, string endDate, string startDate); 
+        List<VehicleEventsForListVm> GetEventsBetweenTwoDates(int vehicleId, string startDate, string endDate);
+
     }
 }

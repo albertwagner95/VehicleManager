@@ -1,0 +1,194 @@
+﻿@model VehicleManager.Application.ViewModels.AddressVm.NewEventVm
+
+@{
+    ViewData["Title"] = "AddRefueling";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2 class="text-center">Dodaj zdarzenie!</h2>
+<hr />
+<form asp-action="AddEvent" class="offset-lg-3">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group row">
+        <input type="hidden" asp-for="Id" class="form-control" />
+    </div>
+    <div class="form-group row">
+        <label asp-for="EventDate" class="col-sm-2 col-form-label">Podaj datę zdarzenia</label>
+        <div class="col-sm-4">
+            <input asp-for="EventDate" value="@DateTime.Today" class="custom-select" />
+        </div>
+        <span asp-validation-for="EventDate" class="text-danger"></span>
+    </div>
+    <div class="form-group row">
+        <label asp-for="VehicleId" class="col-sm-2 col-form-label">Wybierz pojazd</label>
+        <div class="col-sm-4">
+            <select asp-for="VehicleId" asp-items="@(new SelectList(Model.UserCars.UserCars,"Id", "Name"))" class="custom-select">
+                <option value="">Wybierz pojazd</option>
+            </select>
+        </div>
+        <span asp-validation-for="VehicleId" class="text-danger"></span>
+    </div>
+    <div class="form-group row">
+        <label asp-for="EventsListId" class="col-sm-2 col-form-label">Rodzaj zdarzenia</label>
+        <div class="col-sm-4">
+            <select onchange="myFunction()" id="kindOfEvent" asp-for="EventsListId" asp-items="@(new SelectList(Model.EventsListVm,"Id", "Name"))" class="custom-select">
+                <option value="">Rodzaj zdarzenia</option>
+            </select>
+        </div>
+        <span asp-validation-for="EventsListId" class="text-danger"></span>
+    </div>
+    <div id="op1">
+        <div class="form-group row">
+            <label asp-for="PetrolStationName" class="col-sm-2 col-form-label">Nazwa stacji paliw</label>
+            <div class="col-sm-4">
+                <input asp-for="PetrolStationName" class="form-control" />
+                <span asp-validation-for="PetrolStationName" class="text-danger"></span>
+            </div>
+        </div>
+    </div><div id="op2">
+        <div class="form-group row">
+            <label asp-for="AmountOfFuel" class="col-sm-2 col-form-label">Ilość jednostek paliwa</label>
+            <div class="col-sm-4">
+                <input asp-for="AmountOfFuel" class="form-control" data-val="false" />
+                <span asp-validation-for="AmountOfFuel" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div id="op3">
+        <div class="form-group row">
+            <label asp-for="PriceForOneUnit" class="col-sm-2 col-form-label">Cena za jednostkę paliwa</label>
+            <div class="col-sm-4">
+                <input asp-for="PriceForOneUnit" class="form-control" />
+                <span asp-validation-for="PriceForOneUnit" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div id="op4">
+        <div class="form-group row">
+            <div class="col-sm-2">Tak/Nie</div>
+            <div class="col-sm-10">
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="IsRefulingFull" type="checkbox">
+                    <label class="form-check-label" for="gridCheck1">
+                        Czy zatankowany do pełna?
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="op5">
+        <div class="form-group row">
+            <label asp-for="FuelForRefuelingId" class="col-sm-2 col-form-label">Rodzaj paliwa</label>
+            <div class="col-sm-4">
+                <select asp-for="FuelForRefuelingId" asp-items="@(new SelectList(Model.VehicleFuelTypes.FuelTypeForRefuelingForLists,"Id", "Name"))" class="custom-select">
+                    <option value="">Wybierz rodzaj paliwa</option>
+                </select>
+                <span asp-validation-for="FuelForRefuelingId" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div id="op6">
+        <div class="form-group row">
+            <label asp-for="UnitOfFuelId" class="col-sm-2 col-form-label">Jednostka paliwa</label>
+            <div class="col-sm-4">
+                <select asp-for="UnitOfFuelId" asp-items="@(new SelectList(Model.UnitOfFuelForList.UnitOfFuelList,"Id", "Name"))" class="custom-select">
+                    <option value="">Wybierz jednostkę paliwa</option>
+                </select>
+                <span asp-validation-for="UnitOfFuelId" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div id="op7">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Koszt</label>
+            <div class="col-sm-4">
+                <input asp-for="PriceForEvent" class="form-control" />
+                <span asp-validation-for="PriceForEvent" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="MeterStatus" class="col-sm-2 col-form-label">Aktualny stan licznika</label>
+        <div class="col-sm-4">
+            <input asp-for="MeterStatus" class="form-control" />
+            <span asp-validation-for="MeterStatus" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Varnings" class="col-sm-2 col-form-label">Uwagi/notatki</label>
+        <div class="col-sm-4">
+            <input asp-for="Varnings" class="form-control" />
+            <span asp-validation-for="Varnings" class="text-danger"></span>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="form-group row"> 
+        <input type="submit" value="Dodaj zdarzenie" class="btn btn-outline-success offset-lg-5" />
+
+    </div>
+</form>
+<div>
+    <a asp-action="VehicleHistory" asp-controller="Vehicle" class="btn btn-outline-primary">Przejdź do historii zdarzeń</a>
+    <a asp-action="Index" asp-controller="Home" class="btn btn-outline-primary">Wróć do strony głównej</a>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+<script>
+    function myFunction() {
+        var kindOfEventName = document.getElementById("kindOfEvent").value;
+        console.log(kindOfEventName);
+
+        if (kindOfEventName != 1) {
+            document.getElementById("op1").style.display = "none";
+            document.getElementById("op2").style.display = "none";
+            document.getElementById("op3").style.display = "none";
+            document.getElementById("op4").style.display = "none";
+            document.getElementById("op5").style.display = "none";
+            document.getElementById("op6").style.display = "none";
+            document.getElementById("op7").style.display = "block";
+        }
+        if (kindOfEventName == 1) {
+            document.getElementById("op1").style.display = "block";
+            document.getElementById("op2").style.display = "block";
+            document.getElementById("op3").style.display = "block";
+            document.getElementById("op4").style.display = "block";
+            document.getElementById("op5").style.display = "block";
+            document.getElementById("op6").style.display = "block";
+            document.getElementById("op7").style.display = "none";
+        }
+    }
+    var item = document.getElementById("kindOfEvent").value;
+    if (item == null) {
+        document.getElementById("op1").style.display = "none";
+        document.getElementById("op2").style.display = "none";
+        document.getElementById("op3").style.display = "none";
+        document.getElementById("op4").style.display = "none";
+        document.getElementById("op5").style.display = "none";
+        document.getElementById("op6").style.display = "none";
+        document.getElementById("op7").style.display = "block";
+    }
+    else if (item == 1) {
+        document.getElementById("op1").style.display = "block";
+        document.getElementById("op2").style.display = "block";
+        document.getElementById("op3").style.display = "block";
+        document.getElementById("op4").style.display = "block";
+        document.getElementById("op5").style.display = "block";
+        document.getElementById("op6").style.display = "block";
+        document.getElementById("op7").style.display = "none";
+    }
+    else if (item != 1) {
+        document.getElementById("op1").style.display = "none";
+        document.getElementById("op2").style.display = "none";
+        document.getElementById("op3").style.display = "none";
+        document.getElementById("op4").style.display = "none";
+        document.getElementById("op5").style.display = "none";
+        document.getElementById("op6").style.display = "none";
+        document.getElementById("op7").style.display = "block";
+    }
+</script>

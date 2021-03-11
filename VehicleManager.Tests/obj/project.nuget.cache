@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ewsBB1naz8Miy67PvHABWOVegiFJXPgQBmWuZb8okWBM8p54xp7QgveqPbw1RWbKIQFU29GWhAx9hPwHu3NhWA==",
+  "dgSpecHash": "TaHYMTmNtZA1m5N6g/qhU0KiROtHfzZIkVIL32t5633w1W0W2pC3s3X+/iJMnVlr+kdAv5OM1d/D4f+eElMq9w==",
   "success": true,
   "projectFilePath": "C:\\Users\\wagne\\Desktop\\Kurs programista asp.net core\\VehicleManager\\VehicleManager\\VehicleManager.Tests\\VehicleManager.Tests.csproj",
   "expectedPackageFiles": [
@@ -161,8 +161,7 @@
     "C:\\Users\\wagne\\.nuget\\packages\\xunit.core\\2.4.0\\xunit.core.2.4.0.nupkg.sha512",
     "C:\\Users\\wagne\\.nuget\\packages\\xunit.extensibility.core\\2.4.0\\xunit.extensibility.core.2.4.0.nupkg.sha512",
     "C:\\Users\\wagne\\.nuget\\packages\\xunit.extensibility.execution\\2.4.0\\xunit.extensibility.execution.2.4.0.nupkg.sha512",
-    "C:\\Users\\wagne\\.nuget\\packages\\xunit.runner.visualstudio\\2.4.0\\xunit.runner.visualstudio.2.4.0.nupkg.sha512",
-    "C:\\Users\\wagne\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512"
+    "C:\\Users\\wagne\\.nuget\\packages\\xunit.runner.visualstudio\\2.4.0\\xunit.runner.visualstudio.2.4.0.nupkg.sha512"
   ],
   "logs": []
 }

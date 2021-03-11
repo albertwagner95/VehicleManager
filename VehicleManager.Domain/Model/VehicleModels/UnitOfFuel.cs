@@ -10,7 +10,7 @@ namespace VehicleManager.Domain.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Refueling> Refulings { get; set; }
+        public ICollection<Event> Events { get; set; }
 
     }
 }
